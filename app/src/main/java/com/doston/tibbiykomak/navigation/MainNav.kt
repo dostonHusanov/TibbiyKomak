@@ -1,0 +1,71 @@
+package com.doston.tibbiykomak.navigation
+
+import android.content.Context
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.doston.tibbiykomak.home.HomeScreen
+import com.doston.tibbiykomak.onBoarding.OnBoardingScreen
+import com.doston.tibbiykomak.onBoarding.WelcomeScreen
+import com.doston.tibbiykomak.reminder.ReminderScreen
+
+@Composable
+fun MainNav(context: Context) {
+    val navController = rememberNavController()
+
+    // Check if the user has completed the onboarding process
+    val hasCompletedOnboarding = remember { mutableStateOf(hasCompletedOnboarding(context)) }
+
+    // Use NavHost to decide which navigation flow to show
+    NavHost(
+        navController = navController,
+        startDestination = if (hasCompletedOnboarding.value) "main" else "welcome"
+    ) {
+        // First Navigation Flow (Welcome, Language, and Onboarding)
+        composable("welcome") {
+            WelcomeScreen(onStart = {
+                navController.navigate("onboarding")
+            })
+        }
+
+
+
+        composable("onboarding") {
+            OnBoardingScreen(onFinish = {
+                // Set the flag indicating onboarding is complete
+                hasCompletedOnboarding.value = true
+                setOnboardingCompleted(context, true)
+                navController.navigate("main")
+            })
+        }
+
+        // Main Screen (After First-Time Setup)
+        composable("main") {
+            SecondaryNav() // Main content screen for the quiz
+        }
+
+        // Other Screens for the quiz
+        composable("homeScreen") {
+          HomeScreen(navController = navController,"Dostonbek",1)
+        }
+
+        composable("reminderScreen") { backStackEntry ->
+           ReminderScreen()
+        }
+
+
+    }
+}
+
+fun hasCompletedOnboarding(context: Context): Boolean {
+    val sharedPreferences = context.getSharedPreferences("appPrefs", Context.MODE_PRIVATE)
+    return sharedPreferences.getBoolean("hasCompletedOnboarding", false)
+}
+
+fun setOnboardingCompleted(context: Context, value: Boolean) {
+    val sharedPreferences = context.getSharedPreferences("appPrefs", Context.MODE_PRIVATE)
+    sharedPreferences.edit().putBoolean("hasCompletedOnboarding", value).apply()
+}
