@@ -1,22 +1,25 @@
 [versions]
-accompanistPager = "0.24.13-rc"
+accompanistPager = "0.19.0"
 agp = "8.7.3"
 kotlin = "2.0.0"
-coreKtx = "1.16.0"
+coreKtx = "1.1.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 kotlinxCoroutinesAndroid = "1.7.3"
 lifecycleRuntimeKtx = "2.8.7"
-activityCompose = "1.10.1"
+activityCompose = "1.9.3"
 composeBom = "2024.04.01"
 lottieCompose = "5.2.0"
 materialIconsExtended = "1.7.8"
-navigationCompose = "2.8.9"
-navigationComposeJvmstubs = "2.9.0-rc01"
+navigationCompose = "2.8.5"
+navigationComposeJvmstubs = "2.9.0"
+uiVersion = "1.8.2"
+material3Android = "1.3.2"
 
 [libraries]
 accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanistPager" }
+androidx-compose-ui-ui = { module = "androidx.compose.ui:ui", version.ref = "uiVersion" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -36,6 +39,7 @@ androidx-navigation-compose = { group = "androidx.navigation", name = "navigatio
 androidx-navigation-compose-jvmstubs = { group = "androidx.navigation", name = "navigation-compose-jvmstubs", version.ref = "navigationComposeJvmstubs" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
 lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottieCompose" }
+androidx-material3-android = { group = "androidx.compose.material3", name = "material3-android", version.ref = "material3Android" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

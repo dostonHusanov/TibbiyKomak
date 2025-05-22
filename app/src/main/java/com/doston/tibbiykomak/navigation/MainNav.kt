@@ -11,10 +11,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.doston.tibbiykomak.auth.RegisterScreen
-import com.doston.tibbiykomak.database.DatabaseHelper
-import com.doston.tibbiykomak.database.DatabaseService
-import com.doston.tibbiykomak.database.UserViewModel
-import com.doston.tibbiykomak.database.UserViewModelFactory
 import com.doston.tibbiykomak.home.HomeScreen
 import com.doston.tibbiykomak.onBoarding.OnBoardingScreen
 import com.doston.tibbiykomak.onBoarding.WelcomeScreen
@@ -28,9 +24,6 @@ fun MainNav(context: Context) {
     // Check if the user has completed the onboarding process
     val hasCompletedOnboarding = remember { mutableStateOf(hasCompletedOnboarding(context)) }
 
-    val databaseService = remember { DatabaseHelper(context) }
-    val userViewModel: UserViewModel = viewModel(factory = UserViewModelFactory(databaseService))
-    // Use NavHost to decide which navigation flow to show
     NavHost(
         navController = navController,
         startDestination = if (hasCompletedOnboarding.value) "main" else "welcome"
@@ -51,7 +44,7 @@ fun MainNav(context: Context) {
             })
         }
         composable("registerScreen"){
-            RegisterScreen(userViewModel = userViewModel, onFinish = {
+            RegisterScreen( onFinish = {
                 hasCompletedOnboarding.value = true
                 setOnboardingCompleted(context, true)
                 navController.navigate("main")
