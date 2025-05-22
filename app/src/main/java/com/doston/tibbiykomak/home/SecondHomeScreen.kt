@@ -1,5 +1,4 @@
 package com.doston.tibbiykomak.home
-
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -30,10 +29,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.layout.LookaheadScope
 import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -51,9 +48,9 @@ import com.doston.tibbiykomak.ui.theme.TextColor2
 import com.doston.tibbiykomak.ui.theme.TibbiyKomakTheme
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun HomeScreen(
+fun SecondHomeScreen(
     navController: NavController,
-    userName: String,
+
     categoryId: Int,
     modifier: Modifier = Modifier
 ) {
@@ -82,7 +79,7 @@ fun HomeScreen(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     items(illnesses, key = { it.problem }) { illness ->
-                        HomeItem(
+                        SecondHomeItem(
                             title = illness.problem,
                             desc = illness.description,
                             imageRes = R.drawable.headache,
@@ -101,7 +98,7 @@ fun HomeScreen(
 }
 
 @Composable
-fun HomeItem(
+fun SecondHomeItem(
     title: String,
     desc: String,
     imageRes: Int,
@@ -157,7 +154,7 @@ fun HomeItem(
                             .height(30.dp)
                             .width(124.dp),
                         onClick = onClick,
-                        shape = RoundedCornerShape(12.dp),
+                        shape = RoundedCornerShape(20.dp),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = MainColor,
                             contentColor = TextColor
@@ -182,7 +179,7 @@ fun HomeItem(
 
 @Preview(showBackground = true)
 @Composable
-fun HomeItemPreview() {
+fun SecondHomeItemPreview() {
     HomeItem(
         title = "Bosh og'rig'i",
         imageRes = R.drawable.headache,
@@ -192,11 +189,10 @@ fun HomeItemPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun HomeScreenPreview() {
+fun SecondHomeScreenPreview() {
     TibbiyKomakTheme {
-        HomeScreen(
+        SecondHomeScreen(
             navController = rememberNavController(),
-            userName = "Doston",
             categoryId = 1
         )
     }

@@ -12,6 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.doston.tibbiykomak.auth.RegisterScreen
 import com.doston.tibbiykomak.home.HomeScreen
+import com.doston.tibbiykomak.home.SecondHomeScreen
 import com.doston.tibbiykomak.onBoarding.OnBoardingScreen
 import com.doston.tibbiykomak.onBoarding.WelcomeScreen
 import com.doston.tibbiykomak.reminder.ReminderScreen
@@ -59,6 +60,13 @@ fun MainNav(context: Context) {
         // Other Screens for the quiz
         composable("homeScreen") {
             HomeScreen(navController = navController,"Dostonbek",1)
+        }
+        composable("secondHomeScreen") {
+            SecondHomeScreen(
+                navController,
+
+                categoryId = 1
+            )
         }
 
         composable("reminderScreen") { backStackEntry ->

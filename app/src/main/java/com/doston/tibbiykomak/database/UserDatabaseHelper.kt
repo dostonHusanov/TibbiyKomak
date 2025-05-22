@@ -14,6 +14,7 @@ class UserDatabaseHelper(context: Context) :
         db.execSQL(
             "CREATE TABLE user (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, surname TEXT, age INTEGER, phoneNumber TEXT)"
         )
+
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {

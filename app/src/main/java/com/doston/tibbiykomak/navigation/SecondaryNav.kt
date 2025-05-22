@@ -19,6 +19,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Nature
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.outlined.Info
@@ -33,12 +34,9 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationBarItemColors
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.NavigationDrawerItem
-import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -46,7 +44,6 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -56,7 +53,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.BlendMode.Companion.Screen
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -76,6 +72,7 @@ import com.doston.tibbiykomak.home.AboutScreen
 import com.doston.tibbiykomak.home.ContactScreen
 import com.doston.tibbiykomak.home.HomeScreen
 import com.doston.tibbiykomak.home.InfoScreen
+import com.doston.tibbiykomak.home.SecondHomeScreen
 import com.doston.tibbiykomak.reminder.ReminderScreen
 import com.doston.tibbiykomak.ui.theme.MainColor
 import com.doston.tibbiykomak.ui.theme.TextColor
@@ -110,6 +107,10 @@ fun SecondaryNav() {
             icon = { Icon(Icons.Default.Home, contentDescription = "Home") }
         ),
         BottomNavItem(
+            route = "secondHomeScreen",
+            title = "Second",
+            icon = { Icon(Icons.Default.Nature, contentDescription = "") }),
+        BottomNavItem(
             route = "reminderScreen",
             title = "Reminder",
             icon = { Icon(Icons.Default.Notifications, contentDescription = "Reminder") }
@@ -118,13 +119,14 @@ fun SecondaryNav() {
 
 
 
-    ModalNavigationDrawer(gesturesEnabled = currentRoute != "infoScreen" ,
+    ModalNavigationDrawer(gesturesEnabled = currentRoute != "infoScreen",
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet(drawerContentColor = TextColor, drawerContainerColor = MainColor) {
                 Column(
                     modifier = Modifier
-                        .fillMaxSize().background(MainColor)
+                        .fillMaxSize()
+                        .background(MainColor)
 
                         .verticalScroll(rememberScrollState())
                 ) {
@@ -188,38 +190,39 @@ fun SecondaryNav() {
                         fontSize = 16.sp
                     )
 
-                HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+                    HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
 
-                NavigationDrawerItem(
-                    label = { Text("Ilova Haqida") },
-                    selected = false,
-                    icon = { Icon(Icons.Outlined.Info, contentDescription = null) },
-                    onClick = {
-                        scope.launch { drawerState.close() }
-                        navController.navigate("aboutScreen")
+                    NavigationDrawerItem(
+                        label = { Text("Ilova Haqida") },
+                        selected = false,
+                        icon = { Icon(Icons.Outlined.Info, contentDescription = null) },
+                        onClick = {
+                            scope.launch { drawerState.close() }
+                            navController.navigate("aboutScreen")
 
-                    })
+                        })
                     Spacer(Modifier.height(10.dp))
-                NavigationDrawerItem(
-                    label = { Text("Bog'lanish") },
-                    selected = false,
+                    NavigationDrawerItem(
+                        label = { Text("Bog'lanish") },
+                        selected = false,
 
-                    icon = { Icon(Icons.Outlined.Phone, contentDescription = null) },
-                    onClick = {
-                        scope.launch { drawerState.close() }
-                        navController.navigate("contactScreen")
-                    }
-                )
+                        icon = { Icon(Icons.Outlined.Phone, contentDescription = null) },
+                        onClick = {
+                            scope.launch { drawerState.close() }
+                            navController.navigate("contactScreen")
+                        }
+                    )
 
 
-            }}
+                }
+            }
         }
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
 
         // Show bottom bar only for these routes
-        val isBottomBarVisible = currentRoute in listOf("homeScreen", "reminderScreen")
+        val isBottomBarVisible = currentRoute in listOf("homeScreen", "secondHomeScreen","reminderScreen")
 
         if (isBottomBarVisible) {
             Scaffold(
@@ -227,12 +230,12 @@ fun SecondaryNav() {
                     TopAppBar(
                         title = {
 
-                                Text(
-                                    text = "Salom  ${user?.name}",
-                                    fontSize = 22.sp,
-                                    fontWeight = FontWeight.SemiBold,
-                                    color = TextColor2
-                                )
+                            Text(
+                                text = "Salom  ${user?.name}",
+                                fontSize = 22.sp,
+                                fontWeight = FontWeight.SemiBold,
+                                color = TextColor2
+                            )
 
                         },
                         colors = TopAppBarDefaults.topAppBarColors(
@@ -286,37 +289,52 @@ fun SecondaryNav() {
                     composable("homeScreen") {
                         HomeScreen(navController, userName = user?.name.toString(), categoryId = 1)
                     }
+                    composable("secondHomeScreen") {
+                        SecondHomeScreen(
+                            navController,
+
+                            categoryId = 1
+                        )
+                    }
                     composable("reminderScreen") {
                         ReminderScreen()
                     }
+
                     composable("aboutScreen") { AboutScreen(navController) }
                     composable("contactScreen") { ContactScreen(navController) }
                     composable("infoScreen") { backStackEntry ->
                         val illness = navController.previousBackStackEntry
                             ?.savedStateHandle?.get<MainData>("illness")
                         illness?.let {
-                            InfoScreen(illness = it,navController)
+                            InfoScreen(illness = it, navController)
                         }
                     }
 
                 }
             }
         } else {
-            // Fullscreen content for drawer navigation
+
             NavHost(navController = navController, startDestination = "homeScreen") {
                 composable("aboutScreen") { AboutScreen(navController) }
                 composable("contactScreen") { ContactScreen(navController) }
+
                 composable("infoScreen") { backStackEntry ->
                     val illness = navController.previousBackStackEntry
                         ?.savedStateHandle?.get<MainData>("illness")
                     illness?.let {
-                        InfoScreen(illness = it,navController)
+                        InfoScreen(illness = it, navController)
                     }
                 }
 
-                // Include other screens for back navigation if needed
                 composable("homeScreen") {
                     HomeScreen(navController, userName = user?.name.toString(), categoryId = 1)
+                }
+                composable("secondHomeScreen") {
+                    SecondHomeScreen(
+                        navController,
+
+                        categoryId = 1
+                    )
                 }
                 composable("reminderScreen") {
                     ReminderScreen()
