@@ -45,7 +45,7 @@ class UserDatabaseHelper(context: Context) :
                 phoneNumber = cursor.getString(4)
             )
         } else null.also {
-            cursor.close()
+            cursor.close() 
         }
     }
 }

@@ -66,7 +66,7 @@ fun SecondHomeScreen(
             item {
                 Text(
                     text = category,
-                    fontSize = 24.sp,
+                    fontSize = 22.sp,
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
@@ -109,7 +109,7 @@ fun SecondHomeItem(
         modifier = modifier
             .height(135.dp)
             .width(280.dp),
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(8.dp),
     ) {
         Box(
             modifier = Modifier
@@ -154,7 +154,7 @@ fun SecondHomeItem(
                             .height(30.dp)
                             .width(124.dp),
                         onClick = onClick,
-                        shape = RoundedCornerShape(20.dp),
+                        shape = RoundedCornerShape(8.dp),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = MainColor,
                             contentColor = TextColor

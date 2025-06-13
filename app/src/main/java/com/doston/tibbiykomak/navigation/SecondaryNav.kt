@@ -73,6 +73,7 @@ import com.doston.tibbiykomak.home.ContactScreen
 import com.doston.tibbiykomak.home.HomeScreen
 import com.doston.tibbiykomak.home.InfoScreen
 import com.doston.tibbiykomak.home.SecondHomeScreen
+import com.doston.tibbiykomak.reminder.PillScreen
 import com.doston.tibbiykomak.reminder.ReminderScreen
 import com.doston.tibbiykomak.ui.theme.MainColor
 import com.doston.tibbiykomak.ui.theme.TextColor
@@ -229,14 +230,12 @@ fun SecondaryNav() {
                 topBar = {
                     TopAppBar(
                         title = {
-
                             Text(
-                                text = "Salom  ${user?.name}",
+                                text = "Tibbiy Ko'mak",
                                 fontSize = 22.sp,
                                 fontWeight = FontWeight.SemiBold,
                                 color = TextColor2
                             )
-
                         },
                         colors = TopAppBarDefaults.topAppBarColors(
                             containerColor = MainColor,
@@ -292,12 +291,14 @@ fun SecondaryNav() {
                     composable("secondHomeScreen") {
                         SecondHomeScreen(
                             navController,
-
                             categoryId = 1
                         )
                     }
                     composable("reminderScreen") {
-                        ReminderScreen()
+                        ReminderScreen(navController)
+                    }
+                    composable("pillScreen"){
+                        PillScreen(navController)
                     }
 
                     composable("aboutScreen") { AboutScreen(navController) }
@@ -337,8 +338,12 @@ fun SecondaryNav() {
                     )
                 }
                 composable("reminderScreen") {
-                    ReminderScreen()
+                    ReminderScreen(navController)
                 }
+                composable("pillScreen"){
+                    PillScreen(navController)
+                }
+
             }
         }
     }

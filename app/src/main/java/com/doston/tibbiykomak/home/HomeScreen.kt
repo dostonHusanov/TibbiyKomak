@@ -30,10 +30,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.layout.LookaheadScope
 import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -49,6 +47,7 @@ import com.doston.tibbiykomak.ui.theme.MainColor
 import com.doston.tibbiykomak.ui.theme.TextColor
 import com.doston.tibbiykomak.ui.theme.TextColor2
 import com.doston.tibbiykomak.ui.theme.TibbiyKomakTheme
+
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun HomeScreen(
@@ -63,20 +62,23 @@ fun HomeScreen(
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .background(MainColor).nestedScroll(nestedScrollInterop)
+            .background(MainColor)
+            .nestedScroll(nestedScrollInterop)
     ) {
         grouped.forEach { (category, illnesses) ->
             item {
+
                 Text(
                     text = category,
-                    fontSize = 24.sp,
+                    fontSize = 22.sp,
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
+                    modifier = Modifier.padding(horizontal = 12.dp)
                 )
             }
 
             item {
+                Spacer(modifier = Modifier.height(4.dp))
                 LazyRow(
                     contentPadding = PaddingValues(horizontal = 12.dp),
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -87,7 +89,10 @@ fun HomeScreen(
                             desc = illness.description,
                             imageRes = R.drawable.headache,
                             onClick = {
-                                navController.currentBackStackEntry?.savedStateHandle?.set("illness", illness)
+                                navController.currentBackStackEntry?.savedStateHandle?.set(
+                                    "illness",
+                                    illness
+                                )
                                 navController.navigate("infoScreen")
                             }
                         )
@@ -110,9 +115,9 @@ fun HomeItem(
 ) {
     Card(
         modifier = modifier
-            .height(135.dp)
+            .height(140.dp)
             .width(280.dp),
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(8.dp),
     ) {
         Box(
             modifier = Modifier
@@ -157,7 +162,7 @@ fun HomeItem(
                             .height(30.dp)
                             .width(124.dp),
                         onClick = onClick,
-                        shape = RoundedCornerShape(12.dp),
+                        shape = RoundedCornerShape(8.dp),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = MainColor,
                             contentColor = TextColor
@@ -166,6 +171,7 @@ fun HomeItem(
                     ) {
                         Text("Ko'rish", fontSize = 15.sp, textAlign = TextAlign.Center)
                     }
+                    Spacer(modifier = Modifier.height(4.dp))
                 }
                 Image(
                     painter = painterResource(id = imageRes),

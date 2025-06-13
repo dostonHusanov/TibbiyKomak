@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,16 +23,30 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun ContactScreen(navController: NavController){
+fun ContactScreen(navController: NavController) {
 
 
-    Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.SpaceBetween) {
-        Row(modifier = Modifier.fillMaxWidth().padding(vertical = 36.dp, horizontal = 14.dp), horizontalArrangement = Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
-            Image(modifier= Modifier.size(26.dp).shadow(elevation = 0.dp, shape = CircleShape, clip = true).clickable { navController.popBackStack() },
-                 imageVector = Icons.Default.ArrowBack, contentDescription = "")
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceBetween
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 36.dp, horizontal = 14.dp),
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Image(
+                modifier = Modifier
+                    .size(26.dp)
+                    .shadow(elevation = 0.dp, shape = CircleShape, clip = true)
+                    .clickable { navController.popBackStack() },
+                imageVector = Icons.Default.ArrowBack, contentDescription = ""
+            )
             Spacer(Modifier.width(14.dp))
             Text(text = "Biz bilan bog'lanish", fontSize = 22.sp, color = Color.Black)
         }

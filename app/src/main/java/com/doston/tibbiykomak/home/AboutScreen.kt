@@ -23,14 +23,29 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun AboutScreen(navController: NavController){
+fun AboutScreen(navController: NavController) {
 
-    Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.SpaceBetween) {
-        Row(modifier = Modifier.fillMaxWidth().padding(vertical = 36.dp, horizontal = 14.dp), horizontalArrangement = Arrangement.Start) {
-            Image(modifier=Modifier.shadow(elevation = 0.dp, shape = CircleShape, clip = true).size(26.dp).clickable { navController.popBackStack() }, imageVector = Icons.Default.ArrowBack, contentDescription = "")
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceBetween
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 36.dp, horizontal = 14.dp),
+            horizontalArrangement = Arrangement.Start
+        ) {
+            Image(
+                modifier = Modifier
+                    .shadow(elevation = 0.dp, shape = CircleShape, clip = true)
+                    .size(26.dp)
+                    .clickable { navController.popBackStack() },
+                imageVector = Icons.Default.ArrowBack,
+                contentDescription = ""
+            )
             Spacer(Modifier.width(14.dp))
             Text(text = "Ilova Haqida", fontSize = 22.sp, color = Color.Black)
         }
