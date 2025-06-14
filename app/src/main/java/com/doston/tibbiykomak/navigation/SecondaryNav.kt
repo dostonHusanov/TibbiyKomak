@@ -73,6 +73,7 @@ import com.doston.tibbiykomak.home.ContactScreen
 import com.doston.tibbiykomak.home.HomeScreen
 import com.doston.tibbiykomak.home.InfoScreen
 import com.doston.tibbiykomak.home.SecondHomeScreen
+import com.doston.tibbiykomak.reminder.PillAddScreen
 import com.doston.tibbiykomak.reminder.PillScreen
 import com.doston.tibbiykomak.reminder.ReminderScreen
 import com.doston.tibbiykomak.ui.theme.MainColor
@@ -300,6 +301,9 @@ fun SecondaryNav() {
                     composable("pillScreen"){
                         PillScreen(navController)
                     }
+                    composable("pillAdd") {
+                        PillAddScreen()
+                    }
 
                     composable("aboutScreen") { AboutScreen(navController) }
                     composable("contactScreen") { ContactScreen(navController) }
@@ -342,6 +346,9 @@ fun SecondaryNav() {
                 }
                 composable("pillScreen"){
                     PillScreen(navController)
+                }
+                composable("pillAdd") {
+                    PillAddScreen()
                 }
 
             }
