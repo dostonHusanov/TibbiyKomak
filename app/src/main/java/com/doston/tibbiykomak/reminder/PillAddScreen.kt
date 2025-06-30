@@ -1,7 +1,10 @@
 package com.doston.tibbiykomak.reminder
 
 import android.app.TimePickerDialog
+import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -18,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -26,6 +30,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.doston.tibbiykomak.data.ReminderData
+import com.doston.tibbiykomak.database.UserDatabaseHelper
 import com.doston.tibbiykomak.ui.theme.MainColor
 import com.doston.tibbiykomak.ui.theme.RegColor
 import com.doston.tibbiykomak.ui.theme.TextColor
@@ -33,11 +41,14 @@ import com.doston.tibbiykomak.ui.theme.TibbiyKomakTheme
 import java.util.Calendar
 
 @Composable
-fun PillAddScreen() {
+fun PillAddScreen(navController: NavController) {
+    val context = LocalContext.current
+    val dbHelper = remember { UserDatabaseHelper(context) }
     val name = remember { mutableStateOf("") }
     val desc = remember { mutableStateOf("") }
     val day = remember { mutableStateOf("") }
     val timesPerDay = remember { mutableStateOf("") }
+    val error = remember { mutableStateOf("") }
 
     val timeStates = remember { List(6) { mutableStateOf("") } }
 
@@ -89,6 +100,50 @@ fun PillAddScreen() {
                         fontWeight = FontWeight.SemiBold,
                         modifier = Modifier.padding(10.dp)
                     )
+                }
+
+            }
+
+            item {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 10.dp, vertical = 10.dp)
+                        .background(
+                            shape = RoundedCornerShape(10.dp), color = TextColor
+                        )
+                        .clickable {
+                            val selectedTimes = timeStates
+                                .take(count)
+                                .map { it.value }
+                                .filter { it.isNotBlank() }
+                            if (name.value.isBlank() || desc.value.isBlank() || day.value.isBlank() || timesPerDay.value.isBlank() || selectedTimes.isEmpty()) {
+                                Toast
+                                    .makeText(
+                                        context,
+                                        "Bo'sh maydonlarni to'ldiring!",
+                                        Toast.LENGTH_SHORT
+                                    )
+                                    .show()
+                            } else {
+                                val data = ReminderData(
+                                    name = name.value,
+                                    desc = desc.value,
+                                    day = day.value,
+                                    times = selectedTimes
+                                )
+                                dbHelper.insertPill(data)
+                                navController.popBackStack()
+                            }
+                        }, contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Saqlash",
+                        fontSize = 18.sp,
+                        color = MainColor,
+                        fontWeight = FontWeight.Bold, modifier = Modifier.padding(10.dp)
+                    )
+
                 }
             }
         }
@@ -178,6 +233,6 @@ fun CustomTextField(
 @Composable
 fun PillAddScreenPreview() {
     TibbiyKomakTheme {
-        PillAddScreen()
+        PillAddScreen(rememberNavController())
     }
 }

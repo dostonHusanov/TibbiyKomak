@@ -16,11 +16,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             window.statusBarColor = ContextCompat.getColor(this, R.color.background)
 window.navigationBarColor=ContextCompat.getColor(this, R.color.background)
-
             MainNav(context = applicationContext)
-
-
-
         }
     }
 }

@@ -302,7 +302,7 @@ fun SecondaryNav() {
                         PillScreen(navController)
                     }
                     composable("pillAdd") {
-                        PillAddScreen()
+                        PillAddScreen(navController)
                     }
 
                     composable("aboutScreen") { AboutScreen(navController) }
@@ -348,7 +348,7 @@ fun SecondaryNav() {
                     PillScreen(navController)
                 }
                 composable("pillAdd") {
-                    PillAddScreen()
+                    PillAddScreen(navController)
                 }
 
             }

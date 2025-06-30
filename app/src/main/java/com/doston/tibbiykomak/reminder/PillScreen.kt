@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -22,36 +23,51 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.doston.tibbiykomak.data.ReminderData
+import com.doston.tibbiykomak.database.UserDatabaseHelper
 import com.doston.tibbiykomak.ui.theme.MainColor
 import com.doston.tibbiykomak.ui.theme.TextColor
 import com.doston.tibbiykomak.ui.theme.TibbiyKomakTheme
 
 @Composable
 fun PillScreen(navController: NavController) {
+    val context = LocalContext.current
+    val db = remember { UserDatabaseHelper(context) }
+    val pills = remember { mutableStateOf(emptyList<ReminderData>()) }
     Scaffold { innerPadding ->
 
 
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .background(MainColor)
-            .padding(innerPadding)) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MainColor)
+                .padding(innerPadding)
+        ) {
 
+            LaunchedEffect(Unit) {
+                pills.value = db.getAllPills().sortedByDescending { it.id }
 
+            }
             Column(modifier = Modifier.fillMaxSize()) {
                 LazyColumn(modifier = Modifier) {
-                    items(count = 15) {
-
-
-                        PillItem()
+                    items(pills.value) { pill ->
+                        PillItem(
+                            name = pill.name,
+                            day = pill.day,
+                            time = pill.times.count().toString()
+                        )
                     }
                 }
             }
@@ -73,7 +89,7 @@ fun PillScreen(navController: NavController) {
 }
 
 @Composable
-fun PillItem() {
+fun PillItem(name: String, day: String, time: String) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -87,14 +103,16 @@ fun PillItem() {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Column(modifier = Modifier
-                .background(TextColor)
-                .padding(5.dp)) {
+            Column(
+                modifier = Modifier
+                    .background(TextColor)
+                    .padding(10.dp)
+            ) {
                 Text(
-                    text = "Paratsitamol",
+                    text = name,
                     fontSize = 20.sp,
                     color = MainColor,
-                    fontWeight = FontWeight.SemiBold
+                    fontWeight = FontWeight.SemiBold,modifier = Modifier.padding(vertical = 2.dp, horizontal = 2.dp)
                 )
 
                 Row(
@@ -102,12 +120,13 @@ fun PillItem() {
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text(text = "4 kun", fontSize = 18.sp, color = MainColor)
+                    Text(text = "$day kun", fontSize = 16.sp, color = MainColor,modifier = Modifier.padding(vertical = 2.dp, horizontal = 2.dp))
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
-                        text = "Kuniga 3 marta istemol qilinadi",
-                        fontSize = 18.sp,
-                        color = MainColor
+                        text = "Har kuni $time marta istemol qilinadi",
+                        fontSize = 16.sp,
+                        color = MainColor,
+                        modifier = Modifier.padding(vertical = 2.dp, horizontal = 2.dp)
                     )
                 }
             }
