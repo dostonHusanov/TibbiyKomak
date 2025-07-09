@@ -1,7 +1,13 @@
 package com.doston.tibbiykomak.home
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -44,8 +50,7 @@ fun InfoScreen(illness: MainData, navController: NavController) {
         Text(
             text = illness.description,
             fontSize = 16.sp,
-            modifier=Modifier.padding(8.dp,0.dp,0.dp,0.dp)
-            ,fontWeight = FontWeight.Normal,
+            modifier = Modifier.padding(8.dp, 0.dp, 0.dp, 0.dp), fontWeight = FontWeight.Normal,
             color = TextColor, maxLines = 5
         )
 
@@ -65,9 +70,11 @@ fun InfoScreen(illness: MainData, navController: NavController) {
                 shape = RoundedCornerShape(12.dp),
                 elevation = CardDefaults.cardElevation(1.dp)
             ) {
-                Column(modifier = Modifier
-                    .padding(12.dp)
-                    .background(TextColor)) {
+                Column(
+                    modifier = Modifier
+                        .padding(12.dp)
+                        .background(TextColor)
+                ) {
                     Text(
                         text = it.name,
                         fontSize = 18.sp,

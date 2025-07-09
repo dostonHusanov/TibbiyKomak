@@ -59,7 +59,7 @@ fun PillInfoScreen(data: ReminderData, navController: NavController) {
                 fontWeight = FontWeight.Bold,
                 color = TextColor,
 
-            )
+                )
             Spacer(modifier = Modifier.height(14.dp))
             Card(
                 modifier = Modifier
@@ -104,7 +104,8 @@ fun PillInfoScreen(data: ReminderData, navController: NavController) {
                 .background(
                     color = TextColor,
                     RoundedCornerShape(10.dp)
-                ).clickable { navController.popBackStack() },
+                )
+                .clickable { navController.popBackStack() },
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {

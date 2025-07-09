@@ -75,6 +75,7 @@ import com.doston.tibbiykomak.home.HomeScreen
 import com.doston.tibbiykomak.home.InfoScreen
 import com.doston.tibbiykomak.home.SecondHomeScreen
 import com.doston.tibbiykomak.reminder.PillAddScreen
+import com.doston.tibbiykomak.reminder.PillEditScreen
 import com.doston.tibbiykomak.reminder.PillInfoScreen
 import com.doston.tibbiykomak.reminder.PillScreen
 import com.doston.tibbiykomak.reminder.ReminderScreen
@@ -324,6 +325,16 @@ fun SecondaryNav() {
                             PillInfoScreen(data = it, navController)
                         }
                     }
+                    composable("pillEdit") { backStackEntry ->
+                        val pillEdit= navController.previousBackStackEntry
+                            ?.savedStateHandle?.get<ReminderData>("pillEdit")
+                        pillEdit?.let {
+                            PillEditScreen(pills = it, navController)
+                        }
+                        if (pillEdit != null) {
+                            PillEditScreen(pills = pillEdit,navController)
+                        }
+                    }
                 }
             }
         } else {
@@ -364,6 +375,16 @@ fun SecondaryNav() {
                         ?.savedStateHandle?.get<ReminderData>("pillInfo")
                     pillInfo?.let {
                         PillInfoScreen(data = it, navController)
+                    }
+                }
+                composable("pillEdit") { backStackEntry ->
+                    val pillEdit= navController.previousBackStackEntry
+                        ?.savedStateHandle?.get<ReminderData>("pillEdit")
+                    pillEdit?.let {
+                        PillEditScreen(pills = it, navController)
+                    }
+                    if (pillEdit != null) {
+                        PillEditScreen(pills = pillEdit,navController)
                     }
                 }
 

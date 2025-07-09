@@ -115,5 +115,33 @@ class UserDatabaseHelper(context: Context) :
         cursor.close()
         return pillList
     }
+    fun editPill(pill: ReminderData) {
+        val db = writableDatabase
+        val gson = Gson()
+        val timesJson = gson.toJson(pill.times)
+
+        val values = ContentValues().apply {
+            put(R_NAME, pill.name)
+            put(R_DESC, pill.desc)
+            put(R_DAY, pill.day)
+            put(R_TIMES, timesJson)
+        }
+
+        db.update(
+            REMINDER_TABLE,
+            values,
+            "$R_ID = ?",
+            arrayOf(pill.id.toString())
+        )
+    }
+
+    fun deletePill(pillId: Int) {
+        val db = writableDatabase
+        db.delete(
+            REMINDER_TABLE,
+            "$R_ID = ?",
+            arrayOf(pillId.toString())
+        )
+    }
 
 }

@@ -1,12 +1,7 @@
 package com.doston.tibbiykomak.reminder
 
-import android.app.AlarmManager
+
 import android.app.TimePickerDialog
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
-import android.os.Build
-import android.provider.Settings
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -47,22 +42,32 @@ import com.doston.tibbiykomak.ui.theme.TibbiyKomakTheme
 import java.util.Calendar
 
 @Composable
-fun PillAddScreen(navController: NavController) {
+fun PillEditScreen(pills: ReminderData, navController: NavController) {
     val context = LocalContext.current
     val dbHelper = remember { UserDatabaseHelper(context) }
-    val name = remember { mutableStateOf("") }
-    val desc = remember { mutableStateOf("") }
-    val day = remember { mutableStateOf("") }
-    val timesPerDay = remember { mutableStateOf("") }
-    val error = remember { mutableStateOf("") }
+    val name = remember { mutableStateOf(pills.name) }
+    val desc = remember { mutableStateOf(pills.desc) }
+    val day = remember { mutableStateOf(pills.day) }
 
-    val timeStates = remember { List(6) { mutableStateOf("") } }
+    // State for the NUMBER of times per day (e.g., "3")
+    // Initialize with the size of the existing times list
+    val timesPerDayCountString = remember { mutableStateOf(pills.times.size.toString()) }
+
+    // State for the actual selected time strings (e.g., "08:00", "14:00")
+    // Initialize with existing times, padding with empty strings if necessary
+    val timeStates = remember {
+        List(6) { index ->
+            mutableStateOf(pills.times.getOrNull(index) ?: "")
+        }
+    }
+
+    val error = remember { mutableStateOf("") } // You might want to use this for validation errors
 
     Scaffold(containerColor = MainColor) { innerPadding ->
         LazyColumn(modifier = Modifier.padding(innerPadding)) {
             item {
                 Text(
-                    text = "Dori qo'shish",
+                    text = "Dori o'zgartirish", // Changed text to reflect editing
                     color = TextColor,
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
@@ -87,13 +92,22 @@ fun PillAddScreen(navController: NavController) {
             item {
                 CustomTextField(
                     "1 kunda nechchi marta ichiladi",
-                    timesPerDay.value,
-                    { timesPerDay.value = it },
+                    timesPerDayCountString.value, // Use the new state
+                    { newValue ->
+                        // Basic validation: allow only digits and ensure it's within a reasonable range if needed
+                        if (newValue.all { it.isDigit() }) {
+                            timesPerDayCountString.value = newValue
+                        } else if (newValue.isEmpty()) {
+                            timesPerDayCountString.value = ""
+                        }
+                    },
                     KeyboardType.Number
                 )
             }
 
-            val count = timesPerDay.value.toIntOrNull() ?: 0
+            // Safely parse the count
+            val count = timesPerDayCountString.value.toIntOrNull() ?: 0
+
             if (count in 1..6) {
                 items(count) { index ->
                     TimePickerField(label = "Vaqtni tanlang", timeState = timeStates[index])
@@ -107,8 +121,18 @@ fun PillAddScreen(navController: NavController) {
                         modifier = Modifier.padding(10.dp)
                     )
                 }
-
+            } else if (timesPerDayCountString.value.isNotEmpty() && count == 0) {
+                // Handle case where user enters "0" or invalid non-empty string that parses to 0
+                item {
+                    Text(
+                        "Kamida 1 mahal dori ichishingiz kerak.",
+                        color = Color.Red,
+                        fontWeight = FontWeight.SemiBold,
+                        modifier = Modifier.padding(10.dp)
+                    )
+                }
             }
+
 
             item {
                 Box(
@@ -119,11 +143,18 @@ fun PillAddScreen(navController: NavController) {
                             shape = RoundedCornerShape(10.dp), color = TextColor
                         )
                         .clickable {
+                            val currentCount = timesPerDayCountString.value.toIntOrNull() ?: 0
                             val selectedTimes = timeStates
-                                .take(count)
+                                .take(currentCount) // Use currentCount
                                 .map { it.value }
                                 .filter { it.isNotBlank() }
-                            if (name.value.isBlank() || desc.value.isBlank() || day.value.isBlank() || timesPerDay.value.isBlank() || selectedTimes.isEmpty()) {
+
+                            if (name.value.isBlank() ||
+                                desc.value.isBlank() ||
+                                day.value.isBlank() ||
+                                timesPerDayCountString.value.isBlank() ||
+                                currentCount == 0
+                            ) { // Check if count is zero
                                 Toast
                                     .makeText(
                                         context,
@@ -131,23 +162,28 @@ fun PillAddScreen(navController: NavController) {
                                         Toast.LENGTH_SHORT
                                     )
                                     .show()
+                            } else if (selectedTimes.size != currentCount) {
+                                Toast
+                                    .makeText(
+                                        context,
+                                        "Iltimos, barcha vaqtlarni tanlang.",
+                                        Toast.LENGTH_SHORT
+                                    )
+                                    .show()
                             } else {
                                 val data = ReminderData(
+                                    id = pills.id,
                                     name = name.value,
                                     desc = desc.value,
                                     day = day.value,
                                     times = selectedTimes
                                 )
 
-// 1. Save the pill to DB
-                                dbHelper.insertPill(data)
+                                dbHelper.editPill(data)
 
-// 2. Retrieve the saved pill (with ID)
-                                val lastPill = dbHelper.getAllPills().maxByOrNull { it.id ?: 0 }
-
-// 3. Schedule alarms if permission is granted
                                 if (context.hasExactAlarmPermission()) {
-                                    lastPill?.let { AlarmScheduler.scheduleAlarmsForPill(context, it) }
+                                    AlarmScheduler.cancelAlarmsForPill(context, pills) // cancel old
+                                    AlarmScheduler.scheduleAlarmsForPill(context, data) // schedule new
                                 } else {
                                     context.requestExactAlarmPermission()
                                     Toast.makeText(
@@ -157,122 +193,35 @@ fun PillAddScreen(navController: NavController) {
                                     ).show()
                                 }
 
-// 4. Navigate back
                                 navController.popBackStack()
+
+
 
                             }
                         }, contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "Saqlash",
+                        text = "O'zgartirish",
                         fontSize = 18.sp,
                         color = MainColor,
                         fontWeight = FontWeight.Bold, modifier = Modifier.padding(10.dp)
                     )
-
                 }
             }
         }
     }
 }
-fun Context.hasExactAlarmPermission(): Boolean {
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.canScheduleExactAlarms()
-    } else true
-}
-
-fun Context.requestExactAlarmPermission() {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-        val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
-        intent.data = Uri.parse("package:$packageName")
-        startActivity(intent)
-    }
-}
-
-@Composable
-fun TimePickerField(label: String, timeState: MutableState<String>) {
-    val context = LocalContext.current
-    val calendar = Calendar.getInstance()
-    val hour = calendar.get(Calendar.HOUR_OF_DAY)
-    val minute = calendar.get(Calendar.MINUTE)
-
-    val dialog = remember {
-        TimePickerDialog(
-            context,
-            { _, h: Int, m: Int ->
-                timeState.value = String.format("%02d:%02d", h, m)
-            },
-            hour, minute, true
-        )
-    }
-
-    OutlinedTextField(
-        value = timeState.value,
-        onValueChange = {},
-        readOnly = true,
-        label = { Text(label) },
-        trailingIcon = {
-            Icon(
-                imageVector = Icons.Default.Timer,
-                contentDescription = "timer",
-                tint = MainColor,
-                modifier = Modifier.clickable { dialog.show() }
-            )
-        },
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 10.dp, vertical = 8.dp)
-            .clickable { dialog.show() },
-        shape = RoundedCornerShape(10),
-        colors = TextFieldDefaults.colors(
-            focusedContainerColor = RegColor,
-            unfocusedContainerColor = RegColor,
-            disabledContainerColor = RegColor,
-            focusedIndicatorColor = TextColor,
-            unfocusedIndicatorColor = Color.Gray,
-            cursorColor = Color.Black,
-            focusedTextColor = TextColor,
-            unfocusedTextColor = TextColor
-        )
-    )
-}
-
-
-@Composable
-fun CustomTextField(
-    label: String,
-    value: String,
-    onValueChange: (String) -> Unit,
-    keyboardType: KeyboardType = KeyboardType.Text
-) {
-    OutlinedTextField(
-        value = value,
-        onValueChange = onValueChange,
-        label = { Text(label) },
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 6.dp, horizontal = 10.dp),
-        shape = RoundedCornerShape(10),
-        colors = TextFieldDefaults.colors(
-            focusedContainerColor = RegColor,
-            unfocusedContainerColor = RegColor,
-            disabledContainerColor = RegColor,
-            focusedIndicatorColor = TextColor,
-            unfocusedIndicatorColor = Color.Gray,
-            cursorColor = Color.Black,
-            focusedTextColor = TextColor,
-            unfocusedTextColor = TextColor
-        ),
-        keyboardOptions = KeyboardOptions(keyboardType = keyboardType)
-    )
-}
-
 
 @Preview(showBackground = true)
 @Composable
-fun PillAddScreenPreview() {
+fun PillEditScreenPreview() {
     TibbiyKomakTheme {
-        PillAddScreen(rememberNavController())
+        val data = ReminderData(
+            name = "Paracetamol",
+            desc = "Og'riq qoldiruvchi va isitma tushiruvchi dori.",
+            day = "7",
+            times = listOf("07:00", "13:00", "20:30")
+        )
+        PillEditScreen(data, rememberNavController())
     }
 }

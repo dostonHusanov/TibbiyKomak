@@ -18,6 +18,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Card
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -46,7 +48,7 @@ fun PillScreen(navController: NavController) {
     val context = LocalContext.current
     val db = remember { UserDatabaseHelper(context) }
     val pills = remember { mutableStateOf(emptyList<ReminderData>()) }
-    Scaffold { innerPadding ->
+    Scaffold(modifier = Modifier.background(MainColor)) { innerPadding ->
 
 
         Box(
@@ -64,14 +66,20 @@ fun PillScreen(navController: NavController) {
                 LazyColumn(modifier = Modifier) {
                     items(pills.value) { pill ->
                         PillItem(
-                            name = pill.name,
-                            day = pill.day,
-                            time = pill.times.count().toString(),
-                            onClick = { navController.currentBackStackEntry?.savedStateHandle?.set(
-                                "pillInfo",
-                                pill
-                            )
-                                navController.navigate("pillInfo")}
+                            pill = pill,
+                            onClick = {
+                                navController.currentBackStackEntry?.savedStateHandle?.set("pillInfo", pill)
+                                navController.navigate("pillInfo")
+                            },
+                            onEdit = {
+                                navController.currentBackStackEntry?.savedStateHandle?.set("pillEdit", pill)
+                                navController.navigate("pillEdit")
+                            },
+                            onDelete = {
+                                AlarmScheduler.cancelAlarmsForPill(context, pill)
+                                db.deletePill(pill.id)
+                                pills.value = db.getAllPills().sortedByDescending { it.id }
+                            }
                         )
                     }
                 }
@@ -94,15 +102,18 @@ fun PillScreen(navController: NavController) {
 }
 
 @Composable
-fun PillItem(name: String, day: String, time: String,onClick: () -> Unit = {}) {
+fun PillItem(pill: ReminderData,
+              onClick: () -> Unit = {},
+              onEdit: (ReminderData) -> Unit,
+              onDelete: (ReminderData) -> Unit) {
     Card(
-        modifier = Modifier.clickable { onClick() }
+        modifier = Modifier
             .fillMaxWidth()
             .padding(10.dp)
             .background(TextColor, RoundedCornerShape(5.dp))
     ) {
         Row(
-            modifier = Modifier
+            modifier = Modifier.clickable { onClick() }
                 .fillMaxWidth()
                 .background(TextColor),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -114,7 +125,7 @@ fun PillItem(name: String, day: String, time: String,onClick: () -> Unit = {}) {
                     .padding(10.dp)
             ) {
                 Text(
-                    text = name,
+                    text = pill.name,
                     fontSize = 20.sp,
                     color = MainColor,
                     fontWeight = FontWeight.SemiBold,modifier = Modifier.padding(vertical = 2.dp, horizontal = 2.dp)
@@ -125,24 +136,49 @@ fun PillItem(name: String, day: String, time: String,onClick: () -> Unit = {}) {
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text(text = "$day kun", fontSize = 16.sp, color = MainColor,modifier = Modifier.padding(vertical = 2.dp, horizontal = 2.dp))
+                    Text(text = "${pill.day} kun", fontSize = 16.sp, color = MainColor,modifier = Modifier.padding(vertical = 2.dp, horizontal = 2.dp))
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
-                        text = "Har kuni $time marta istemol qilinadi",
+                        text = "Har kuni ${pill.day} marta istemol qilinadi",
                         fontSize = 16.sp,
                         color = MainColor,
                         modifier = Modifier.padding(vertical = 2.dp, horizontal = 2.dp)
                     )
                 }
             }
-            Icon(
-                imageVector = Icons.Default.MoreVert,
-                contentDescription = "popup menu",
-                Modifier
-                    .clickable { }
-                    .padding(5.dp),
-                tint = MainColor
-            )
+
+            val expanded = remember { mutableStateOf(false) }
+
+            Box {
+                Icon(
+                    imageVector = Icons.Default.MoreVert,
+                    contentDescription = "popup menu",
+                    modifier = Modifier
+                        .clickable { expanded.value = true }
+                        .padding(5.dp),
+                    tint = MainColor
+                )
+
+                DropdownMenu(
+                    expanded = expanded.value,
+                    onDismissRequest = { expanded.value = false }
+                ) {
+                    DropdownMenuItem(
+                        text = { Text("Edit") },
+                        onClick = {
+                            expanded.value = false
+                            onEdit(pill)
+                        }
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Delete") },
+                        onClick = {
+                            expanded.value = false
+                            onDelete(pill)
+                        }
+                    )
+                }
+            }
 
         }
     }
