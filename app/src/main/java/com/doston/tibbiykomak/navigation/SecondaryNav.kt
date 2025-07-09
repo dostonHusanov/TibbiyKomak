@@ -66,6 +66,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.doston.tibbiykomak.R
 import com.doston.tibbiykomak.data.MainData
+import com.doston.tibbiykomak.data.ReminderData
 import com.doston.tibbiykomak.data.User
 import com.doston.tibbiykomak.database.UserDatabaseHelper
 import com.doston.tibbiykomak.home.AboutScreen
@@ -74,6 +75,7 @@ import com.doston.tibbiykomak.home.HomeScreen
 import com.doston.tibbiykomak.home.InfoScreen
 import com.doston.tibbiykomak.home.SecondHomeScreen
 import com.doston.tibbiykomak.reminder.PillAddScreen
+import com.doston.tibbiykomak.reminder.PillInfoScreen
 import com.doston.tibbiykomak.reminder.PillScreen
 import com.doston.tibbiykomak.reminder.ReminderScreen
 import com.doston.tibbiykomak.ui.theme.MainColor
@@ -224,7 +226,8 @@ fun SecondaryNav() {
         val currentRoute = navBackStackEntry?.destination?.route
 
         // Show bottom bar only for these routes
-        val isBottomBarVisible = currentRoute in listOf("homeScreen", "secondHomeScreen","reminderScreen")
+        val isBottomBarVisible =
+            currentRoute in listOf("homeScreen", "secondHomeScreen", "reminderScreen")
 
         if (isBottomBarVisible) {
             Scaffold(
@@ -298,7 +301,7 @@ fun SecondaryNav() {
                     composable("reminderScreen") {
                         ReminderScreen(navController)
                     }
-                    composable("pillScreen"){
+                    composable("pillScreen") {
                         PillScreen(navController)
                     }
                     composable("pillAdd") {
@@ -314,7 +317,13 @@ fun SecondaryNav() {
                             InfoScreen(illness = it, navController)
                         }
                     }
-
+                    composable("pillInfo") { backStackEntry ->
+                        val pillInfo= navController.previousBackStackEntry
+                            ?.savedStateHandle?.get<ReminderData>("pillInfo")
+                        pillInfo?.let {
+                            PillInfoScreen(data = it, navController)
+                        }
+                    }
                 }
             }
         } else {
@@ -344,11 +353,18 @@ fun SecondaryNav() {
                 composable("reminderScreen") {
                     ReminderScreen(navController)
                 }
-                composable("pillScreen"){
+                composable("pillScreen") {
                     PillScreen(navController)
                 }
                 composable("pillAdd") {
                     PillAddScreen(navController)
+                }
+                composable("pillInfo") { backStackEntry ->
+                    val pillInfo = navController.previousBackStackEntry
+                        ?.savedStateHandle?.get<ReminderData>("pillInfo")
+                    pillInfo?.let {
+                        PillInfoScreen(data = it, navController)
+                    }
                 }
 
             }

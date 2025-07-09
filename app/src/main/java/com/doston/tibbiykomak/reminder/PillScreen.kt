@@ -66,7 +66,12 @@ fun PillScreen(navController: NavController) {
                         PillItem(
                             name = pill.name,
                             day = pill.day,
-                            time = pill.times.count().toString()
+                            time = pill.times.count().toString(),
+                            onClick = { navController.currentBackStackEntry?.savedStateHandle?.set(
+                                "pillInfo",
+                                pill
+                            )
+                                navController.navigate("pillInfo")}
                         )
                     }
                 }
@@ -89,9 +94,9 @@ fun PillScreen(navController: NavController) {
 }
 
 @Composable
-fun PillItem(name: String, day: String, time: String) {
+fun PillItem(name: String, day: String, time: String,onClick: () -> Unit = {}) {
     Card(
-        modifier = Modifier
+        modifier = Modifier.clickable { onClick() }
             .fillMaxWidth()
             .padding(10.dp)
             .background(TextColor, RoundedCornerShape(5.dp))
