@@ -49,25 +49,21 @@ fun PillEditScreen(pills: ReminderData, navController: NavController) {
     val desc = remember { mutableStateOf(pills.desc) }
     val day = remember { mutableStateOf(pills.day) }
 
-    // State for the NUMBER of times per day (e.g., "3")
-    // Initialize with the size of the existing times list
     val timesPerDayCountString = remember { mutableStateOf(pills.times.size.toString()) }
 
-    // State for the actual selected time strings (e.g., "08:00", "14:00")
-    // Initialize with existing times, padding with empty strings if necessary
     val timeStates = remember {
         List(6) { index ->
             mutableStateOf(pills.times.getOrNull(index) ?: "")
         }
     }
 
-    val error = remember { mutableStateOf("") } // You might want to use this for validation errors
+    val error = remember { mutableStateOf("") }
 
     Scaffold(containerColor = MainColor) { innerPadding ->
         LazyColumn(modifier = Modifier.padding(innerPadding)) {
             item {
                 Text(
-                    text = "Dori o'zgartirish", // Changed text to reflect editing
+                    text = "Dori o'zgartirish",
                     color = TextColor,
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
@@ -92,9 +88,9 @@ fun PillEditScreen(pills: ReminderData, navController: NavController) {
             item {
                 CustomTextField(
                     "1 kunda nechchi marta ichiladi",
-                    timesPerDayCountString.value, // Use the new state
+                    timesPerDayCountString.value,
                     { newValue ->
-                        // Basic validation: allow only digits and ensure it's within a reasonable range if needed
+
                         if (newValue.all { it.isDigit() }) {
                             timesPerDayCountString.value = newValue
                         } else if (newValue.isEmpty()) {
@@ -105,7 +101,6 @@ fun PillEditScreen(pills: ReminderData, navController: NavController) {
                 )
             }
 
-            // Safely parse the count
             val count = timesPerDayCountString.value.toIntOrNull() ?: 0
 
             if (count in 1..6) {
@@ -122,7 +117,7 @@ fun PillEditScreen(pills: ReminderData, navController: NavController) {
                     )
                 }
             } else if (timesPerDayCountString.value.isNotEmpty() && count == 0) {
-                // Handle case where user enters "0" or invalid non-empty string that parses to 0
+
                 item {
                     Text(
                         "Kamida 1 mahal dori ichishingiz kerak.",
@@ -145,7 +140,7 @@ fun PillEditScreen(pills: ReminderData, navController: NavController) {
                         .clickable {
                             val currentCount = timesPerDayCountString.value.toIntOrNull() ?: 0
                             val selectedTimes = timeStates
-                                .take(currentCount) // Use currentCount
+                                .take(currentCount)
                                 .map { it.value }
                                 .filter { it.isNotBlank() }
 
@@ -154,7 +149,7 @@ fun PillEditScreen(pills: ReminderData, navController: NavController) {
                                 day.value.isBlank() ||
                                 timesPerDayCountString.value.isBlank() ||
                                 currentCount == 0
-                            ) { // Check if count is zero
+                            ) {
                                 Toast
                                     .makeText(
                                         context,
@@ -182,8 +177,8 @@ fun PillEditScreen(pills: ReminderData, navController: NavController) {
                                 dbHelper.editPill(data)
 
                                 if (context.hasExactAlarmPermission()) {
-                                    AlarmScheduler.cancelAlarmsForPill(context, pills) // cancel old
-                                    AlarmScheduler.scheduleAlarmsForPill(context, data) // schedule new
+                                    AlarmScheduler.cancelAlarmsForPill(context, pills)
+                                    AlarmScheduler.scheduleAlarmsForPill(context, data)
                                 } else {
                                     context.requestExactAlarmPermission()
                                     Toast.makeText(

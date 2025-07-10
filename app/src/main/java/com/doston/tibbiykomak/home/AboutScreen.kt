@@ -26,7 +26,6 @@ import androidx.navigation.NavController
 
 @Composable
 fun AboutScreen(navController: NavController) {
-
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,

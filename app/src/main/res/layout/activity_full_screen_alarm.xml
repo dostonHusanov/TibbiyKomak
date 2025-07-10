@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/mainColor"
+    tools:context=".home.FullScreenAlarmActivity">
+
+    <TextView
+        android:id="@+id/timeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12:00"
+        android:textColor="@color/TextColor"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-light"
+        app:layout_constraintTop_toTopOf="parent"
+       android:layout_marginTop="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/dateText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="01 Jan 2024"
+        android:textColor="@color/TextColor"
+        android:textSize="16sp"
+        android:alpha="0.8"
+        app:layout_constraintTop_toBottomOf="@id/timeText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/reminderText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="💊 Dori ichish vaqti keldi!"
+        android:textColor="@color/TextColor"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/dateText"
+       android:layout_marginTop="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/pillNameText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Paratsitamol"
+        android:textColor="@color/TextColor"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:maxLines="2"
+        android:layout_marginTop="10dp"
+        android:ellipsize="end"
+        app:layout_constraintTop_toBottomOf="@id/reminderText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+       android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"/>
+
+    <TextView
+        android:id="@+id/pillDescText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Og'riq qoldiruvchi va shamollashni oldini oladi"
+        android:textColor="@color/TextColor"
+        android:textSize="16sp"
+        android:textAlignment="center"
+        android:alpha="0.9"
+        android:maxLines="3"
+        android:ellipsize="end"
+        app:layout_constraintTop_toBottomOf="@id/pillNameText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"/>
+
+    <LinearLayout
+        android:id="@+id/buttonsContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginBottom="60dp"
+        android:layout_marginHorizontal="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <Button
+            android:id="@+id/takePillButton"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginBottom="16dp"
+            android:text="✓ Dori ichildi"
+            android:textColor="@color/mainColor"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:backgroundTint="@color/TextColor"
+            android:elevation="4dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/snoozeButton"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:text="⏰ 5 daq"
+                android:textColor="@color/mainColor"
+                android:backgroundTint="@color/TextColor"
+                android:textSize="14sp"
+                android:elevation="4dp" />
+
+            <Button
+                android:id="@+id/dismissButton"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:text="✕ Yopish"
+                android:textColor="@color/mainColor"
+                android:backgroundTint="@color/TextColor"
+                android:textSize="14sp"
+                android:elevation="4dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

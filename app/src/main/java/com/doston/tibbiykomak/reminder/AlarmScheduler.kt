@@ -1,6 +1,7 @@
 package com.doston.tibbiykomak.reminder
 
 
+import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
@@ -10,6 +11,7 @@ import java.util.*
 
 object AlarmScheduler {
 
+    @SuppressLint("ScheduleExactAlarm")
     fun scheduleAlarmsForPill(context: Context, pill: ReminderData) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val days = pill.day.toIntOrNull() ?: return
@@ -28,6 +30,10 @@ object AlarmScheduler {
                     set(Calendar.MINUTE, minute)
                     set(Calendar.SECOND, 0)
                     set(Calendar.MILLISECOND, 0)
+
+                    if (i == 0 && timeInMillis <= System.currentTimeMillis()) {
+                        add(Calendar.DAY_OF_YEAR, 1)
+                    }
                 }
 
                 val intent = Intent(context, PillAlarmReceiver::class.java).apply {
@@ -43,7 +49,7 @@ object AlarmScheduler {
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
                 )
 
-                alarmManager.setExactAndAllowWhileIdle(
+                alarmManager.set(
                     AlarmManager.RTC_WAKEUP,
                     calendar.timeInMillis,
                     pendingIntent

@@ -139,25 +139,30 @@ fun PillAddScreen(navController: NavController) {
                                     times = selectedTimes
                                 )
 
-// 1. Save the pill to DB
                                 dbHelper.insertPill(data)
 
-// 2. Retrieve the saved pill (with ID)
-                                val lastPill = dbHelper.getAllPills().maxByOrNull { it.id ?: 0 }
+                                val lastPill = dbHelper
+                                    .getAllPills()
+                                    .maxByOrNull { it.id ?: 0 }
 
-// 3. Schedule alarms if permission is granted
                                 if (context.hasExactAlarmPermission()) {
-                                    lastPill?.let { AlarmScheduler.scheduleAlarmsForPill(context, it) }
+                                    lastPill?.let {
+                                        AlarmScheduler.scheduleAlarmsForPill(
+                                            context,
+                                            it
+                                        )
+                                    }
                                 } else {
                                     context.requestExactAlarmPermission()
-                                    Toast.makeText(
-                                        context,
-                                        "Iltimos, dori eslatmalar uchun ruxsat bering",
-                                        Toast.LENGTH_LONG
-                                    ).show()
+                                    Toast
+                                        .makeText(
+                                            context,
+                                            "Iltimos, dori eslatmalar uchun ruxsat bering",
+                                            Toast.LENGTH_LONG
+                                        )
+                                        .show()
                                 }
 
-// 4. Navigate back
                                 navController.popBackStack()
 
                             }
@@ -175,6 +180,7 @@ fun PillAddScreen(navController: NavController) {
         }
     }
 }
+
 fun Context.hasExactAlarmPermission(): Boolean {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
