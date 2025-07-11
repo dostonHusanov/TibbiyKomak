@@ -71,11 +71,12 @@ class UserDatabaseHelper(context: Context) :
         val db = writableDatabase
         val gson = Gson()
         val timesJson = gson.toJson(data.times)
+        val datesJson = gson.toJson(data.date)
 
         val values = ContentValues().apply {
             put(R_NAME, data.name)
             put(R_DESC, data.desc)
-            put(R_DAY, data.day)
+            put(R_DAY, datesJson)
             put(R_TIMES, timesJson)
         }
         db.insert(REMINDER_TABLE, null, values)
@@ -99,12 +100,14 @@ class UserDatabaseHelper(context: Context) :
 
                 val times: List<String> =
                     gson.fromJson(timesJson, object : TypeToken<List<String>>() {}.type)
-
+                val datesJson = cursor.getString(cursor.getColumnIndexOrThrow(R_DAY))
+                val dates: List<String> =
+                    gson.fromJson(datesJson, object : TypeToken<List<String>>() {}.type)
                 val pill = ReminderData(
                     id = id,
                     name = name,
                     desc = desc,
-                    day = day,
+                    date = dates,
                     times = times
                 )
 
@@ -119,11 +122,11 @@ class UserDatabaseHelper(context: Context) :
         val db = writableDatabase
         val gson = Gson()
         val timesJson = gson.toJson(pill.times)
-
+        val datesJson = gson.toJson(pill.date)
         val values = ContentValues().apply {
             put(R_NAME, pill.name)
             put(R_DESC, pill.desc)
-            put(R_DAY, pill.day)
+            put(R_DAY, datesJson)
             put(R_TIMES, timesJson)
         }
 

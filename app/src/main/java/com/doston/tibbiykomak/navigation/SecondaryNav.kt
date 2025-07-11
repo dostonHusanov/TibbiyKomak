@@ -112,10 +112,6 @@ fun SecondaryNav() {
             icon = { Icon(Icons.Default.Home, contentDescription = "Home") }
         ),
         BottomNavItem(
-            route = "secondHomeScreen",
-            title = "Second",
-            icon = { Icon(Icons.Default.Nature, contentDescription = "") }),
-        BottomNavItem(
             route = "reminderScreen",
             title = "Reminder",
             icon = { Icon(Icons.Default.Notifications, contentDescription = "Reminder") }
@@ -228,7 +224,7 @@ fun SecondaryNav() {
 
         // Show bottom bar only for these routes
         val isBottomBarVisible =
-            currentRoute in listOf("homeScreen", "secondHomeScreen", "reminderScreen")
+            currentRoute in listOf("homeScreen",  "reminderScreen")
 
         if (isBottomBarVisible) {
             Scaffold(
@@ -293,12 +289,7 @@ fun SecondaryNav() {
                     composable("homeScreen") {
                         HomeScreen(navController, userName = user?.name.toString(), categoryId = 1)
                     }
-                    composable("secondHomeScreen") {
-                        SecondHomeScreen(
-                            navController,
-                            categoryId = 1
-                        )
-                    }
+
                     composable("reminderScreen") {
                         ReminderScreen(navController)
                     }
@@ -354,13 +345,7 @@ fun SecondaryNav() {
                 composable("homeScreen") {
                     HomeScreen(navController, userName = user?.name.toString(), categoryId = 1)
                 }
-                composable("secondHomeScreen") {
-                    SecondHomeScreen(
-                        navController,
 
-                        categoryId = 1
-                    )
-                }
                 composable("reminderScreen") {
                     ReminderScreen(navController)
                 }

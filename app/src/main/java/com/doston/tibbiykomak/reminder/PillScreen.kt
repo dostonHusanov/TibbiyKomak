@@ -136,10 +136,10 @@ fun PillItem(pill: ReminderData,
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text(text = "${pill.day} kun", fontSize = 16.sp, color = MainColor,modifier = Modifier.padding(vertical = 2.dp, horizontal = 2.dp))
+                    Text(text = "${pill.date.count()} kun", fontSize = 16.sp, color = MainColor,modifier = Modifier.padding(vertical = 2.dp, horizontal = 2.dp))
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
-                        text = "Har kuni ${pill.day} marta istemol qilinadi",
+                        text = "Har kuni ${pill.times.count()} marta istemol qilinadi",
                         fontSize = 16.sp,
                         color = MainColor,
                         modifier = Modifier.padding(vertical = 2.dp, horizontal = 2.dp)

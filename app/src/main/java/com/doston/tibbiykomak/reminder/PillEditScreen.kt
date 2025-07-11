@@ -20,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -41,23 +42,32 @@ import com.doston.tibbiykomak.ui.theme.TextColor
 import com.doston.tibbiykomak.ui.theme.TibbiyKomakTheme
 import java.util.Calendar
 
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+
 @Composable
 fun PillEditScreen(pills: ReminderData, navController: NavController) {
     val context = LocalContext.current
     val dbHelper = remember { UserDatabaseHelper(context) }
+
     val name = remember { mutableStateOf(pills.name) }
     val desc = remember { mutableStateOf(pills.desc) }
-    val day = remember { mutableStateOf(pills.day) }
+
+    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+    val selectedDates = remember {
+        mutableStateListOf<LocalDate>().apply {
+            addAll(pills.date.mapNotNull { runCatching { LocalDate.parse(it) }.getOrNull() })
+        }
+    }
 
     val timesPerDayCountString = remember { mutableStateOf(pills.times.size.toString()) }
+    val showDatePicker = remember { mutableStateOf(false) }
 
     val timeStates = remember {
         List(6) { index ->
             mutableStateOf(pills.times.getOrNull(index) ?: "")
         }
     }
-
-    val error = remember { mutableStateOf("") }
 
     Scaffold(containerColor = MainColor) { innerPadding ->
         LazyColumn(modifier = Modifier.padding(innerPadding)) {
@@ -74,23 +84,42 @@ fun PillEditScreen(pills: ReminderData, navController: NavController) {
             item {
                 CustomTextField("Dori nomi", name.value, { name.value = it })
             }
+
             item {
                 CustomTextField("Dori xaqida qisqa malumot", desc.value, { desc.value = it })
             }
+
             item {
-                CustomTextField(
-                    "Nechchi kun",
-                    day.value,
-                    { day.value = it },
-                    KeyboardType.Number
-                )
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 10.dp, vertical = 8.dp)
+                        .background(RegColor, RoundedCornerShape(10.dp))
+                        .clickable { showDatePicker.value = true }
+                        .padding(16.dp)
+                ) {
+                    Text(
+                        text = if (selectedDates.isEmpty()) "Sana(lar)ni tanlang"
+                        else selectedDates.joinToString { it.format(formatter) },
+                        color = TextColor
+                    )
+                }
+                if (showDatePicker.value) {
+                    MultipleDatePickerDialog(
+                        selectedDates = selectedDates
+                    ){
+                        showDatePicker.value = false
+                    }
+                }
             }
+
+
+
             item {
                 CustomTextField(
                     "1 kunda nechchi marta ichiladi",
                     timesPerDayCountString.value,
                     { newValue ->
-
                         if (newValue.all { it.isDigit() }) {
                             timesPerDayCountString.value = newValue
                         } else if (newValue.isEmpty()) {
@@ -117,7 +146,6 @@ fun PillEditScreen(pills: ReminderData, navController: NavController) {
                     )
                 }
             } else if (timesPerDayCountString.value.isNotEmpty() && count == 0) {
-
                 item {
                     Text(
                         "Kamida 1 mahal dori ichishingiz kerak.",
@@ -128,7 +156,6 @@ fun PillEditScreen(pills: ReminderData, navController: NavController) {
                 }
             }
 
-
             item {
                 Box(
                     modifier = Modifier
@@ -138,39 +165,27 @@ fun PillEditScreen(pills: ReminderData, navController: NavController) {
                             shape = RoundedCornerShape(10.dp), color = TextColor
                         )
                         .clickable {
-                            val currentCount = timesPerDayCountString.value.toIntOrNull() ?: 0
                             val selectedTimes = timeStates
-                                .take(currentCount)
+                                .take(count)
                                 .map { it.value }
                                 .filter { it.isNotBlank() }
 
-                            if (name.value.isBlank() ||
-                                desc.value.isBlank() ||
-                                day.value.isBlank() ||
-                                timesPerDayCountString.value.isBlank() ||
-                                currentCount == 0
+                            if (
+                                name.value.isBlank() || desc.value.isBlank()
+                                || selectedDates.isEmpty() || timesPerDayCountString.value.isBlank()
+                                || selectedTimes.size != count
                             ) {
-                                Toast
-                                    .makeText(
-                                        context,
-                                        "Bo'sh maydonlarni to'ldiring!",
-                                        Toast.LENGTH_SHORT
-                                    )
-                                    .show()
-                            } else if (selectedTimes.size != currentCount) {
-                                Toast
-                                    .makeText(
-                                        context,
-                                        "Iltimos, barcha vaqtlarni tanlang.",
-                                        Toast.LENGTH_SHORT
-                                    )
-                                    .show()
+                                Toast.makeText(
+                                    context,
+                                    "Iltimos, barcha maydonlarni to'ldiring!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             } else {
                                 val data = ReminderData(
                                     id = pills.id,
                                     name = name.value,
                                     desc = desc.value,
-                                    day = day.value,
+                                    date = selectedDates.map { it.format(formatter) },
                                     times = selectedTimes
                                 )
 
@@ -189,9 +204,6 @@ fun PillEditScreen(pills: ReminderData, navController: NavController) {
                                 }
 
                                 navController.popBackStack()
-
-
-
                             }
                         }, contentAlignment = Alignment.Center
                 ) {
@@ -199,24 +211,11 @@ fun PillEditScreen(pills: ReminderData, navController: NavController) {
                         text = "O'zgartirish",
                         fontSize = 18.sp,
                         color = MainColor,
-                        fontWeight = FontWeight.Bold, modifier = Modifier.padding(10.dp)
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(10.dp)
                     )
                 }
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PillEditScreenPreview() {
-    TibbiyKomakTheme {
-        val data = ReminderData(
-            name = "Paracetamol",
-            desc = "Og'riq qoldiruvchi va isitma tushiruvchi dori.",
-            day = "7",
-            times = listOf("07:00", "13:00", "20:30")
-        )
-        PillEditScreen(data, rememberNavController())
     }
 }

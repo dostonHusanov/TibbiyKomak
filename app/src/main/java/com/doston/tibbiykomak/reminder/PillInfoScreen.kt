@@ -84,7 +84,7 @@ fun PillInfoScreen(data: ReminderData, navController: NavController) {
                     PillDetailRow(
                         icon = Icons.Default.CalendarToday,
                         label = "Kunlar soni",
-                        value = "${data.day} kun"
+                        value = "${data.date.count()} kun"
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     PillDetailRow(
@@ -159,7 +159,7 @@ fun PillInfoScreenPreview() {
         val data = ReminderData(
             name = "Paracetamol",
             desc = "Og'riq qoldiruvchi va isitma tushiruvchi dori.",
-            day = "7",
+            date = listOf("12","13"),
             times = listOf("07:00", "13:00", "20:30")
         )
         PillInfoScreen(data, rememberNavController())

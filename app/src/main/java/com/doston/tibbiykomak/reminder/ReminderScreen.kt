@@ -1,39 +1,37 @@
 package com.doston.tibbiykomak.reminder
 
-import android.graphics.Paint
-import android.icu.number.Scale
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -43,40 +41,96 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.doston.tibbiykomak.R
+import com.doston.tibbiykomak.data.ReminderData
+import com.doston.tibbiykomak.database.UserDatabaseHelper
 import com.doston.tibbiykomak.ui.theme.MainColor
 import com.doston.tibbiykomak.ui.theme.TextColor
 import com.doston.tibbiykomak.ui.theme.TextColor2
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 @Composable
 fun ReminderScreen(navController: NavController) {
-    Box(modifier = Modifier.fillMaxSize().background(MainColor)) {
+    val context = LocalContext.current
+    val allPills = remember { getAllPills(context) }
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
-        Column(
-            Modifier
-                .fillMaxSize()
+    val today = dateFormat.format(Date())
+    val dateRange = remember { generateNext7Days() }
 
-        ) {
+    var selectedDate by remember { mutableStateOf(today) }
 
-            LazyColumn(
-                horizontalAlignment = Alignment.Start,
-                verticalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxSize()
-            ) {
+    val selectedPills = remember(selectedDate) {
+        allPills.filter { it.date.contains(selectedDate) }
+    }
+
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MainColor)
+    ) {
+        Column(modifier = Modifier.fillMaxSize()) {
+
+
+
+
+            LazyColumn(modifier = Modifier.weight(1f)) {
                 item {
+                    val formattedDate = try {
+                        val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                        val outputFormat = SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault())
+                        val date = inputFormat.parse(selectedDate)
+                        outputFormat.format(date ?: Date())
+                    } catch (e: Exception) {
+                        selectedDate
+                    }
                     Text(
-                        text = "Bugungi Reja",
+                        text = formattedDate,
                         color = TextColor2,
-                        fontSize = 22.sp,
+                        fontSize = 20.sp,
                         textAlign = TextAlign.Start,
-                        modifier = Modifier.padding(15.dp, 0.dp, 15.dp, 0.dp),
+                        modifier = Modifier.padding(start = 16.dp),
                         fontWeight = FontWeight.Bold
                     )
                 }
-                items(count = 15, itemContent = {
-                    ReminderItem()
-                })
+                item {
+                    LazyRow(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 8.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        contentPadding = PaddingValues(horizontal = 16.dp)
+                    ) {
+                        items(dateRange.size) { index ->
+                            val date = dateRange[index]
+                            val isSelected = date == selectedDate
+
+                            DateItem(
+                                date = date,
+                                isSelected = isSelected,
+                                onClick = { selectedDate = date }
+                            )
+                        }
+                    }
+                }
+                items(selectedPills.size) { index ->
+                    val pill = selectedPills[index]
+                    pill.times.forEach { time ->
+                        ReminderItem(
+                            time = time,
+                            name = pill.name,
+                            desc = pill.desc,
+                            date = pill.date,
+                            today = selectedDate
+                        )
+                    }
+                }
             }
         }
+
         FloatingActionButton(
             onClick = { navController.navigate("pillScreen") },
             containerColor = TextColor,
@@ -92,110 +146,105 @@ fun ReminderScreen(navController: NavController) {
         }
     }
 }
+
+
+
+
 @Composable
-fun ReminderItem() {
+fun ReminderItem(time: String, name: String, desc: String, date: List<String>, today: String) {
+    val currentIndex = date.indexOf(today) + 1 
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
-            .height(120.dp), shape = RoundedCornerShape(12.dp)
+            .padding(horizontal = 16.dp, vertical = 8.dp),
+        shape = RoundedCornerShape(12.dp),
+        colors = CardDefaults.cardColors(containerColor = MainColor)
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(color = MainColor)
-        ) {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+        Column {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(color = Color(0xFF01A854)),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Column(
+                Text(
+                    text = time,
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(8.dp)
+                )
+
+                Text(
+                    text = if (currentIndex > 0) "$currentIndex/${date.size} Kun" else "-/${date.size} Kun",
+                    fontSize = 14.sp,
+                    modifier = Modifier.padding(8.dp)
+                )
+
+                Text("Istemol qilindi", fontSize = 14.sp, modifier = Modifier.padding(8.dp))
+            }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(color = Color(0xFF01C763))
+                    .padding(6.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.pill),
+                    contentDescription = "",
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .background(color = Color(0xFF01A854)),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.Start
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text(
-                            "10:20",
-                            fontSize = 22.sp,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier.padding(8.dp)
-                        )
-                        Row(
-                            horizontalArrangement = Arrangement.Center,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                "1/2", fontSize = 14.sp,
-                                modifier = Modifier.padding(8.dp)
-                            )
-                            Text(
-                                "Kun", fontSize = 14.sp,
-                                modifier = Modifier.padding(8.dp)
-                            )
-                        }
-                        Text(
-                            "Istemol qilindi", fontSize = 14.sp,
-                            modifier = Modifier.padding(8.dp)
-                        )
-                    }
-                }
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(color = Color(0xFF01C763)),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Start,
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(6.dp)
-                    ) {
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Center
-                        ) {
-                            Card(
-                                modifier = Modifier
-                                    .size(55.dp)
-                                    .padding(6.dp),
-                                shape = CircleShape
-                            ) {
-                                Image(
-                                    painter = painterResource(id = R.drawable.pill),
-                                    modifier = Modifier
-                                        .size(55.dp)
-                                        .padding(8.dp),
-                                    contentDescription = ""
-                                )
-                            }
-                        }
-                        Column {
-                            Text("Paratsitamol", fontSize = 22.sp)
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.Start
-                            ) {
-                                Text("Turi: ", fontSize = 14.sp)
-                                Text("Kapsula", fontSize = 14.sp)
-                            }
-                        }
-                    }
+                        .size(55.dp)
+                        .padding(6.dp)
+                )
+
+                Column(modifier = Modifier.padding(start = 8.dp)) {
+                    Text(name, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                    Text(desc, fontSize = 12.sp, maxLines = 1)
                 }
             }
         }
     }
 }
+@Composable
+fun DateItem(date: String, isSelected: Boolean, onClick: () -> Unit) {
+    val backgroundColor = if (isSelected) TextColor else Color.White
+    val textColor = if (isSelected) Color.White else TextColor
+
+    Column(
+        modifier = Modifier
+            .background(backgroundColor, RoundedCornerShape(8.dp))
+            .clickable { onClick() }
+            .padding(horizontal = 12.dp, vertical = 8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        val day = date.takeLast(2)
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val dateObj = sdf.parse(date)
+        val weekday = SimpleDateFormat("EEE", Locale.getDefault()).format(dateObj ?: Date())
+
+        Text(weekday, fontSize = 14.sp, color = textColor)
+        Text(day, fontSize = 18.sp, fontWeight = FontWeight.Bold, color = textColor)
+    }
+}
+fun getAllPills(context: Context): List<ReminderData> {
+    val db = UserDatabaseHelper(context)
+    return db.getAllPills()
+}
+fun generateNext7Days(): List<String> {
+    val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    val calendar = Calendar.getInstance()
+
+    return List(31) { offset ->
+        calendar.time = Date()
+        calendar.add(Calendar.DAY_OF_YEAR, offset)
+        format.format(calendar.time)
+    }
+}
+
+
 
 @Preview(showBackground = true)
 @Composable

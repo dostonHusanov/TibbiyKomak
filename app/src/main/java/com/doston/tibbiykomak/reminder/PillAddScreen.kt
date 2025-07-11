@@ -1,6 +1,7 @@
 package com.doston.tibbiykomak.reminder
 
 import android.app.AlarmManager
+import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
@@ -11,22 +12,28 @@ import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Timer
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -44,7 +51,10 @@ import com.doston.tibbiykomak.ui.theme.MainColor
 import com.doston.tibbiykomak.ui.theme.RegColor
 import com.doston.tibbiykomak.ui.theme.TextColor
 import com.doston.tibbiykomak.ui.theme.TibbiyKomakTheme
-import java.util.Calendar
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.YearMonth
+import java.util.*
 
 @Composable
 fun PillAddScreen(navController: NavController) {
@@ -54,8 +64,8 @@ fun PillAddScreen(navController: NavController) {
     val desc = remember { mutableStateOf("") }
     val day = remember { mutableStateOf("") }
     val timesPerDay = remember { mutableStateOf("") }
-    val error = remember { mutableStateOf("") }
-
+    val selectedDates = remember { mutableStateListOf<LocalDate>() }
+    val showDatePicker = remember { mutableStateOf(false) }
     val timeStates = remember { List(6) { mutableStateOf("") } }
 
     Scaffold(containerColor = MainColor) { innerPadding ->
@@ -77,13 +87,32 @@ fun PillAddScreen(navController: NavController) {
                 CustomTextField("Dori xaqida qisqa malumot", desc.value, { desc.value = it })
             }
             item {
-                CustomTextField(
-                    "Nechchi kun",
-                    day.value,
-                    { day.value = it },
-                    KeyboardType.Number
-                )
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(10.dp)
+                        .background(
+                            shape = RoundedCornerShape(10.dp), color = RegColor
+                        )
+                        .clickable { showDatePicker.value = true },
+                    contentAlignment = Alignment.CenterStart
+                ) {
+                    Text(
+                        text = if (selectedDates.isEmpty()) "Sanalarni tanlang" else
+                            selectedDates.joinToString { it.toString() },
+                        color = TextColor,
+                        modifier = Modifier.padding(12.dp)
+                    )
+                }
+                if (showDatePicker.value) {
+                    MultipleDatePickerDialog(selectedDates) {
+                        showDatePicker.value = false
+                    }
+                }
             }
+
+
+
             item {
                 CustomTextField(
                     "1 kunda nechchi marta ichiladi",
@@ -107,7 +136,6 @@ fun PillAddScreen(navController: NavController) {
                         modifier = Modifier.padding(10.dp)
                     )
                 }
-
             }
 
             item {
@@ -115,15 +143,14 @@ fun PillAddScreen(navController: NavController) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 10.dp, vertical = 10.dp)
-                        .background(
-                            shape = RoundedCornerShape(10.dp), color = TextColor
-                        )
+                        .background(shape = RoundedCornerShape(10.dp), color = TextColor)
                         .clickable {
                             val selectedTimes = timeStates
                                 .take(count)
                                 .map { it.value }
                                 .filter { it.isNotBlank() }
-                            if (name.value.isBlank() || desc.value.isBlank() || day.value.isBlank() || timesPerDay.value.isBlank() || selectedTimes.isEmpty()) {
+
+                            if (name.value.isBlank() || desc.value.isBlank() || selectedDates.isEmpty() || timesPerDay.value.isBlank() || selectedTimes.isEmpty()) {
                                 Toast
                                     .makeText(
                                         context,
@@ -135,22 +162,18 @@ fun PillAddScreen(navController: NavController) {
                                 val data = ReminderData(
                                     name = name.value,
                                     desc = desc.value,
-                                    day = day.value,
+                                    date = selectedDates.map { it.toString() },
                                     times = selectedTimes
                                 )
 
                                 dbHelper.insertPill(data)
-
                                 val lastPill = dbHelper
                                     .getAllPills()
                                     .maxByOrNull { it.id ?: 0 }
 
                                 if (context.hasExactAlarmPermission()) {
                                     lastPill?.let {
-                                        AlarmScheduler.scheduleAlarmsForPill(
-                                            context,
-                                            it
-                                        )
+                                        AlarmScheduler.scheduleAlarmsForPill(context, it)
                                     }
                                 } else {
                                     context.requestExactAlarmPermission()
@@ -164,21 +187,91 @@ fun PillAddScreen(navController: NavController) {
                                 }
 
                                 navController.popBackStack()
-
                             }
-                        }, contentAlignment = Alignment.Center
+                        },
+                    contentAlignment = Alignment.Center
                 ) {
                     Text(
                         text = "Saqlash",
                         fontSize = 18.sp,
                         color = MainColor,
-                        fontWeight = FontWeight.Bold, modifier = Modifier.padding(10.dp)
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(10.dp)
                     )
-
                 }
             }
         }
     }
+}
+
+
+@Composable
+fun MultipleDatePickerDialog(
+    selectedDates: SnapshotStateList<LocalDate>,
+    onDismiss: () -> Unit
+) {
+    val today = remember { LocalDate.now() }
+    val currentMonth = remember { mutableStateOf(YearMonth.now()) }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        confirmButton = {
+            TextButton(onClick = onDismiss) {
+                Text("OK")
+            }
+        },
+        title = { Text("Sanalarni tanlang") },
+        text = {
+            Column {
+                Text(
+                    "${
+                        currentMonth.value.month.name.lowercase()
+                            .replaceFirstChar { it.uppercase() }
+                    } ${currentMonth.value.year}",
+                    style = MaterialTheme.typography.titleMedium,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(7),
+                    modifier = Modifier.height(300.dp)
+                ) {
+                    val days = currentMonth.value.lengthOfMonth()
+                    val startDayOfWeek = currentMonth.value.atDay(1).dayOfWeek.value % 7
+
+                    // Empty cells before start of month
+                    items(startDayOfWeek) {
+                        Box(modifier = Modifier.size(40.dp))
+                    }
+
+                    items(days) { day ->
+                        val date = currentMonth.value.atDay(day + 1)
+                        val isSelected = selectedDates.contains(date)
+
+                        Box(
+                            modifier = Modifier
+                                .size(40.dp)
+                                .padding(4.dp)
+                                .background(
+                                    color = if (isSelected) Color.Green else Color.Transparent,
+                                    shape = MaterialTheme.shapes.small
+                                )
+                                .clickable {
+                                    if (isSelected) {
+                                        selectedDates.remove(date)
+                                    } else {
+                                        selectedDates.add(date)
+                                    }
+                                },
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(text = "${day + 1}")
+                        }
+                    }
+                }
+            }
+        }
+    )
 }
 
 fun Context.hasExactAlarmPermission(): Boolean {
@@ -195,6 +288,7 @@ fun Context.requestExactAlarmPermission() {
         startActivity(intent)
     }
 }
+
 
 @Composable
 fun TimePickerField(label: String, timeState: MutableState<String>) {

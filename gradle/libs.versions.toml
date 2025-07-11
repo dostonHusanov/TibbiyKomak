@@ -1,6 +1,7 @@
 [versions]
 accompanistPager = "0.19.0"
 agp = "8.7.3"
+datetime = "0.9.0"
 gson = "2.13.1"
 kotlin = "2.0.0"
 coreKtx = "1.1.0"
@@ -27,6 +28,7 @@ accompanist-pager = { module = "com.google.accompanist:accompanist-pager", versi
 androidx-compose-ui-ui = { module = "androidx.compose.ui:ui", version.ref = "uiVersion" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
+datetime = { module = "io.github.vanpra.compose-material-dialogs:datetime", version.ref = "datetime" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }

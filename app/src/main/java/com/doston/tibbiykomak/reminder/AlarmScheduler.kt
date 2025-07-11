@@ -14,34 +14,41 @@ object AlarmScheduler {
     @SuppressLint("ScheduleExactAlarm")
     fun scheduleAlarmsForPill(context: Context, pill: ReminderData) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val days = pill.day.toIntOrNull() ?: return
 
-        for (i in 0 until days) {
-            for ((index, time) in pill.times.withIndex()) {
-                val parts = time.split(":")
-                if (parts.size != 2) continue
+        for ((dateIndex, dateString) in pill.date.withIndex()) {
+            val dateParts = dateString.split("-")
+            if (dateParts.size != 3) continue
 
-                val hour = parts[0].toIntOrNull() ?: continue
-                val minute = parts[1].toIntOrNull() ?: continue
+            val year = dateParts[0].toIntOrNull() ?: continue
+            val month = dateParts[1].toIntOrNull()?.minus(1) ?: continue // Calendar.MONTH is 0-based
+            val day = dateParts[2].toIntOrNull() ?: continue
+
+            for ((timeIndex, time) in pill.times.withIndex()) {
+                val timeParts = time.split(":")
+                if (timeParts.size != 2) continue
+
+                val hour = timeParts[0].toIntOrNull() ?: continue
+                val minute = timeParts[1].toIntOrNull() ?: continue
 
                 val calendar = Calendar.getInstance().apply {
-                    add(Calendar.DAY_OF_YEAR, i)
+                    set(Calendar.YEAR, year)
+                    set(Calendar.MONTH, month)
+                    set(Calendar.DAY_OF_MONTH, day)
                     set(Calendar.HOUR_OF_DAY, hour)
                     set(Calendar.MINUTE, minute)
                     set(Calendar.SECOND, 0)
                     set(Calendar.MILLISECOND, 0)
-
-                    if (i == 0 && timeInMillis <= System.currentTimeMillis()) {
-                        add(Calendar.DAY_OF_YEAR, 1)
-                    }
                 }
+
+                // Skip past alarms
+                if (calendar.timeInMillis <= System.currentTimeMillis()) continue
 
                 val intent = Intent(context, PillAlarmReceiver::class.java).apply {
                     putExtra("pillName", pill.name)
                     putExtra("desc", pill.desc)
                 }
 
-                val requestCode = generateRequestCode(pill.id ?: 0, index, i)
+                val requestCode = generateRequestCode(pill.id ?: 0, dateIndex, timeIndex)
                 val pendingIntent = PendingIntent.getBroadcast(
                     context,
                     requestCode,
@@ -49,7 +56,7 @@ object AlarmScheduler {
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
                 )
 
-                alarmManager.set(
+                alarmManager.setExact(
                     AlarmManager.RTC_WAKEUP,
                     calendar.timeInMillis,
                     pendingIntent
@@ -58,14 +65,14 @@ object AlarmScheduler {
         }
     }
 
+
     fun cancelAlarmsForPill(context: Context, pill: ReminderData) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val days = pill.day.toIntOrNull() ?: return
 
-        for (i in 0 until days) {
-            for (index in pill.times.indices) {
+        for ((dateIndex, _) in pill.date.withIndex()) {
+            for ((timeIndex, _) in pill.times.withIndex()) {
                 val intent = Intent(context, PillAlarmReceiver::class.java)
-                val requestCode = generateRequestCode(pill.id ?: 0, index, i)
+                val requestCode = generateRequestCode(pill.id ?: 0, dateIndex, timeIndex)
                 val pendingIntent = PendingIntent.getBroadcast(
                     context,
                     requestCode,

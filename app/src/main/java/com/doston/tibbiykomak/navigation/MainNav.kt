@@ -52,21 +52,12 @@ fun MainNav(context: Context) {
             })
         }
 
-        // Main Screen (After First-Time Setup)
         composable("main") {
             SecondaryNav() // Main content screen for the quiz
         }
 
-        // Other Screens for the quiz
         composable("homeScreen") {
             HomeScreen(navController = navController,"Dostonbek",1)
-        }
-        composable("secondHomeScreen") {
-            SecondHomeScreen(
-                navController,
-
-                categoryId = 1
-            )
         }
 
         composable("reminderScreen") { backStackEntry ->
