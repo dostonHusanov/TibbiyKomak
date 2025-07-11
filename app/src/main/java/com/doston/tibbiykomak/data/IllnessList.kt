@@ -1,5 +1,7 @@
 package com.doston.tibbiykomak.data
 
+import com.doston.tibbiykomak.R
+
 fun getIllnessList(categoryId: Int): List<MainData> {
     return when (categoryId) {
         1 -> listOf(
@@ -19,7 +21,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                         "Kattalar uchun 200–400 mg har 4–6 soatda. Kunlik maksimal doza: 1200 mg."
                     )
                 ),
-                homeAdvice = listOf("Dam olish", "Ko‘proq suv ichish", "Yengil ovqat")
+                homeAdvice = listOf("Dam olish", "Ko‘proq suv ichish", "Yengil ovqat"), image = R.drawable.brain
             ),
             MainData(
                 category = "Ommaviy muammolar",
@@ -37,7 +39,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                         "Kattalar uchun 200–400 mg har 6 soatda."
                     )
                 ),
-                homeAdvice = listOf("Ko‘proq suyuqlik ichish", "Dam olish", "Yengil kiyim kiying")
+                homeAdvice = listOf("Ko‘proq suyuqlik ichish", "Dam olish", "Yengil kiyim kiying"), image = R.drawable.fever
             ),
             MainData(
                 category = "Ommaviy muammolar",
@@ -59,7 +61,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                     "Ko‘proq tolali ovqatlar iste’mol qilish",
                     "Ko‘proq suv ichish",
                     "Jismoniy faollik"
-                )
+                ), image = R.drawable.stomach
             ),
             MainData(
                 category = "Ommaviy muammolar",
@@ -77,7 +79,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                         "Kuniga 1-2 marta."
                     )
                 ),
-                homeAdvice = listOf("Yengil mashqlar", "Ko‘p suyuqlik ichish", "Tanaffuslar qilish")
+                homeAdvice = listOf("Yengil mashqlar", "Ko‘p suyuqlik ichish", "Tanaffuslar qilish"), image = R.drawable.apatite
             ),
             MainData(
                 category = "Ommaviy muammolar",
@@ -95,7 +97,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                         "Kattalar uchun 40-80 mg har 8 soatda."
                     )
                 ),
-                homeAdvice = listOf("Dam olish", "Yengil ovqat", "Issiq suyuqlik ichish")
+                homeAdvice = listOf("Dam olish", "Yengil ovqat", "Issiq suyuqlik ichish"), image = R.drawable.stomach
             ),
             MainData(
                 category = "Ommaviy muammolar",
@@ -117,7 +119,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                     "Allergenlardan uzoq turish",
                     "Sovuq siqish",
                     "Teri namlantirish"
-                )
+                ), image = R.drawable.allergy
             ),
             MainData(
                 category = "Ommaviy muammolar",
@@ -139,7 +141,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                     "Iliq choy ichish",
                     "Tomoqni tuzli suv bilan chayish",
                     "Dam olish"
-                )
+                ), image = R.drawable.sore
             ),
             MainData(
                 category = "Ruhiy sog‘liq muammolari",
@@ -161,7 +163,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                     "Jismoniy mashqlar qilish",
                     "Do‘stlar bilan muloqot",
                     "Professional yordamga murojaat qilish"
-                )
+                ), image = R.drawable.brain
             ),
             MainData(
                 category = "Ruhiy sog‘liq muammolari",
@@ -179,7 +181,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                         "Kuniga 100-300 mg."
                     )
                 ),
-                homeAdvice = listOf("Yengil mashqlar", "Nafas olish mashqlari", "Yetarli uxlash")
+                homeAdvice = listOf("Yengil mashqlar", "Nafas olish mashqlari", "Yetarli uxlash"), image = R.drawable.brain
             ),
             MainData(
                 category = "Ruhiy sog‘liq muammolari",
@@ -193,7 +195,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                     "Yotishdan oldin og‘ir ovqat yemang",
                     "Yotish vaqtini belgilash",
                     "Yorug‘lik va shovqinni kamaytirish"
-                )
+                ), image = R.drawable.sleepless
             ),
 
             MainData(
@@ -216,7 +218,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                     "Achchiq va yog‘li ovqatlardan saqlanish",
                     "Ko‘p suyuqlik ichish",
                     "Chekish va spirtli ichimliklardan voz kechish"
-                )
+                ), image = R.drawable.stomach
             ),
             MainData(
                 category = "Ovqat hazm qilish muammolari",
@@ -234,7 +236,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                     "Kichik porsiyalarda tez-tez ovqatlanish",
                     "Og‘ir va yog‘li taomlardan saqlanish",
                     "Ko‘p suv ichish"
-                )
+                ), image = R.drawable.stomach
             ),
             MainData(
                 category = "Ovqat hazm qilish muammolari",
@@ -248,7 +250,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                     "Yengil ovqatlanish",
                     "Oziq-ovqatni yaxshi chaynash",
                     "Stressni kamaytirish"
-                )
+                ), image = R.drawable.stomach
             ),
 
 
@@ -264,7 +266,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                     "Allergenlardan uzoqroq bo‘lish",
                     "Terini toza va nam saqlash",
                     "Sovuq kompress qo‘yish"
-                )
+                ), image = R.drawable.allergy
             ),
             MainData(
                 category = "Allergiya",
@@ -278,7 +280,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                     "Uy sharoitida changni kamaytirish",
                     "Allergenlardan uzoqroq bo‘lish",
                     "Burunni nam saqlash"
-                )
+                ), image = R.drawable.allergy
             ),
             MainData(
                 category = "Allergiya",
@@ -292,7 +294,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                     "Allergen bo‘lgan ovqatlardan voz kechish",
                     "Kichik porsiyalarda ovqatlanish",
                     "Ko‘p suv ichish"
-                )
+                ), image = R.drawable.stomach
             ),
 
             MainData(
@@ -316,7 +318,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                     "Doimiy jismoniy faollik",
                     "Stressni kamaytirish",
                     "Sog‘lom ovqatlanish"
-                )
+                ), image = R.drawable.blood
             ),
             MainData(
                 category = "Qon bosimi muammolari",
@@ -335,7 +337,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                     "Birdan turib ketmaslik",
                     "Tuzli mahsulotlarni iste’mol qilish",
                     "Elastik paypoq kiyish"
-                )
+                ), image = R.drawable.blood
             ),
             MainData(
                 category = "Nafas olish tizimi muammolari",
@@ -358,7 +360,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                     "Nam havo ta’minlash",
                     "Chekishdan saqlanish",
                     "Dam olish"
-                )
+                ), image = R.drawable.nose
             ),
             MainData(
                 category = "Nafas olish tizimi muammolari",
@@ -381,7 +383,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                     "Inhalatorni to‘g‘ri ishlatish",
                     "Doimiy dori nazorati",
                     "Sog‘lom turmush tarzi"
-                )
+                ), image = R.drawable.nose
             ),
             MainData(
                 category = "Nafas olish tizimi muammolari",
@@ -404,7 +406,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                     "Dam olish",
                     "Isitmani tushirish",
                     "Tibbiy nazorat ostida bo‘lish"
-                )
+                ), image = R.drawable.nose
             ),
 
             // Cardiovascular problems
@@ -429,7 +431,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                     "Sport bilan shug‘ullanish",
                     "Stressni kamaytirish",
                     "Vaznni me’yorda saqlash"
-                )
+                ), image = R.drawable.blood
             ),
             MainData(
                 category = "Qon-tomir muammolari",
@@ -452,7 +454,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                     "Tuzli ovqatlar yeyish",
                     "Sekin o‘rnashish",
                     "Doimiy jismoniy faollik"
-                )
+                ), image = R.drawable.blood
             ),
             MainData(
                 category = "Qon-tomir muammolari",
@@ -471,7 +473,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                     "Siqish paypoqlaridan foydalanish",
                     "Uzoq tik turgan holatda qolmaslik",
                     "Yurish va harakatni oshirish"
-                )
+                ), image = R.drawable.blood
             ),
             MainData(
                 category = "Ovqat hazm qilish muammolari",
@@ -493,7 +495,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                     "Kislotali va achchiq ovqatlardan voz kechish",
                     "Ko‘p va kichik porsiyalar bilan ovqatlanish",
                     "Spirtli ichimliklardan tiyilish"
-                )
+                ), image = R.drawable.stomach
             ),
             MainData(
                 category = "Ovqat hazm qilish muammolari",
@@ -511,7 +513,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                     "Tuz va achchiq ovqatlardan cheklanish",
                     "Chekishni tashlash",
                     "Stressni kamaytirish"
-                )
+                ), image = R.drawable.stomach
             ),
             MainData(
                 category = "Ovqat hazm qilish muammolari",
@@ -529,7 +531,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                     "Gaz hosil qiluvchi ovqatlardan saqlanish",
                     "Yaxshi chaynalgan ovqat yeyish",
                     "Jismoniy faollikni oshirish"
-                )
+                ), image = R.drawable.stomach
             ),
             MainData(
                 category = "Ovqat hazm qilish muammolari",
@@ -543,7 +545,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                     "Ko‘p suyuqlik ichish",
                     "To‘yimli ovqatlanish va tolaga boy mahsulotlar yeyish",
                     "Jismoniy faollik"
-                )
+                ), image = R.drawable.stomach
             ),
             MainData(
                 category = "Ovqat hazm qilish muammolari",
@@ -557,7 +559,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                     "Ko‘p miqdorda suyuqlik ichish",
                     "Yengil va kam yog‘li ovqatlar yeyish",
                     "Antibiotiklarni faqat shifokor nazorati ostida qabul qilish"
-                )
+                ), image = R.drawable.stomach
             ),
 
             // Skin problems
@@ -581,7 +583,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                     "Teringizni muntazam tozalang",
                     "Yog‘li ovqatlardan cheklaning",
                     "Yuzga qo‘l bilan tegmaslik"
-                )
+                ), image = R.drawable.allergy
             ),
             MainData(
                 category = "Teri muammolari",
@@ -603,7 +605,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                     "Allergenlardan saqlanish",
                     "Teringizni namlab turish",
                     "Issiq suv bilan yuvinishdan tiyilish"
-                )
+                ), image = R.drawable.allergy
             ),
             MainData(
                 category = "Teri muammolari",
@@ -625,7 +627,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                     "Stressni kamaytirish",
                     "Namlikni saqlash",
                     "Qo‘pol va qichishuvchi kiyimlardan voz kechish"
-                )
+                ), image = R.drawable.allergy
             ),
             MainData(
                 category = "Teri muammolari",
@@ -647,7 +649,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                     "Allergenlardan uzoq turish",
                     "Teringizni quritmaslik",
                     "Sovun va kimyoviy moddalardan ehtiyot bo‘lish"
-                )
+                ), image = R.drawable.allergy
             ),
             MainData(
                 category = "Teri muammolari",
@@ -665,10 +667,9 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                     "Teri tozaligiga e’tibor berish",
                     "Yaralarni ifloslanishdan himoya qilish",
                     "Shifokorga murojaat qilish"
-                )
+                ), image = R.drawable.allergy
             ),
 
-            // Metabolic problems
             MainData(
                 category = "Metabolik muammolar",
                 problem = "Qandli diabet",
@@ -689,7 +690,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                     "Sog‘lom ovqatlanish",
                     "Jismoniy faollikni oshirish",
                     "Qon shakarini muntazam tekshirish"
-                )
+                ), image = R.drawable.metobolib
             ),
             MainData(
                 category = "Metabolik muammolar",
@@ -711,7 +712,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                     "Darhol shifokorga murojaat qilish",
                     "Suyuqlik ichishni ko‘paytirish",
                     "Tibbiy nazoratda bo‘lish"
-                )
+                ), image = R.drawable.metobolib
             ),
             MainData(
                 category = "Metabolik muammolar",
@@ -729,7 +730,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                     "Qon bosimini va xolesterin darajasini nazorat qilish",
                     "Sog‘lom turmush tarzini olib borish",
                     "Doimiy tibbiy ko‘rikdan o‘tish"
-                )
+                ), image = R.drawable.metobolib
             ),
             MainData(
                 category = "Metabolik muammolar",
@@ -746,7 +747,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                     "Muntazam tibbiy nazorat",
                     "Sog‘lom ovqatlanish",
                     "Jismoniy faollikni saqlash"
-                )
+                ), image = R.drawable.metobolib
             ),
             MainData(
                 category = "Metabolik muammolar",
@@ -768,7 +769,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                     "Stressni kamaytirish",
                     "Yod iste’molini nazorat qilish",
                     "Doimiy shifokor nazorati"
-                )
+                ), image = R.drawable.metobolib
             ),
             MainData(
                 category = "Suyak va mushak muammolari",
@@ -782,7 +783,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                     "Sog‘lom ovqatlanish",
                     "Jismoniy faollikni saqlash",
                     "Quyosh nurida ko‘proq bo‘lish"
-                )
+                ), image = R.drawable.bone
             ),
             MainData(
                 category = "Suyak va mushak muammolari",
@@ -804,7 +805,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                     "Bo‘g‘imlarni himoya qilish",
                     "Mushaklarni mustahkamlash uchun mashqlar",
                     "Sog‘lom vaznni saqlash"
-                )
+                ), image = R.drawable.bone
             ),
             MainData(
                 category = "Suyak va mushak muammolari",
@@ -822,7 +823,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                     "Issiq kompreslar qo‘llash",
                     "Yumshoq cho‘zish mashqlari",
                     "Yetarli suyuqlik ichish"
-                )
+                ), image = R.drawable.bone
             ),
             MainData(
                 category = "Suyak va mushak muammolari",
@@ -840,7 +841,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                     "Tana holatini to‘g‘ri saqlash",
                     "Muntazam jismoniy mashqlar",
                     "Issiq vannalar qabul qilish"
-                )
+                ), image = R.drawable.bone
             ),
             MainData(
                 category = "Suyak va mushak muammolari",
@@ -862,7 +863,7 @@ fun getIllnessList(categoryId: Int): List<MainData> {
                     "Muntazam mashqlar bajarish",
                     "Sog‘lom va balanslangan ovqatlanish",
                     "Yetarli dam olish"
-                )
+                ), image = R.drawable.bone
             )
         )
 

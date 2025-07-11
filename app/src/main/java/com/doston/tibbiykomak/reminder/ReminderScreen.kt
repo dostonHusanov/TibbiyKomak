@@ -73,10 +73,6 @@ fun ReminderScreen(navController: NavController) {
             .background(MainColor)
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
-
-
-
-
             LazyColumn(modifier = Modifier.weight(1f)) {
                 item {
                     val formattedDate = try {

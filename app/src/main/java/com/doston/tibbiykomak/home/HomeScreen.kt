@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -87,7 +88,7 @@ fun HomeScreen(
                         HomeItem(
                             title = illness.problem,
                             desc = illness.description,
-                            imageRes = R.drawable.headache,
+                            imageRes = illness.image,
                             onClick = {
                                 navController.currentBackStackEntry?.savedStateHandle?.set(
                                     "illness",
@@ -173,13 +174,16 @@ fun HomeItem(
                     }
                     Spacer(modifier = Modifier.height(4.dp))
                 }
-                Image(
-                    painter = painterResource(id = imageRes),
-                    contentDescription = "Image for $title",
-                    modifier = Modifier
-                        .size(80.dp)
-                        .weight(1f)
-                )
+                Column(modifier = Modifier.background(color = MainColor, shape = CircleShape).size(80.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+                    Image(
+                        painter = painterResource(id = imageRes),
+                        contentDescription = "Image for $title",
+                        modifier = Modifier
+                            .size(70.dp)
+                            .weight(1f).padding(2.dp)
+                    )
+                }
+
             }
         }
     }

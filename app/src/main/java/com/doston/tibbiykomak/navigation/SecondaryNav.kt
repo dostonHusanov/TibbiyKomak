@@ -15,11 +15,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Nature
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.outlined.Info
@@ -37,6 +37,7 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.NavigationDrawerItem
+import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -73,7 +74,6 @@ import com.doston.tibbiykomak.home.AboutScreen
 import com.doston.tibbiykomak.home.ContactScreen
 import com.doston.tibbiykomak.home.HomeScreen
 import com.doston.tibbiykomak.home.InfoScreen
-import com.doston.tibbiykomak.home.SecondHomeScreen
 import com.doston.tibbiykomak.reminder.PillAddScreen
 import com.doston.tibbiykomak.reminder.PillEditScreen
 import com.doston.tibbiykomak.reminder.PillInfoScreen
@@ -142,7 +142,7 @@ fun SecondaryNav() {
                         Card(
                             shape = CircleShape,
                             modifier = Modifier.padding(10.dp),
-                            colors = CardDefaults.cardColors(TextColor2)
+                            colors = CardDefaults.cardColors(TextColor)
                         ) {
                             Card(
                                 shape = CircleShape,
@@ -178,20 +178,22 @@ fun SecondaryNav() {
                     Text(
                         "${user?.name} ${user?.surname}",
                         modifier = Modifier.padding(horizontal = 16.dp),
-                        fontSize = 16.sp
+                        fontSize = 18.sp, fontWeight = FontWeight.Bold
                     )
+                    Spacer(Modifier.height(2.dp))
                     Text(
                         "${user?.age} yosh",
                         modifier = Modifier.padding(horizontal = 16.dp),
-                        fontSize = 16.sp
+                        fontSize = 16.sp, fontWeight = FontWeight.SemiBold
                     )
+                    Spacer(Modifier.height(2.dp))
                     Text(
                         "${user?.phoneNumber}",
                         modifier = Modifier.padding(horizontal = 16.dp),
-                        fontSize = 16.sp
+                        fontSize = 16.sp, fontWeight = FontWeight.SemiBold
                     )
 
-                    HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+                    HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp), color = TextColor)
 
                     NavigationDrawerItem(
                         label = { Text("Ilova Haqida") },
@@ -201,7 +203,13 @@ fun SecondaryNav() {
                             scope.launch { drawerState.close() }
                             navController.navigate("aboutScreen")
 
-                        })
+                        }, colors = NavigationDrawerItemDefaults.colors(
+                            unselectedContainerColor = TextColor,
+                            unselectedTextColor = MainColor,
+                            unselectedBadgeColor = MainColor,
+                            unselectedIconColor = MainColor
+                        ), modifier = Modifier.padding(horizontal = 16.dp).background(shape = RoundedCornerShape(10.dp), color = TextColor)
+                    )
                     Spacer(Modifier.height(10.dp))
                     NavigationDrawerItem(
                         label = { Text("Bog'lanish") },
@@ -211,7 +219,12 @@ fun SecondaryNav() {
                         onClick = {
                             scope.launch { drawerState.close() }
                             navController.navigate("contactScreen")
-                        }
+                        }, colors = NavigationDrawerItemDefaults.colors(
+                            unselectedContainerColor = TextColor,
+                            unselectedTextColor = MainColor,
+                            unselectedBadgeColor = MainColor,
+                            unselectedIconColor = MainColor
+                        ), modifier = Modifier.padding(horizontal = 16.dp).background(shape = RoundedCornerShape(10.dp), color = TextColor)
                     )
 
 
@@ -224,7 +237,7 @@ fun SecondaryNav() {
 
         // Show bottom bar only for these routes
         val isBottomBarVisible =
-            currentRoute in listOf("homeScreen",  "reminderScreen")
+            currentRoute in listOf("homeScreen", "reminderScreen")
 
         if (isBottomBarVisible) {
             Scaffold(
@@ -310,20 +323,20 @@ fun SecondaryNav() {
                         }
                     }
                     composable("pillInfo") { backStackEntry ->
-                        val pillInfo= navController.previousBackStackEntry
+                        val pillInfo = navController.previousBackStackEntry
                             ?.savedStateHandle?.get<ReminderData>("pillInfo")
                         pillInfo?.let {
                             PillInfoScreen(data = it, navController)
                         }
                     }
                     composable("pillEdit") { backStackEntry ->
-                        val pillEdit= navController.previousBackStackEntry
+                        val pillEdit = navController.previousBackStackEntry
                             ?.savedStateHandle?.get<ReminderData>("pillEdit")
                         pillEdit?.let {
                             PillEditScreen(pills = it, navController)
                         }
                         if (pillEdit != null) {
-                            PillEditScreen(pills = pillEdit,navController)
+                            PillEditScreen(pills = pillEdit, navController)
                         }
                     }
                 }
@@ -363,13 +376,13 @@ fun SecondaryNav() {
                     }
                 }
                 composable("pillEdit") { backStackEntry ->
-                    val pillEdit= navController.previousBackStackEntry
+                    val pillEdit = navController.previousBackStackEntry
                         ?.savedStateHandle?.get<ReminderData>("pillEdit")
                     pillEdit?.let {
                         PillEditScreen(pills = it, navController)
                     }
                     if (pillEdit != null) {
-                        PillEditScreen(pills = pillEdit,navController)
+                        PillEditScreen(pills = pillEdit, navController)
                     }
                 }
 
@@ -377,3 +390,4 @@ fun SecondaryNav() {
         }
     }
 }
+
