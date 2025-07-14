@@ -4,7 +4,7 @@ import com.doston.tibbiykomak.R
 
 class OnBoardingData(val image:Int,val title:String,val desc:String)
 val listData= listOf(OnBoardingData(
-    image = R.drawable.a,
+    image = R.drawable.logo,
     title = "Xush kelibsiz!",
     desc = "Tibbiy Ko'mak ilovasi orqali sog‘lig‘ingiz haqida tez va foydali maslahatlar oling."
 ),OnBoardingData(

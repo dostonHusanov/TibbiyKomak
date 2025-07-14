@@ -74,20 +74,9 @@ fun AboutScreen(navController: NavController) {
                 .padding(horizontal = 16.dp)
                 .verticalScroll(rememberScrollState()),
         ) {
-            // App Logo
-            Icon(
-                painter = painterResource(R.drawable.wel_text),
-                contentDescription = null,
-                modifier = Modifier
-                    .size(80.dp)
-                    .align(Alignment.CenterHorizontally)
-                    .padding(top = 8.dp),
-                tint = TextColor
-            )
 
-            Spacer(modifier = Modifier.height(16.dp))
             SectionHeader("🩺 Tibbiy Ko'mak — Sizning Shaxsiy Sog‘liqni Saqlash Yordamchingiz")
-
+            Spacer(modifier = Modifier.height(10.dp))
             SectionText("Tibbiy Ko'mak — bu sizning kundalik sog‘lig‘ingizni nazorat qilishda yordam beradigan ilova. Dori eslatmalari, kasalliklar haqida ma'lumotlar va ko‘plab foydali funksiyalarni taqdim etadi.")
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -153,7 +142,7 @@ fun SectionHeader(title: String) {
         text = title,
         fontSize = 20.sp,
         fontWeight = FontWeight.SemiBold,
-        color = TextColor,
+        color = TextColor2,
         modifier = Modifier.padding(bottom = 4.dp)
     )
 }

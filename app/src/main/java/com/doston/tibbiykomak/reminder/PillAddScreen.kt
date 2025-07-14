@@ -177,13 +177,11 @@ fun PillAddScreen(navController: NavController) {
                                     }
                                 } else {
                                     context.requestExactAlarmPermission()
-                                    Toast
-                                        .makeText(
-                                            context,
-                                            "Iltimos, dori eslatmalar uchun ruxsat bering",
-                                            Toast.LENGTH_LONG
-                                        )
-                                        .show()
+                                    Toast.makeText(
+                                        context,
+                                        "Iltimos, dori eslatmalar uchun ruxsat bering",
+                                        Toast.LENGTH_LONG
+                                    ).show()
                                 }
 
                                 navController.popBackStack()

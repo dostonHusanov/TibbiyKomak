@@ -12,6 +12,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -20,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.doston.tibbiykomak.R
+import com.doston.tibbiykomak.ui.theme.BColor
 import com.doston.tibbiykomak.ui.theme.MainColor
 import com.doston.tibbiykomak.ui.theme.TextColor
 import com.google.accompanist.pager.*
@@ -42,7 +44,7 @@ fun OnBoardingScreen(onFinish: () -> Unit) {
     Box(modifier = Modifier.fillMaxSize().padding(WindowInsets.systemBars.asPaddingValues())) {
         // Background image
         Image(
-            painter = painterResource(id = R.drawable.background), // replace with your image
+            painter = painterResource(id = R.drawable.background2), // replace with your image
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
@@ -104,40 +106,49 @@ fun OnBoardingScreen(onFinish: () -> Unit) {
                     .padding(horizontal = 8.dp, vertical = 16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Button(
-                    onClick = {
-                        if (selectedPage > 0) {
+                if (selectedPage > 0) {
+                    Button(
+                        onClick = {
                             scope.launch {
                                 pagerState.animateScrollToPage(selectedPage - 1)
                             }
-                        }
-                    },
-                    enabled = selectedPage > 0,
-                    modifier = Modifier
-                        .width(150.dp)
-                        .height(45.dp).border(2.dp, MainColor, CircleShape),
-                    shape = CircleShape, colors = ButtonDefaults.buttonColors(containerColor = TextColor, contentColor = MainColor)
-                ) {
-                    Row(
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
+                        },
+                        modifier = Modifier
+                            .width(150.dp)
+                            .height(45.dp)
+                            .border(2.dp, MainColor, CircleShape),
+                        shape = CircleShape,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = TextColor,
+                            contentColor = MainColor
+                        )
                     ) {
-
-                    Image(
-                        painter = painterResource(R.drawable.left_arrow),
-                        contentDescription = "",
-                        modifier = Modifier.size(20.dp)
-                    )
-                    Text(text = "Oldingisi", color = MainColor, fontSize = 16.sp)
+                        Row(
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                painter = painterResource(R.drawable.left_arrow),
+                                contentDescription = "",
+                                modifier = Modifier.size(20.dp),
+                                tint = MainColor
+                            )
+                            Text(text = "Oldingisi", color = MainColor, fontSize = 16.sp)
+                        }
+                    }
                 }
-            }
+
+
                 Button(
                     onClick = {
+
                         if (selectedPage == listData.size - 1) {
                             onFinish()
                         } else {
                             scope.launch {
+
                                 pagerState.animateScrollToPage(selectedPage + 1)
+
                             }
                         }
                     },
@@ -152,8 +163,8 @@ fun OnBoardingScreen(onFinish: () -> Unit) {
                     )
                 ) {
                     Row(horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-                    Text(text = if (selectedPage == listData.size - 1) "Davom etish" else "Keyingisi", color = TextColor, fontSize = 16.sp)
-                    Image(painter = painterResource(R.drawable.right_arrow), contentDescription = "", modifier = Modifier.size(20.dp))
+                    Text(text = if (selectedPage == listData.size - 1) "Keyingisi" else "Keyingisi", color = TextColor, fontSize = 16.sp)
+                    Icon(painter = painterResource(R.drawable.right_arrow), tint = TextColor, contentDescription = "", modifier = Modifier.size(20.dp))
                 }
             }}
         }

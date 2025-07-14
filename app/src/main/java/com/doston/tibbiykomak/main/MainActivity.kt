@@ -24,16 +24,19 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            window.statusBarColor = ContextCompat.getColor(this, R.color.background)
-window.navigationBarColor=ContextCompat.getColor(this, R.color.background)
+           // window.statusBarColor = ContextCompat.getColor(this, R.color.background)
+//window.navigationBarColor=ContextCompat.getColor(this, R.color.background)
             MainNav(context = applicationContext)
             requestAlarmPermissions()
             requestBatteryOptimization()
         }
     }
-    @SuppressLint("ObsoleteSdkInt")
+    @SuppressLint("BatteryLife")
     private fun requestBatteryOptimization() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        val powerManager = getSystemService(Context.POWER_SERVICE) as android.os.PowerManager
+        val isIgnoringOptimizations = powerManager.isIgnoringBatteryOptimizations(packageName)
+
+        if (!isIgnoringOptimizations) {
             val intent = Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)
             intent.data = Uri.parse("package:$packageName")
             startActivity(intent)

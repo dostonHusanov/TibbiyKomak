@@ -44,6 +44,7 @@ import com.doston.tibbiykomak.R
 import com.doston.tibbiykomak.data.ReminderData
 import com.doston.tibbiykomak.database.UserDatabaseHelper
 import com.doston.tibbiykomak.ui.theme.MainColor
+import com.doston.tibbiykomak.ui.theme.RegColor
 import com.doston.tibbiykomak.ui.theme.TextColor
 import com.doston.tibbiykomak.ui.theme.TextColor2
 import java.text.SimpleDateFormat
@@ -77,7 +78,7 @@ fun ReminderScreen(navController: NavController) {
                 item {
                     val formattedDate = try {
                         val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                        val outputFormat = SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault())
+                        val outputFormat = SimpleDateFormat("d-MMMM, yyyy", Locale("uz"))
                         val date = inputFormat.parse(selectedDate)
                         outputFormat.format(date ?: Date())
                     } catch (e: Exception) {
@@ -155,13 +156,13 @@ fun ReminderItem(time: String, name: String, desc: String, date: List<String>, t
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp),
         shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = MainColor)
+        colors = CardDefaults.cardColors(containerColor = TextColor)
     ) {
         Column {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(color = Color(0xFF01A854)),
+                    .background(color = Color(0xFF365486)),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
@@ -169,22 +170,22 @@ fun ReminderItem(time: String, name: String, desc: String, date: List<String>, t
                     text = time,
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(8.dp)
+                    modifier = Modifier.padding(8.dp), color = MainColor
                 )
 
                 Text(
                     text = if (currentIndex > 0) "$currentIndex/${date.size} Kun" else "-/${date.size} Kun",
                     fontSize = 14.sp,
-                    modifier = Modifier.padding(8.dp)
+                    modifier = Modifier.padding(8.dp), color = MainColor
                 )
 
-                Text("Istemol qilindi", fontSize = 14.sp, modifier = Modifier.padding(8.dp))
+                Text("Istemol qilindi", fontSize = 14.sp, modifier = Modifier.padding(8.dp), color = MainColor)
             }
 
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(color = Color(0xFF01C763))
+                    .background(color = RegColor)
                     .padding(6.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {

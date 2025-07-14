@@ -203,6 +203,7 @@ fun PillEditScreen(pills: ReminderData, navController: NavController) {
                                     ).show()
                                 }
 
+
                                 navController.popBackStack()
                             }
                         }, contentAlignment = Alignment.Center

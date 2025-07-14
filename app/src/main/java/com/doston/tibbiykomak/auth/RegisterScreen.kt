@@ -49,13 +49,12 @@ fun RegisterScreen(onFinish: () -> Unit) {
 
     Box(
         modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFF00E676)) // Bright green base background
+            .fillMaxSize() // Bright green base background
     ) {
         Box(modifier = Modifier.fillMaxSize().padding(WindowInsets.systemBars.asPaddingValues())) {
             // Background image
             Image(
-                painter = painterResource(id = R.drawable.reg_back), // replace with your image
+                painter = painterResource(id = R.drawable.background1), // replace with your image
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize()

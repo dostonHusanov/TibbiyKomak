@@ -83,6 +83,7 @@ import com.doston.tibbiykomak.reminder.PillInfoScreen
 import com.doston.tibbiykomak.reminder.PillScreen
 import com.doston.tibbiykomak.reminder.ReminderScreen
 import com.doston.tibbiykomak.ui.theme.MainColor
+import com.doston.tibbiykomak.ui.theme.RegColor
 import com.doston.tibbiykomak.ui.theme.TextColor
 import com.doston.tibbiykomak.ui.theme.TextColor2
 import kotlinx.coroutines.launch
@@ -111,13 +112,13 @@ fun SecondaryNav() {
     val bottomNavItems = listOf(
         BottomNavItem(
             route = "homeScreen",
-            title = "Home",
-            icon = { Icon(Icons.Default.Home, contentDescription = "Home") }
+            title = "Bosh sahifa",
+            icon = { Icon(painterResource(R.drawable.home), contentDescription = "Home") }
         ),
         BottomNavItem(
             route = "reminderScreen",
-            title = "Reminder",
-            icon = { Icon(Icons.Default.Notifications, contentDescription = "Reminder") }
+            title = "Eslatma",
+            icon = { Icon(painterResource(R.drawable.bell), contentDescription = "Reminder") }
         )
     )
 
@@ -132,109 +133,122 @@ fun SecondaryNav() {
                         .fillMaxSize()
                         .background(MainColor)
 
-                        .verticalScroll(rememberScrollState())
+                        .verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Spacer(Modifier.height(12.dp))
-                    Row(
-                        modifier = Modifier
-                            .padding(26.dp)
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.Top
-                    ) {
-                        Card(
-                            shape = CircleShape,
-                            modifier = Modifier.padding(10.dp),
-                            colors = CardDefaults.cardColors(TextColor)
+
+                    Column(modifier = Modifier.fillMaxWidth()) {
+
+
+                        Row(
+                            modifier = Modifier
+                                .padding(26.dp)
+                                .fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.Top
                         ) {
                             Card(
                                 shape = CircleShape,
-                                modifier = Modifier.padding(3.dp),
-                                colors = CardDefaults.cardColors(MainColor)
+                                modifier = Modifier.padding(10.dp),
+                                colors = CardDefaults.cardColors(TextColor2)
                             ) {
-                                Image(
-                                    imageVector = Icons.Default.Person,
-                                    contentDescription = "Profile image",
-                                    modifier = Modifier
-                                        .size(60.dp)
-                                        .padding(6.dp)
-                                )
+                                Card(
+                                    shape = CircleShape,
+                                    modifier = Modifier.padding(3.dp),
+                                    colors = CardDefaults.cardColors(MainColor)
+                                ) {
+                                    Image(
+                                        imageVector = Icons.Default.Person,
+                                        contentDescription = "Profile image",
+                                        modifier = Modifier
+                                            .size(60.dp)
+                                            .padding(6.dp),
+                                    )
+                                }
                             }
-                        }
-                        var isDarkMode by remember { mutableStateOf(true) }
+                            var isDarkMode by remember { mutableStateOf(true) }
 
-                        Icon(
-                            painter = painterResource(
-                                if (isDarkMode) R.drawable.night_mode else R.drawable.light_mode
+                            Icon(
+                                painter = painterResource(
+                                    if (isDarkMode) R.drawable.night_mode else R.drawable.light_mode
+                                ),
+                                contentDescription = "Mode",
+                                modifier = Modifier
+                                    .size(34.dp)
+                                    .clip(CircleShape)
+                                    .background(MainColor) // Optional: background to see shadow properly
+                                    .shadow(0.dp, shape = CircleShape)
+                                    .clickable { isDarkMode = !isDarkMode }
+                            )
+                        }
+
+
+                        Text(
+                            "${user?.name} ${user?.surname}",
+                            modifier = Modifier.padding(horizontal = 16.dp),
+                            fontSize = 18.sp, fontWeight = FontWeight.Bold
+                        )
+                        Spacer(Modifier.height(2.dp))
+                        Text(
+                            "${user?.age} yosh",
+                            modifier = Modifier.padding(horizontal = 16.dp),
+                            fontSize = 16.sp, fontWeight = FontWeight.SemiBold
+                        )
+                        Spacer(Modifier.height(2.dp))
+                        Text(
+                            "${user?.phoneNumber}",
+                            modifier = Modifier.padding(horizontal = 16.dp),
+                            fontSize = 16.sp, fontWeight = FontWeight.SemiBold
+                        )
+
+                        HorizontalDivider(
+                            modifier = Modifier.padding(vertical = 10.dp),
+                            color = TextColor
+                        )
+
+                        NavigationDrawerItem(
+                            label = { Text("Ilova Haqida") },
+                            selected = false,
+                            icon = { Icon(Icons.Outlined.Info, contentDescription = null) },
+                            onClick = {
+                                scope.launch { drawerState.close() }
+                                navController.navigate("aboutScreen")
+
+                            },
+                            colors = NavigationDrawerItemDefaults.colors(
+                                unselectedContainerColor = TextColor,
+                                unselectedTextColor = MainColor,
+                                unselectedBadgeColor = MainColor,
+                                unselectedIconColor = MainColor
                             ),
-                            contentDescription = "Mode",
-                            modifier = Modifier
-                                .size(34.dp)
-                                .clip(CircleShape)
-                                .background(MainColor) // Optional: background to see shadow properly
-                                .shadow(0.dp, shape = CircleShape)
-                                .clickable { isDarkMode = !isDarkMode }
+                            modifier = Modifier.padding(horizontal = 16.dp)
+                                .background(shape = RoundedCornerShape(10.dp), color = TextColor)
+                        )
+                        Spacer(Modifier.height(10.dp))
+                        NavigationDrawerItem(
+                            label = { Text("Bog'lanish") },
+                            selected = false,
+
+                            icon = { Icon(Icons.Outlined.Phone, contentDescription = null) },
+                            onClick = {
+                                scope.launch { drawerState.close() }
+                                navController.navigate("contactScreen")
+                            },
+                            colors = NavigationDrawerItemDefaults.colors(
+                                unselectedContainerColor = TextColor,
+                                unselectedTextColor = MainColor,
+                                unselectedBadgeColor = MainColor,
+                                unselectedIconColor = MainColor
+                            ),
+                            modifier = Modifier.padding(horizontal = 16.dp)
+                                .background(shape = RoundedCornerShape(10.dp), color = TextColor)
                         )
                     }
-
-
-                    Text(
-                        "${user?.name} ${user?.surname}",
-                        modifier = Modifier.padding(horizontal = 16.dp),
-                        fontSize = 18.sp, fontWeight = FontWeight.Bold
-                    )
-                    Spacer(Modifier.height(2.dp))
-                    Text(
-                        "${user?.age} yosh",
-                        modifier = Modifier.padding(horizontal = 16.dp),
-                        fontSize = 16.sp, fontWeight = FontWeight.SemiBold
-                    )
-                    Spacer(Modifier.height(2.dp))
-                    Text(
-                        "${user?.phoneNumber}",
-                        modifier = Modifier.padding(horizontal = 16.dp),
-                        fontSize = 16.sp, fontWeight = FontWeight.SemiBold
-                    )
-
-                    HorizontalDivider(modifier = Modifier.padding(vertical = 10.dp), color = TextColor)
-
-                    NavigationDrawerItem(
-                        label = { Text("Ilova Haqida") },
-                        selected = false,
-                        icon = { Icon(Icons.Outlined.Info, contentDescription = null) },
-                        onClick = {
-                            scope.launch { drawerState.close() }
-                            navController.navigate("aboutScreen")
-
-                        }, colors = NavigationDrawerItemDefaults.colors(
-                            unselectedContainerColor = TextColor,
-                            unselectedTextColor = MainColor,
-                            unselectedBadgeColor = MainColor,
-                            unselectedIconColor = MainColor
-                        ), modifier = Modifier.padding(horizontal = 16.dp).background(shape = RoundedCornerShape(10.dp), color = TextColor)
-                    )
-                    Spacer(Modifier.height(10.dp))
-                    NavigationDrawerItem(
-                        label = { Text("Bog'lanish") },
-                        selected = false,
-
-                        icon = { Icon(Icons.Outlined.Phone, contentDescription = null) },
-                        onClick = {
-                            scope.launch { drawerState.close() }
-                            navController.navigate("contactScreen")
-                        }, colors = NavigationDrawerItemDefaults.colors(
-                            unselectedContainerColor = TextColor,
-                            unselectedTextColor = MainColor,
-                            unselectedBadgeColor = MainColor,
-                            unselectedIconColor = MainColor
-                        ), modifier = Modifier.padding(horizontal = 16.dp).background(shape = RoundedCornerShape(10.dp), color = TextColor)
-                    )
                     Spacer(Modifier.height(10.dp))
                     Row(
                         horizontalArrangement = Arrangement.SpaceAround,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = 24.dp)
+                            .padding(vertical = 24.dp, horizontal = 24.dp)
                     ) {
 
                         Icon(
@@ -333,9 +347,9 @@ fun SecondaryNav() {
                     )
                 },
                 bottomBar = {
-                    NavigationBar(containerColor = TextColor) {
+                    NavigationBar(containerColor = RegColor) {
                         bottomNavItems.forEach { item ->
-                            NavigationBarItem(
+                            NavigationBarItem(modifier = Modifier.size(20.dp),
                                 selected = currentRoute == item.route,
                                 onClick = {
                                     navController.navigate(item.route) {
@@ -347,13 +361,13 @@ fun SecondaryNav() {
                                     }
                                 },
                                 icon = item.icon,
-                                label = { Text(text = item.title) },
+                                label = { Text(text = item.title, fontSize = 10.sp) },
                                 colors = NavigationBarItemDefaults.colors(
                                     selectedIconColor = MainColor,
-                                    unselectedIconColor = MainColor,
-                                    selectedTextColor = MainColor,
-                                    unselectedTextColor = MainColor,
-                                    indicatorColor = Color(0xFF015B22)
+                                    unselectedIconColor = TextColor2,
+                                    selectedTextColor = TextColor2,
+                                    unselectedTextColor = TextColor2,
+                                    indicatorColor = TextColor
                                 )
                             )
                         }

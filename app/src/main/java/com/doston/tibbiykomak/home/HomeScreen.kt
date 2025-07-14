@@ -124,9 +124,7 @@ fun HomeItem(
             modifier = Modifier
                 .fillMaxSize()
                 .background(
-                    brush = Brush.verticalGradient(
-                        colors = listOf(AColor, Color(0xFF00BF33))
-                    )
+                    color = TextColor
                 )
         ) {
             Row(
@@ -147,14 +145,16 @@ fun HomeItem(
                         fontWeight = FontWeight.Bold,
                         fontSize = 24.sp,
                         maxLines = 1,
-                        color = TextColor2
+                        color = MainColor
+                       // color = TextColor2
                     )
                     Text(
                         text = desc,
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 12.sp,
                         maxLines = 3,
-                        color = Color(0xFF004B1C),
+                        color = MainColor,
+                       // color = Color(0xFF004B1C),
                         overflow = TextOverflow.Ellipsis
                     )
                     Spacer(modifier = Modifier.height(4.dp))
