@@ -1,6 +1,8 @@
 package com.doston.tibbiykomak.navigation
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -22,6 +24,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Phone
 import androidx.compose.material3.Card
@@ -123,7 +126,7 @@ fun SecondaryNav() {
     ModalNavigationDrawer(gesturesEnabled = currentRoute != "infoScreen",
         drawerState = drawerState,
         drawerContent = {
-            ModalDrawerSheet(drawerContentColor = TextColor, drawerContainerColor = MainColor) {
+            ModalDrawerSheet(drawerContainerColor = MainColor) {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -193,7 +196,7 @@ fun SecondaryNav() {
                         fontSize = 16.sp, fontWeight = FontWeight.SemiBold
                     )
 
-                    HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp), color = TextColor)
+                    HorizontalDivider(modifier = Modifier.padding(vertical = 10.dp), color = TextColor)
 
                     NavigationDrawerItem(
                         label = { Text("Ilova Haqida") },
@@ -226,6 +229,70 @@ fun SecondaryNav() {
                             unselectedIconColor = MainColor
                         ), modifier = Modifier.padding(horizontal = 16.dp).background(shape = RoundedCornerShape(10.dp), color = TextColor)
                     )
+                    Spacer(Modifier.height(10.dp))
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceAround,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 24.dp)
+                    ) {
+
+                        Icon(
+                            painter = painterResource(id = R.drawable.telegram),
+                            contentDescription = "Telegram",
+                            modifier = Modifier
+                                .size(32.dp)
+                                .clickable {
+                                    val telegramUrl = "https://t.me/Husanov_Doston"
+                                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(telegramUrl))
+                                    context.startActivity(intent)
+                                },
+                            tint = Color.Unspecified
+
+                        )
+
+                        Icon(
+                            painter = painterResource(id = R.drawable.instagram),
+                            contentDescription = "Instagram",
+                            modifier = Modifier
+                                .size(32.dp)
+                                .clickable {
+                                    val instagramUrl = "https://www.instagram.com/tibbiykomak/"
+                                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(instagramUrl))
+                                    context.startActivity(intent)
+                                },
+                            tint = Color.Unspecified
+
+                        )
+
+
+                        Icon(
+                            painter = painterResource(id = R.drawable.youtube),
+                            contentDescription = "YouTube",
+                            modifier = Modifier
+                                .size(32.dp)
+                                .clickable {
+                                    val youtubeUrl = "https://www.youtube.com/@doston_husanov"
+                                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(youtubeUrl))
+                                    context.startActivity(intent)
+                                },
+                            tint = Color.Unspecified
+                        )
+
+                        Icon(
+                            painter = painterResource(R.drawable.phone),
+                            contentDescription = "Phone",
+                            modifier = Modifier
+                                .size(32.dp)
+                                .clickable {
+                                    val intent = Intent(Intent.ACTION_DIAL)
+                                    intent.data = Uri.parse("tel:+998918032662")
+                                    context.startActivity(intent)
+                                },
+                            tint = Color.Unspecified
+
+                        )
+                    }
 
 
                 }
@@ -235,7 +302,6 @@ fun SecondaryNav() {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
 
-        // Show bottom bar only for these routes
         val isBottomBarVisible =
             currentRoute in listOf("homeScreen", "reminderScreen")
 

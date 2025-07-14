@@ -1,54 +1,167 @@
 package com.doston.tibbiykomak.home
 
+import android.content.Intent
+import android.net.Uri
+import android.widget.Toast
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.doston.tibbiykomak.ui.theme.MainColor
+import com.doston.tibbiykomak.ui.theme.TextColor
+import com.doston.tibbiykomak.ui.theme.TextColor2
+import com.doston.tibbiykomak.ui.theme.TibbiyKomakTheme
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ContactScreen(navController: NavController) {
+    val context = LocalContext.current
+    var fullName by remember { mutableStateOf("") }
+    var phoneNumber by remember { mutableStateOf("") }
+    var messageText by remember { mutableStateOf("") }
 
-
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceBetween
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 36.dp, horizontal = 14.dp),
-            horizontalArrangement = Arrangement.Start,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Image(
-                modifier = Modifier
-                    .size(26.dp)
-                    .shadow(elevation = 0.dp, shape = CircleShape, clip = true)
-                    .clickable { navController.popBackStack() },
-                imageVector = Icons.Default.ArrowBack, contentDescription = ""
+    Scaffold(
+        containerColor = MainColor,
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(
+                        text = "Biz bilan bog'lanish",
+                        fontSize = 22.sp,
+                        color = TextColor2
+                    )
+                },
+                navigationIcon = {
+                    IconButton(onClick = { navController.popBackStack() }) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = "Orqaga",
+                            tint = TextColor2
+                        )
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MainColor
+                )
             )
-            Spacer(Modifier.width(14.dp))
-            Text(text = "Biz bilan bog'lanish", fontSize = 22.sp, color = Color.Black)
         }
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MainColor)
+                .padding(innerPadding)
+                .padding(horizontal = 16.dp),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Spacer(modifier = Modifier.height(24.dp))
+
+            OutlinedTextField(
+                value = fullName,
+                onValueChange = { fullName = it },
+                label = { Text("To'liq ismingiz") },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth(),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = TextColor2,
+                    unfocusedBorderColor = TextColor,
+                    focusedLabelColor = TextColor2,
+                    unfocusedLabelColor = TextColor,
+                    cursorColor = TextColor2
+                )
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            OutlinedTextField(
+                value = phoneNumber,
+                onValueChange = { phoneNumber = it },
+                label = { Text("Telefon raqamingiz") },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth(),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = TextColor2,
+                    unfocusedBorderColor = TextColor,
+                    focusedLabelColor = TextColor2,
+                    unfocusedLabelColor = TextColor,
+                    cursorColor = TextColor2
+                )
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            OutlinedTextField(
+                value = messageText,
+                onValueChange = { messageText = it },
+                label = { Text("Xabaringiz") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(120.dp),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = TextColor2,
+                    unfocusedBorderColor = TextColor,
+                    focusedLabelColor = TextColor2,
+                    unfocusedLabelColor = TextColor,
+                    cursorColor = TextColor2
+                )
+            )
+
+            Spacer(modifier = Modifier.height(32.dp))
+
+            Button(
+                onClick = {
+                    if (fullName.isNotEmpty() && phoneNumber.isNotEmpty() && messageText.isNotEmpty()) {
+                        val message =
+                            "Salom! Mening ismim: $fullName\nTelefon raqamim: $phoneNumber\nXabar: $messageText"
+                        val encodedMessage = Uri.encode(message)
+
+                        val telegramUsername = "Husanov_Doston"
+                        val intent = Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("https://t.me/$telegramUsername?text=$encodedMessage")
+                        )
+                        context.startActivity(intent)
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Maydonlar bo'sh bo'lmasligi kerak",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = TextColor,
+                    contentColor = MainColor
+                )
+            ) {
+                Text(text = "Xabar yuborish", fontSize = 16.sp)
+            }
+        }
+    }
+}
+@Preview(showBackground = true)
+@Composable
+fun ContactScreenPreview(){
+    TibbiyKomakTheme {
+        ContactScreen(rememberNavController())
     }
 }

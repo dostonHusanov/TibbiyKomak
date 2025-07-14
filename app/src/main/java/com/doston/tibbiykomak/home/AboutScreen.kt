@@ -1,166 +1,188 @@
 package com.doston.tibbiykomak.home
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.layout.systemBars
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.doston.tibbiykomak.R
 import com.doston.tibbiykomak.ui.theme.MainColor
 import com.doston.tibbiykomak.ui.theme.TextColor
+import com.doston.tibbiykomak.ui.theme.TextColor2
 import com.doston.tibbiykomak.ui.theme.TibbiyKomakTheme
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AboutScreen(navController: NavController) {
-    Column(
-        modifier = Modifier.padding(WindowInsets.statusBars.asPaddingValues()).padding(WindowInsets.systemBars.asPaddingValues())
-            .fillMaxSize()
-            .background(MainColor),
-        horizontalAlignment = Alignment.CenterHorizontally,
-
-        ) {
-        Row(
+    Scaffold(
+        containerColor = MainColor,
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(
+                        text = "Ilova Haqida",
+                        fontSize = 22.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = TextColor2
+                    )
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MainColor,
+                    titleContentColor = TextColor
+                ),
+                navigationIcon = {
+                    IconButton(onClick = { navController.popBackStack() }) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = "Orqaga",
+                            tint = TextColor2
+                        )
+                    }
+                }
+            )
+        }
+    ) { innerPadding ->
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 14.dp),
-            horizontalArrangement = Arrangement.Start
+                .fillMaxSize()
+                .padding(innerPadding)
+                .padding(horizontal = 16.dp)
+                .verticalScroll(rememberScrollState()),
         ) {
-            Image(
+            // App Logo
+            Icon(
+                painter = painterResource(R.drawable.wel_text),
+                contentDescription = null,
                 modifier = Modifier
-                    .shadow(elevation = 0.dp, shape = CircleShape, clip = true)
-                    .size(26.dp)
-                    .clickable { navController.popBackStack() },
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = "",
+                    .size(80.dp)
+                    .align(Alignment.CenterHorizontally)
+                    .padding(top = 8.dp),
+                tint = TextColor
             )
 
-            Text(text = "Ilova Haqida", fontSize = 22.sp, color = Color.Black)
+            Spacer(modifier = Modifier.height(16.dp))
+            SectionHeader("🩺 Tibbiy Ko'mak — Sizning Shaxsiy Sog‘liqni Saqlash Yordamchingiz")
+
+            SectionText("Tibbiy Ko'mak — bu sizning kundalik sog‘lig‘ingizni nazorat qilishda yordam beradigan ilova. Dori eslatmalari, kasalliklar haqida ma'lumotlar va ko‘plab foydali funksiyalarni taqdim etadi.")
+
+            Spacer(modifier = Modifier.height(20.dp))
+            SectionHeader("🔧 Asosiy xususiyatlar")
+
+            val features = listOf(
+                "Dori eslatmalari.",
+                "Kasalliklar haqida ma'lumot.",
+                "Shaxsiy profil.",
+                "Bog'lanish funksiyasi.",
+                "Tungi va kunduzgi rejimlar."
+            )
+            BulletList(items = features)
+
+            Spacer(modifier = Modifier.height(20.dp))
+            SectionHeader("🎯 Kimlar uchun mo‘ljallangan")
+
+            val people = listOf(
+                "Doimiy dori iste'mol qiluvchi insonlar uchun.",
+                "Yoshi katta, eslatmalarga muhtoj foydalanuvchilar uchun.",
+                "Farzandlariga dori eslatmalarini sozlamoqchi bo‘lgan ota-onalar uchun.",
+                "Sog‘lig‘ini nazorat qilmoqchi bo‘lgan foydalanuvchilar uchun.",
+                "Oddiy va o‘zbek tilidagi ilovani afzal ko‘radiganlar uchun.",
+                "Murakkab tibbiy ilovalardan charchagan foydalanuvchilar uchun.",
+                "Nogironligi bor va eslatmaga ehtiyoji bo‘lgan insonlar uchun.",
+                "Tibbiy ma’lumotlarga tezkor kirishni xohlaydiganlar uchun."
+            )
+            BulletList(items = people)
+
+            Spacer(modifier = Modifier.height(20.dp))
+            SectionHeader("🛡️ Nima uchun Tibbiy Ko'mak?")
+
+            val reasons = listOf(
+                "Oson va tushunarli dizayn.",
+                "To‘liq o‘zbek tilida.",
+                "Internetga bog‘liq bo‘lmagan holda ishlaydi.",
+                "Sog‘lig‘ingiz siz uchun muhim bo‘lgani kabi, biz uchun ham muhim."
+            )
+            BulletList(items = reasons)
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            Text(
+                text = "Ilova versiyasi: 1.0.0",
+                fontSize = 14.sp,
+                color = TextColor2
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            Text(
+                text = "© 2025 Tibbiy Ko'mak. Barcha huquqlar himoyalangan.",
+                fontSize = 12.sp,
+                color = TextColor2
+            )
         }
-        LazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
-            item {
-                Text(
-                    text = "Tibbiy Ko'mak — Sizning Shaxsiy Sog‘liqni Saqlash Yordamchingiz",
-                    color = TextColor,
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(horizontal = 10.dp)
-                )
-            }
-            item {
-                Text(
-                    text = "Tibbiy Ko'mak — bu foydalanuvchi uchun qulay sog‘liqni saqlash ilovasi bo‘lib, kunlik sog‘lig‘ingizni nazorat qilishda yordam beradi. Dori eslatmalari, kasalliklar haqida ma’lumotlar va foydali funksiyalar bir joyda jamlangan.",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Normal,
-                    color = TextColor,
-                    modifier = Modifier.padding(horizontal = 10.dp)
-                )
-            }
-            item {
-                Text(
-                    text = "\uD83C\uDF1F Asosiy xususiyatlar:\n" +
-                            "\uD83D\uDC8A Dori eslatmalari — Doringizni ichishni unutmang! Har kuni eslatmalarni sozlang va davolanish tartibingizni nazorat qiling.\n" +
-                            "\n" +
-                            "\uD83D\uDCDA Kasalliklar haqida ma'lumot — Eng ko‘p uchraydigan kasalliklar va ularning davosi haqida sodda va tushunarli tarzda o‘qing.\n" +
-                            "\n" +
-                            "\uD83D\uDCC7 Shaxsiy profil — Yoshingiz, ism-familiyangiz va telefon raqamingizni saqlang, shaxsiylashtirilgan xizmatlardan foydalaning.\n" +
-                            "\n" +
-                            "\uD83D\uDCE8 Bog‘lanish bo‘limi — Taklif yoki savollaringiz bo‘lsa, biz bilan osongina bog‘laning.\n" +
-                            "\n" +
-                            "ℹ\uFE0F Ilova haqida — Ilovaning qanday ishlashi va sizga qanday foyda keltirishi haqida ma'lumot oling.\n" +
-                            "\n",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Normal,
-                    color = TextColor,
-                    modifier = Modifier.padding(horizontal = 10.dp)
-                )
-            }
-            item {
-                Text(
-                    text = " Kimlar uchun mo‘ljallangan:\n" +
-                            "Doimiy dori ichadigan foydalanuvchilar\n" +
-                            "\n" +
-                            "Keksalar va eslatmalarga muhtoj bo‘lganlar\n" +
-                            "\n" +
-                            "Soddaligi va o‘zbek tilida bo‘lgan ilovalarni afzal ko‘radiganlar\n" +
-                            "\n",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Normal,
-                    color = TextColor,
-                    modifier = Modifier.padding(horizontal = 10.dp)
-                )
-            }
-            item {
-                Text(
-                    text = "\uD83D\uDEE1\uFE0F Nima uchun aynan Tibbiy Ko'mak?\n" +
-                            "Oson va tushunarli dizayn\n" +
-                            "\n" +
-                            "To‘liq o‘zbek tilida\n" +
-                            "\n" +
-                            "Internetga bog‘liq bo‘lmagan holda ishlaydi\n" +
-                            "\n" +
-                            "Sog‘lig‘ingiz siz uchun muhim bo‘lgani kabi, biz uchun ham muhim\n" +
-                            "\n",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Normal,
-                    color = TextColor,
-                    modifier = Modifier.padding(horizontal = 10.dp)
-                )
-
-            }
-        }
-
-        Spacer(modifier = Modifier.height(10.dp))
-        Spacer(modifier = Modifier.height(10.dp))
-        Spacer(modifier = Modifier.height(10.dp))
-        Spacer(modifier = Modifier.height(10.dp))
-        Text(
-            text = "\uD83D\uDEE1\uFE0F Nima uchun aynan Tibbiy Ko'mak?\n" +
-                    "Oson va tushunarli dizayn\n" +
-                    "\n" +
-                    "To‘liq o‘zbek tilida\n" +
-                    "\n" +
-                    "Internetga bog‘liq bo‘lmagan holda ishlaydi\n" +
-                    "\n" +
-                    "Sog‘lig‘ingiz siz uchun muhim bo‘lgani kabi, biz uchun ham muhim\n" +
-                    "\n",
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Normal,
-            color = TextColor,
-            modifier = Modifier.padding(horizontal = 10.dp)
-        )
-
     }
 }
 
+@Composable
+fun SectionHeader(title: String) {
+    Text(
+        text = title,
+        fontSize = 20.sp,
+        fontWeight = FontWeight.SemiBold,
+        color = TextColor,
+        modifier = Modifier.padding(bottom = 4.dp)
+    )
+}
+
+@Composable
+fun SectionText(text: String) {
+    Text(
+        text = text,
+        fontSize = 16.sp,
+        color = TextColor2,
+        modifier = Modifier.padding(bottom = 8.dp)
+    )
+}
+
+@Composable
+fun BulletList(items: List<String>) {
+    items.forEach { item ->
+        Text(
+            text = "• $item",
+            fontSize = 16.sp,
+            color = TextColor,
+            modifier = Modifier.padding(vertical = 2.dp)
+        )
+    }
+}
 @Preview(showBackground = true)
 @Composable
-fun AboutScreenPreview() {
-    TibbiyKomakTheme { AboutScreen(rememberNavController()) }
+fun AboutScreenPreview(){
+    TibbiyKomakTheme {
+        AboutScreen(rememberNavController())
+    }
 }
