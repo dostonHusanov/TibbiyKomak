@@ -48,8 +48,9 @@ fun PillInfoScreen(data: ReminderData, navController: NavController) {
             .fillMaxSize()
             .background(MainColor)
             .padding(WindowInsets.statusBars.asPaddingValues())
+            .padding(WindowInsets.systemBars.asPaddingValues())
             .padding(horizontal = 16.dp)
-            .padding(WindowInsets.systemBars.asPaddingValues()),
+            ,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {

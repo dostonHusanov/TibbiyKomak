@@ -14,18 +14,22 @@ import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.doston.tibbiykomak.R
 import com.doston.tibbiykomak.navigation.MainNav
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
            // window.statusBarColor = ContextCompat.getColor(this, R.color.background)
 //window.navigationBarColor=ContextCompat.getColor(this, R.color.background)
+
+
             MainNav(context = applicationContext)
             requestAlarmPermissions()
             requestBatteryOptimization()

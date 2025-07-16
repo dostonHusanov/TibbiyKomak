@@ -21,7 +21,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.doston.tibbiykomak.R
-import com.doston.tibbiykomak.ui.theme.BColor
 import com.doston.tibbiykomak.ui.theme.MainColor
 import com.doston.tibbiykomak.ui.theme.TextColor
 import com.google.accompanist.pager.*

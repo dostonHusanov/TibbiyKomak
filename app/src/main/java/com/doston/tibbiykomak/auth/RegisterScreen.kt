@@ -84,6 +84,7 @@ fun RegisterScreen(onFinish: () -> Unit) {
                 onValueChange = { age.value = it },
                 keyboardType = KeyboardType.Number
             )
+
             RoundedTextField(
                 label = "Telefon raqam",
                 value = phoneNumber.value,

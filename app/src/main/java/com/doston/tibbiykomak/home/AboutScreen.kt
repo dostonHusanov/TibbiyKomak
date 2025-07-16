@@ -2,6 +2,7 @@ package com.doston.tibbiykomak.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -75,12 +76,12 @@ fun AboutScreen(navController: NavController) {
                 .verticalScroll(rememberScrollState()),
         ) {
 
-            SectionHeader("🩺 Tibbiy Ko'mak — Sizning Shaxsiy Sog‘liqni Saqlash Yordamchingiz")
+            SectionHeader("Tibbiy Ko'mak — Sizning Shaxsiy Sog‘liqni Saqlash Yordamchingiz")
             Spacer(modifier = Modifier.height(10.dp))
             SectionText("Tibbiy Ko'mak — bu sizning kundalik sog‘lig‘ingizni nazorat qilishda yordam beradigan ilova. Dori eslatmalari, kasalliklar haqida ma'lumotlar va ko‘plab foydali funksiyalarni taqdim etadi.")
 
             Spacer(modifier = Modifier.height(20.dp))
-            SectionHeader("🔧 Asosiy xususiyatlar")
+            SectionHeader("Asosiy xususiyatlar")
 
             val features = listOf(
                 "Dori eslatmalari.",
@@ -92,7 +93,7 @@ fun AboutScreen(navController: NavController) {
             BulletList(items = features)
 
             Spacer(modifier = Modifier.height(20.dp))
-            SectionHeader("🎯 Kimlar uchun mo‘ljallangan")
+            SectionHeader("Kimlar uchun mo‘ljallangan")
 
             val people = listOf(
                 "Doimiy dori iste'mol qiluvchi insonlar uchun.",
@@ -107,7 +108,7 @@ fun AboutScreen(navController: NavController) {
             BulletList(items = people)
 
             Spacer(modifier = Modifier.height(20.dp))
-            SectionHeader("🛡️ Nima uchun Tibbiy Ko'mak?")
+            SectionHeader("Nima uchun Tibbiy Ko'mak?")
 
             val reasons = listOf(
                 "Oson va tushunarli dizayn.",
@@ -143,7 +144,7 @@ fun SectionHeader(title: String) {
         fontSize = 20.sp,
         fontWeight = FontWeight.SemiBold,
         color = TextColor2,
-        modifier = Modifier.padding(bottom = 4.dp)
+        modifier = Modifier
     )
 }
 
@@ -152,21 +153,28 @@ fun SectionText(text: String) {
     Text(
         text = text,
         fontSize = 16.sp,
-        color = TextColor2,
-        modifier = Modifier.padding(bottom = 8.dp)
+        color = TextColor,
+        modifier = Modifier.padding(horizontal = 10.dp, vertical = 8.dp)
     )
 }
 
 @Composable
 fun BulletList(items: List<String>) {
     items.forEach { item ->
+        Row(modifier = Modifier.padding(horizontal = 4.dp), verticalAlignment = Alignment.Top) {
         Text(
-            text = "• $item",
+            text = " • ",
+            fontSize = 16.sp,
+            color = TextColor,
+            modifier = Modifier.padding(vertical = 2.dp), fontWeight = FontWeight.Bold
+        )
+            Text(
+            text = item,
             fontSize = 16.sp,
             color = TextColor,
             modifier = Modifier.padding(vertical = 2.dp)
         )
-    }
+    }}
 }
 @Preview(showBackground = true)
 @Composable
