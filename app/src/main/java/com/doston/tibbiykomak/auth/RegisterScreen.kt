@@ -1,5 +1,6 @@
 package com.doston.tibbiykomak.auth
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -49,19 +50,18 @@ fun RegisterScreen(onFinish: () -> Unit) {
 
     Box(
         modifier = Modifier
-            .fillMaxSize() // Bright green base background
+            .fillMaxSize()
     ) {
         Box(modifier = Modifier.fillMaxSize().padding(WindowInsets.systemBars.asPaddingValues())) {
-            // Background image
+
             Image(
-                painter = painterResource(id = R.drawable.background1), // replace with your image
+                painter = painterResource(id = R.drawable.background1),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize()
             )
 
 
-        // Form content
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -100,8 +100,13 @@ fun RegisterScreen(onFinish: () -> Unit) {
                     age = age.value.toIntOrNull() ?: 0,
                     phoneNumber = phoneNumber.value
                 )
-                    dbHelper.insertUser(user)
-                    onFinish() },
+                    if(name.value.isNotEmpty()&&surname.value.isNotEmpty()&&age.value.isNotEmpty()&&phoneNumber.value.isNotEmpty()){
+                        dbHelper.insertUser(user)
+                        onFinish()
+                    }else{
+                        Toast.makeText(context, "Iltimos, barcha kataklarni to'ldiring", Toast.LENGTH_SHORT).show()
+                    }
+                     },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 24.dp)
