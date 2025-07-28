@@ -18,8 +18,8 @@ val TextColor2 = Color(0xFF0F1035)   // Very dark blue
 val AColor = Color(0xFF01702A)       // Dark green
 
 // Dark theme colors
-val DMainColor = Color(0xFF365486)   // Dark blue (background)
-val DRegColor = Color(0xFF0F1035)    // Very dark blue
-val DTextColor = Color(0xFFDCF2F1)   // Light mint/cyan (text)
-val DTextColor2 = Color(0xFF7FC7D9)  // Light blue (text)
+val DMainColor = Color(0xFF0F1035)   // Dark blue (background)
+val DRegColor = Color(0xFF365486)    // Very dark blue
+val DTextColor = Color(0xFF7FC7D9)   // Light mint/cyan (text)
+val DTextColor2 = Color(0xFFDCF2F1)  // Light blue (text)
 val DAColor = Color(0xFF01702A)      // Dark green

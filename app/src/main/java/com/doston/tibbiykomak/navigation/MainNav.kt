@@ -16,10 +16,11 @@ import com.doston.tibbiykomak.home.SecondHomeScreen
 import com.doston.tibbiykomak.onBoarding.OnBoardingScreen
 import com.doston.tibbiykomak.onBoarding.WelcomeScreen
 import com.doston.tibbiykomak.reminder.ReminderScreen
+import com.doston.tibbiykomak.ui.theme.ThemeViewModel
 
 @SuppressLint("RememberReturnType")
 @Composable
-fun MainNav(context: Context) {
+fun MainNav(context: Context,viewModel: ThemeViewModel) {
     val navController = rememberNavController()
 
     // Check if the user has completed the onboarding process
@@ -53,11 +54,11 @@ fun MainNav(context: Context) {
         }
 
         composable("main") {
-            SecondaryNav() // Main content screen for the quiz
+            SecondaryNav(viewModel =viewModel ) // Main content screen for the quiz
         }
 
         composable("homeScreen") {
-            HomeScreen(navController = navController,"Dostonbek",1)
+            HomeScreen(navController = navController,1, viewModel = viewModel)
         }
 
         composable("reminderScreen") { backStackEntry ->

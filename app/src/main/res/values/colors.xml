@@ -8,8 +8,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="background">#FF365486</color>
-    <color name="mainColor">#FF00FA7D</color>
-    <color name="TextColor">#FF016C29</color>
+    <color name="mainColor">#FFDCF2F1</color>
+    <color name="TextColor">#FF365486</color>
+    <color name="TextColor2">#FF0F1035</color>
     <color name="alarm_background">#2196F3</color>
     <color name="alarm_background_gradient_start">#1976D2</color>
     <color name="alarm_background_gradient_end">#2196F3</color>
@@ -19,4 +20,6 @@
     <color name="alarm_danger">#F44336</color>
     <color name="alarm_text_primary">#FFFFFF</color>
     <color name="alarm_text_secondary">#E0E0E0</color>
+
+
 </resources>

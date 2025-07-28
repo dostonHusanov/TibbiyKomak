@@ -15,10 +15,14 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.doston.tibbiykomak.R
 import com.doston.tibbiykomak.navigation.MainNav
+import com.doston.tibbiykomak.ui.theme.ThemeViewModel
 
 class MainActivity : ComponentActivity() {
 
@@ -29,23 +33,21 @@ class MainActivity : ComponentActivity() {
            // window.statusBarColor = ContextCompat.getColor(this, R.color.background)
 //window.navigationBarColor=ContextCompat.getColor(this, R.color.background)
 
-
-            MainNav(context = applicationContext)
+val viewModel:ThemeViewModel= viewModel()
+            val isDarkTheme by viewModel.themeDark.collectAsState()
+            MainNav(context = applicationContext,viewModel)
             requestAlarmPermissions()
-            requestBatteryOptimization()
+          //  requestBatteryOptimization()
         }
     }
-    @SuppressLint("BatteryLife")
+  /*  @SuppressLint("ObsoleteSdkInt")
     private fun requestBatteryOptimization() {
-        val powerManager = getSystemService(Context.POWER_SERVICE) as android.os.PowerManager
-        val isIgnoringOptimizations = powerManager.isIgnoringBatteryOptimizations(packageName)
-
-        if (!isIgnoringOptimizations) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val intent = Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)
             intent.data = Uri.parse("package:$packageName")
             startActivity(intent)
         }
-    }
+    }*/
     private fun requestAlarmPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager

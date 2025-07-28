@@ -3,7 +3,6 @@ package com.doston.tibbiykomak.navigation
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -11,27 +10,20 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Phone
-import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DrawerValue
@@ -47,13 +39,13 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -67,7 +59,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -89,11 +80,17 @@ import com.doston.tibbiykomak.reminder.PillEditScreen
 import com.doston.tibbiykomak.reminder.PillInfoScreen
 import com.doston.tibbiykomak.reminder.PillScreen
 import com.doston.tibbiykomak.reminder.ReminderScreen
+import com.doston.tibbiykomak.ui.theme.AColor
+import com.doston.tibbiykomak.ui.theme.DAColor
+import com.doston.tibbiykomak.ui.theme.DMainColor
+import com.doston.tibbiykomak.ui.theme.DRegColor
+import com.doston.tibbiykomak.ui.theme.DTextColor
+import com.doston.tibbiykomak.ui.theme.DTextColor2
 import com.doston.tibbiykomak.ui.theme.MainColor
 import com.doston.tibbiykomak.ui.theme.RegColor
 import com.doston.tibbiykomak.ui.theme.TextColor
 import com.doston.tibbiykomak.ui.theme.TextColor2
-import com.doston.tibbiykomak.ui.theme.TibbiyKomakTheme
+import com.doston.tibbiykomak.ui.theme.ThemeViewModel
 import kotlinx.coroutines.launch
 
 data class BottomNavItem(
@@ -105,7 +102,7 @@ data class BottomNavItem(
 @SuppressLint("StateFlowValueCalledInComposition", "SuspiciousIndentation")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SecondaryNav() {
+fun SecondaryNav(viewModel: ThemeViewModel) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val navController = rememberNavController()
@@ -114,6 +111,13 @@ fun SecondaryNav() {
     var user by remember { mutableStateOf<User?>(null) }
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
+    val isDarkTheme by viewModel.themeDark.collectAsState()
+    val mainColor = if (isDarkTheme) MainColor else DMainColor
+    val textColor = if (isDarkTheme) TextColor else DTextColor
+    val textColor2 = if (isDarkTheme) TextColor2 else DTextColor2
+    val regColor = if (isDarkTheme) RegColor else DRegColor
+    val aColor = if (isDarkTheme) AColor else DAColor
+
     LaunchedEffect(Unit) {
         user = dbHelper.getUser()
     }
@@ -121,26 +125,40 @@ fun SecondaryNav() {
         BottomNavItem(
             route = "homeScreen",
             title = "Bosh sahifa",
-            icon = { Icon(painterResource(R.drawable.home), contentDescription = "Home") }
+            icon = {
+                Icon(
+                    painterResource(R.drawable.home),
+                    contentDescription = "Home",
+                    tint = textColor
+                )
+            }
         ),
         BottomNavItem(
             route = "reminderScreen",
             title = "Eslatma",
-            icon = { Icon(painterResource(R.drawable.bell), contentDescription = "Reminder") }
+            icon = {
+                Icon(
+                    painterResource(R.drawable.bell),
+                    contentDescription = "Reminder",
+                    tint = textColor
+                )
+            }
         )
     )
 
 
 
-    ModalNavigationDrawer( gesturesEnabled = currentRoute != "infoScreen",
+    ModalNavigationDrawer(gesturesEnabled = currentRoute != "infoScreen",
         drawerState = drawerState, modifier = Modifier,
         drawerContent = {
             ModalDrawerSheet(drawerContainerColor = MainColor) {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(MainColor)
-                        .verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.SpaceBetween) {
+                        .background(mainColor)
+                        .verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.SpaceBetween
+                ) {
 
                     Column(modifier = Modifier.fillMaxWidth()) {
                         Row(
@@ -153,35 +171,36 @@ fun SecondaryNav() {
                             Card(
                                 shape = CircleShape,
                                 modifier = Modifier.padding(10.dp),
-                                colors = CardDefaults.cardColors(TextColor2)
+                                colors = CardDefaults.cardColors(textColor2)
                             ) {
                                 Card(
                                     shape = CircleShape,
                                     modifier = Modifier.padding(3.dp),
-                                    colors = CardDefaults.cardColors(MainColor)
+                                    colors = CardDefaults.cardColors(mainColor)
                                 ) {
-                                    Image(
+                                    Icon(
                                         imageVector = Icons.Default.Person,
                                         contentDescription = "Profile image",
                                         modifier = Modifier
                                             .size(60.dp)
-                                            .padding(6.dp),
+                                            .padding(6.dp), tint = textColor
                                     )
                                 }
                             }
-                            var isDarkMode by remember { mutableStateOf(true) }
 
                             Icon(
                                 painter = painterResource(
-                                    if (isDarkMode) R.drawable.night_mode else R.drawable.light_mode
-                                ),
-                                contentDescription = "Mode",
+                                    if (isDarkTheme) R.drawable.night_mode else R.drawable.light_mode
+                                ), tint = textColor,
+                                contentDescription = "Toggle Theme",
                                 modifier = Modifier
                                     .size(34.dp)
                                     .clip(CircleShape)
-                                    .background(MainColor) // Optional: background to see shadow properly
+                                    .background(mainColor)
                                     .shadow(0.dp, shape = CircleShape)
-                                    .clickable { isDarkMode = !isDarkMode }
+                                    .clickable {
+                                        viewModel.setTheme(!isDarkTheme)
+                                    }
                             )
                         }
 
@@ -189,24 +208,24 @@ fun SecondaryNav() {
                         Text(
                             "${user?.name} ${user?.surname}",
                             modifier = Modifier.padding(horizontal = 16.dp),
-                            fontSize = 18.sp, fontWeight = FontWeight.Bold
+                            fontSize = 18.sp, fontWeight = FontWeight.Bold, color = textColor
                         )
                         Spacer(Modifier.height(2.dp))
                         Text(
                             "${user?.age} yosh",
                             modifier = Modifier.padding(horizontal = 16.dp),
-                            fontSize = 16.sp, fontWeight = FontWeight.SemiBold
+                            fontSize = 16.sp, fontWeight = FontWeight.SemiBold, color = textColor
                         )
                         Spacer(Modifier.height(2.dp))
                         Text(
                             "${user?.phoneNumber}",
                             modifier = Modifier.padding(horizontal = 16.dp),
-                            fontSize = 16.sp, fontWeight = FontWeight.SemiBold
+                            fontSize = 16.sp, fontWeight = FontWeight.SemiBold, color = textColor
                         )
 
                         HorizontalDivider(
                             modifier = Modifier.padding(vertical = 10.dp),
-                            color = TextColor
+                            color = textColor
                         )
 
                         NavigationDrawerItem(
@@ -219,13 +238,14 @@ fun SecondaryNav() {
 
                             },
                             colors = NavigationDrawerItemDefaults.colors(
-                                unselectedContainerColor = TextColor,
-                                unselectedTextColor = MainColor,
-                                unselectedBadgeColor = MainColor,
-                                unselectedIconColor = MainColor
+                                unselectedContainerColor = textColor,
+                                unselectedTextColor = mainColor,
+                                unselectedBadgeColor = mainColor,
+                                unselectedIconColor = mainColor
                             ),
-                            modifier = Modifier.padding(horizontal = 16.dp)
-                                .background(shape = RoundedCornerShape(10.dp), color = TextColor)
+                            modifier = Modifier
+                                .padding(horizontal = 16.dp)
+                                .background(shape = RoundedCornerShape(10.dp), color = textColor)
                         )
                         Spacer(Modifier.height(10.dp))
                         NavigationDrawerItem(
@@ -238,13 +258,14 @@ fun SecondaryNav() {
                                 navController.navigate("contactScreen")
                             },
                             colors = NavigationDrawerItemDefaults.colors(
-                                unselectedContainerColor = TextColor,
-                                unselectedTextColor = MainColor,
-                                unselectedBadgeColor = MainColor,
-                                unselectedIconColor = MainColor
+                                unselectedContainerColor = textColor,
+                                unselectedTextColor = mainColor,
+                                unselectedBadgeColor = mainColor,
+                                unselectedIconColor = mainColor
                             ),
-                            modifier = Modifier.padding(horizontal = 16.dp)
-                                .background(shape = RoundedCornerShape(10.dp), color = TextColor)
+                            modifier = Modifier
+                                .padding(horizontal = 16.dp)
+                                .background(shape = RoundedCornerShape(10.dp), color = textColor)
                         )
                     }
                     Spacer(Modifier.height(10.dp))
@@ -307,7 +328,7 @@ fun SecondaryNav() {
                                     intent.data = Uri.parse("tel:+998918032662")
                                     context.startActivity(intent)
                                 },
-                            tint = Color.Unspecified
+                            tint = textColor
 
                         )
                     }
@@ -332,12 +353,12 @@ fun SecondaryNav() {
                                 text = "Tibbiy Ko'mak",
                                 fontSize = 22.sp,
                                 fontWeight = FontWeight.SemiBold,
-                                color = TextColor2
+                                color = textColor2
                             )
                         },
                         colors = TopAppBarDefaults.topAppBarColors(
-                            containerColor = MainColor,
-                            titleContentColor = TextColor
+                            containerColor = mainColor,
+                            titleContentColor = textColor
                         ),
                         navigationIcon = {
                             IconButton(onClick = {
@@ -345,18 +366,24 @@ fun SecondaryNav() {
                                     if (drawerState.isClosed) drawerState.open() else drawerState.close()
                                 }
                             }) {
-                                Icon(Icons.Default.Menu, contentDescription = "Menu")
+                                Icon(
+                                    Icons.Default.Menu,
+                                    contentDescription = "Menu",
+                                    tint = textColor2
+                                )
                             }
                         }
                     )
                 },
                 bottomBar = {
-                    NavigationBar(containerColor = MainColor, modifier = Modifier.border(1.dp,
-                        TextColor2)) {
+                    NavigationBar(
+                        containerColor = mainColor,
+                        modifier = Modifier.border(0.3.dp, textColor2)
+                    ) {
                         bottomNavItems.forEach { item ->
-                            NavigationBarItem(modifier = Modifier.size(20.dp),
+                            NavigationBarItem(
+                                modifier = Modifier.size(20.dp),
                                 selected = currentRoute == item.route,
-
                                 onClick = {
                                     navController.navigate(item.route) {
                                         popUpTo(navController.graph.findStartDestination().id) {
@@ -366,23 +393,25 @@ fun SecondaryNav() {
                                         restoreState = true
                                     }
                                 },
-                                icon = {
-item.icon()
-
-                                       },
-
-                                label = { Text(text = item.title, fontSize = 10.sp) },
+                                icon = { item.icon() },
+                                label = {
+                                    Text(
+                                        text = item.title,
+                                        fontSize = 10.sp
+                                    )
+                                },
                                 colors = NavigationBarItemDefaults.colors(
-                                    selectedIconColor = MainColor,
-                                    unselectedIconColor = TextColor,
-                                    selectedTextColor = TextColor,
-                                    unselectedTextColor = TextColor,
-                                    indicatorColor = TextColor
+                                    selectedIconColor = textColor2,
+                                    unselectedIconColor = textColor2,
+                                    selectedTextColor = textColor2,
+                                    unselectedTextColor = textColor2,
+                                    indicatorColor = regColor
                                 )
                             )
                         }
                     }
                 }
+
             ) { innerPadding ->
                 NavHost(
                     navController = navController,
@@ -390,7 +419,7 @@ item.icon()
                     modifier = Modifier.padding(innerPadding)
                 ) {
                     composable("homeScreen") {
-                        HomeScreen(navController, userName = user?.name.toString(), categoryId = 1)
+                        HomeScreen(navController, categoryId = 1, viewModel = viewModel)
                     }
 
                     composable("reminderScreen") {
@@ -446,7 +475,7 @@ item.icon()
                 }
 
                 composable("homeScreen") {
-                    HomeScreen(navController, userName = user?.name.toString(), categoryId = 1)
+                    HomeScreen(navController, categoryId = 1, viewModel = viewModel)
                 }
 
                 composable("reminderScreen") {
@@ -481,10 +510,3 @@ item.icon()
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun SecondaryNawPreview(){
-    TibbiyKomakTheme {
-        SecondaryNav()
-    }
-}

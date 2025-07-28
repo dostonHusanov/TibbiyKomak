@@ -1,4 +1,6 @@
 package com.doston.tibbiykomak.home
+
+import android.app.Activity
 import android.content.Context
 import android.media.AudioAttributes
 import android.media.AudioManager
@@ -15,7 +17,6 @@ import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
-import android.app.Activity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -42,8 +43,8 @@ class FullScreenAlarmActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        window.statusBarColor = ContextCompat.getColor(this, R.color.background)
-        window.navigationBarColor= ContextCompat.getColor(this, R.color.background)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.mainColor)
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.mainColor)
         Log.d(TAG, "FullScreenAlarmActivity started")
 
         setupWindowFlags()
@@ -56,7 +57,12 @@ class FullScreenAlarmActivity : Activity() {
             findViewById<View>(R.id.main)?.let { mainView ->
                 ViewCompat.setOnApplyWindowInsetsListener(mainView) { v, insets ->
                     val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-                    v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+                    v.setPadding(
+                        systemBars.left,
+                        systemBars.top,
+                        systemBars.right,
+                        systemBars.bottom
+                    )
                     insets
                 }
             }
@@ -178,7 +184,8 @@ class FullScreenAlarmActivity : Activity() {
     private fun startVibration() {
         try {
             vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                val vibratorManager = getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+                val vibratorManager =
+                    getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
                 vibratorManager.defaultVibrator
             } else {
                 @Suppress("DEPRECATION")
@@ -234,7 +241,8 @@ class FullScreenAlarmActivity : Activity() {
         val timeRunnable = object : Runnable {
             override fun run() {
                 if (isAlarmActive) {
-                    val currentTime = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
+                    val currentTime =
+                        SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
                     binding.timeText.text = currentTime
                     handler.postDelayed(this, 1000)
                 }

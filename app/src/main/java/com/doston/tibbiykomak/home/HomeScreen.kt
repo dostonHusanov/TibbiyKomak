@@ -26,6 +26,8 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -44,26 +46,42 @@ import androidx.navigation.compose.rememberNavController
 import com.doston.tibbiykomak.R
 import com.doston.tibbiykomak.data.getIllnessList
 import com.doston.tibbiykomak.ui.theme.AColor
+import com.doston.tibbiykomak.ui.theme.DAColor
+import com.doston.tibbiykomak.ui.theme.DMainColor
+import com.doston.tibbiykomak.ui.theme.DRegColor
+import com.doston.tibbiykomak.ui.theme.DTextColor
+import com.doston.tibbiykomak.ui.theme.DTextColor2
 import com.doston.tibbiykomak.ui.theme.MainColor
+import com.doston.tibbiykomak.ui.theme.RegColor
 import com.doston.tibbiykomak.ui.theme.TextColor
 import com.doston.tibbiykomak.ui.theme.TextColor2
+import com.doston.tibbiykomak.ui.theme.ThemeViewModel
 import com.doston.tibbiykomak.ui.theme.TibbiyKomakTheme
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun HomeScreen(
     navController: NavController,
-    userName: String,
     categoryId: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,viewModel: ThemeViewModel
 ) {
+
+
     val illnessList = getIllnessList(categoryId)
     val grouped = illnessList.groupBy { it.category }
     val nestedScrollInterop = rememberNestedScrollInteropConnection()
+    val isDarkTheme by viewModel.themeDark.collectAsState()
+    val mainColor= if (isDarkTheme) MainColor else DMainColor
+    val textColor=if (isDarkTheme) TextColor else DTextColor
+    val textColor2=if(isDarkTheme) TextColor2 else DTextColor2
+    val regColor=if (isDarkTheme) RegColor else DRegColor
+    val aColor=if(isDarkTheme) AColor else DAColor
+
+
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .background(MainColor)
+            .background(mainColor)
             .nestedScroll(nestedScrollInterop)
     ) {
         grouped.forEach { (category, illnesses) ->
@@ -74,7 +92,8 @@ fun HomeScreen(
                     fontSize = 22.sp,
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(horizontal = 12.dp)
+                    modifier = Modifier.padding(horizontal = 12.dp),
+                    color = textColor
                 )
             }
 
@@ -95,7 +114,7 @@ fun HomeScreen(
                                     illness
                                 )
                                 navController.navigate("infoScreen")
-                            }
+                            }, viewModel = viewModel
                         )
                     }
                 }
@@ -112,8 +131,16 @@ fun HomeItem(
     desc: String,
     imageRes: Int,
     modifier: Modifier = Modifier,
-    onClick: () -> Unit = {}
+    onClick: () -> Unit = {},viewModel: ThemeViewModel
 ) {
+    val isDarkTheme by viewModel.themeDark.collectAsState()
+
+    val mainColor= if (isDarkTheme) MainColor else DMainColor
+    val textColor=if (isDarkTheme) TextColor else DTextColor
+    val textColor2=if(isDarkTheme) TextColor2 else DTextColor2
+    val regColor=if (isDarkTheme) RegColor else DRegColor
+    val aColor=if(isDarkTheme) AColor else DAColor
+
     Card(
         modifier = modifier
             .height(140.dp)
@@ -124,7 +151,7 @@ fun HomeItem(
             modifier = Modifier
                 .fillMaxSize()
                 .background(
-                    color = TextColor
+                    color = textColor
                 )
         ) {
             Row(
@@ -145,7 +172,7 @@ fun HomeItem(
                         fontWeight = FontWeight.Bold,
                         fontSize = 24.sp,
                         maxLines = 1,
-                        color = MainColor
+                        color = mainColor
                        // color = TextColor2
                     )
                     Text(
@@ -153,7 +180,7 @@ fun HomeItem(
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 12.sp,
                         maxLines = 3,
-                        color = MainColor,
+                        color = mainColor,
                        // color = Color(0xFF004B1C),
                         overflow = TextOverflow.Ellipsis
                     )
@@ -165,8 +192,8 @@ fun HomeItem(
                         onClick = onClick,
                         shape = RoundedCornerShape(8.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = MainColor,
-                            contentColor = TextColor
+                            containerColor =mainColor,
+                            contentColor =textColor
                         ),
                         contentPadding = PaddingValues(0.dp)
                     ) {
@@ -174,13 +201,16 @@ fun HomeItem(
                     }
                     Spacer(modifier = Modifier.height(4.dp))
                 }
-                Column(modifier = Modifier.background(color = MainColor, shape = CircleShape).size(80.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+                Column(modifier = Modifier
+                    .background(color = mainColor, shape = CircleShape)
+                    .size(80.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
                     Image(
                         painter = painterResource(id = imageRes),
                         contentDescription = "Image for $title",
                         modifier = Modifier
                             .size(70.dp)
-                            .weight(1f).padding(2.dp)
+                            .weight(1f)
+                            .padding(2.dp)
                     )
                 }
 
@@ -190,24 +220,3 @@ fun HomeItem(
 }
 
 
-@Preview(showBackground = true)
-@Composable
-fun HomeItemPreview() {
-    HomeItem(
-        title = "Bosh og'rig'i",
-        imageRes = R.drawable.headache,
-        desc = "Bosh og'rig'i deyarli barchamiz bir vaqtning o'zida boshdan kechirgan hayratlanarli keng tarqalgan tibbiy shikoyatdir."
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun HomeScreenPreview() {
-    TibbiyKomakTheme {
-        HomeScreen(
-            navController = rememberNavController(),
-            userName = "Doston",
-            categoryId = 1
-        )
-    }
-}

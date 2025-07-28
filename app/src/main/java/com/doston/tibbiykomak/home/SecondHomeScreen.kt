@@ -177,15 +177,6 @@ fun SecondHomeItem(
 }
 
 
-@Preview(showBackground = true)
-@Composable
-fun SecondHomeItemPreview() {
-    HomeItem(
-        title = "Bosh og'rig'i",
-        imageRes = R.drawable.headache,
-        desc = "Bosh og'rig'i deyarli barchamiz bir vaqtning o'zida boshdan kechirgan hayratlanarli keng tarqalgan tibbiy shikoyatdir."
-    )
-}
 
 @Preview(showBackground = true)
 @Composable
