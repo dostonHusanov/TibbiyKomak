@@ -423,13 +423,13 @@ fun SecondaryNav(viewModel: ThemeViewModel) {
                     }
 
                     composable("reminderScreen") {
-                        ReminderScreen(navController)
+                        ReminderScreen(navController,viewModel)
                     }
                     composable("pillScreen") {
-                        PillScreen(navController)
+                        PillScreen(navController,viewModel)
                     }
                     composable("pillAdd") {
-                        PillAddScreen(navController)
+                        PillAddScreen(navController,viewModel)
                     }
 
                     composable("aboutScreen") { AboutScreen(navController) }
@@ -445,17 +445,17 @@ fun SecondaryNav(viewModel: ThemeViewModel) {
                         val pillInfo = navController.previousBackStackEntry
                             ?.savedStateHandle?.get<ReminderData>("pillInfo")
                         pillInfo?.let {
-                            PillInfoScreen(data = it, navController)
+                            PillInfoScreen(data = it, navController,viewModel)
                         }
                     }
                     composable("pillEdit") { backStackEntry ->
                         val pillEdit = navController.previousBackStackEntry
                             ?.savedStateHandle?.get<ReminderData>("pillEdit")
                         pillEdit?.let {
-                            PillEditScreen(pills = it, navController)
+                            PillEditScreen(pills = it, navController,viewModel)
                         }
                         if (pillEdit != null) {
-                            PillEditScreen(pills = pillEdit, navController)
+                            PillEditScreen(pills = pillEdit, navController,viewModel)
                         }
                     }
                 }
@@ -479,29 +479,29 @@ fun SecondaryNav(viewModel: ThemeViewModel) {
                 }
 
                 composable("reminderScreen") {
-                    ReminderScreen(navController)
+                    ReminderScreen(navController,viewModel)
                 }
                 composable("pillScreen") {
-                    PillScreen(navController)
+                    PillScreen(navController,viewModel)
                 }
                 composable("pillAdd") {
-                    PillAddScreen(navController)
+                    PillAddScreen(navController,viewModel)
                 }
                 composable("pillInfo") { backStackEntry ->
                     val pillInfo = navController.previousBackStackEntry
                         ?.savedStateHandle?.get<ReminderData>("pillInfo")
                     pillInfo?.let {
-                        PillInfoScreen(data = it, navController)
+                        PillInfoScreen(data = it, navController,viewModel)
                     }
                 }
                 composable("pillEdit") { backStackEntry ->
                     val pillEdit = navController.previousBackStackEntry
                         ?.savedStateHandle?.get<ReminderData>("pillEdit")
                     pillEdit?.let {
-                        PillEditScreen(pills = it, navController)
+                        PillEditScreen(pills = it, navController,viewModel)
                     }
                     if (pillEdit != null) {
-                        PillEditScreen(pills = pillEdit, navController)
+                        PillEditScreen(pills = pillEdit, navController,viewModel)
                     }
                 }
 

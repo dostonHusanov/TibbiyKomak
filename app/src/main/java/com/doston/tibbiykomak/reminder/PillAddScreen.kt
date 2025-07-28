@@ -43,13 +43,22 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.doston.tibbiykomak.data.ReminderData
 import com.doston.tibbiykomak.database.UserDatabaseHelper
+import com.doston.tibbiykomak.ui.theme.AColor
+import com.doston.tibbiykomak.ui.theme.DAColor
+import com.doston.tibbiykomak.ui.theme.DMainColor
+import com.doston.tibbiykomak.ui.theme.DRegColor
+import com.doston.tibbiykomak.ui.theme.DTextColor
+import com.doston.tibbiykomak.ui.theme.DTextColor2
 import com.doston.tibbiykomak.ui.theme.MainColor
 import com.doston.tibbiykomak.ui.theme.RegColor
 import com.doston.tibbiykomak.ui.theme.TextColor
+import com.doston.tibbiykomak.ui.theme.TextColor2
+import com.doston.tibbiykomak.ui.theme.ThemeViewModel
 import com.doston.tibbiykomak.ui.theme.TibbiyKomakTheme
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -57,7 +66,7 @@ import java.time.YearMonth
 import java.util.*
 
 @Composable
-fun PillAddScreen(navController: NavController) {
+fun PillAddScreen(navController: NavController,viewModel: ThemeViewModel) {
     val context = LocalContext.current
     val dbHelper = remember { UserDatabaseHelper(context) }
     val name = remember { mutableStateOf("") }
@@ -67,13 +76,18 @@ fun PillAddScreen(navController: NavController) {
     val selectedDates = remember { mutableStateListOf<LocalDate>() }
     val showDatePicker = remember { mutableStateOf(false) }
     val timeStates = remember { List(6) { mutableStateOf("") } }
-
-    Scaffold(containerColor = MainColor) { innerPadding ->
+    val isDarkTheme by viewModel.themeDark.collectAsState()
+    val mainColor = if (isDarkTheme) MainColor else DMainColor
+    val textColor = if (isDarkTheme) TextColor else DTextColor
+    val textColor2 = if (isDarkTheme) TextColor2 else DTextColor2
+    val regColor = if (isDarkTheme) RegColor else DRegColor
+    val aColor = if (isDarkTheme) AColor else DAColor
+    Scaffold(containerColor = mainColor) { innerPadding ->
         LazyColumn(modifier = Modifier.padding(innerPadding)) {
             item {
                 Text(
                     text = "Dori qo'shish",
-                    color = TextColor,
+                    color = textColor,
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(10.dp)
@@ -81,10 +95,10 @@ fun PillAddScreen(navController: NavController) {
             }
 
             item {
-                CustomTextField("Dori nomi", name.value, { name.value = it })
+                CustomTextField("Dori nomi", name.value ,{ name.value = it }, viewModel = viewModel)
             }
             item {
-                CustomTextField("Dori xaqida qisqa malumot", desc.value, { desc.value = it })
+                CustomTextField("Dori xaqida qisqa malumot", desc.value, { desc.value = it }, viewModel = viewModel)
             }
             item {
                 Box(
@@ -92,7 +106,7 @@ fun PillAddScreen(navController: NavController) {
                         .fillMaxWidth()
                         .padding(10.dp)
                         .background(
-                            shape = RoundedCornerShape(10.dp), color = RegColor
+                            shape = RoundedCornerShape(10.dp), color = regColor
                         )
                         .clickable { showDatePicker.value = true },
                     contentAlignment = Alignment.CenterStart
@@ -100,12 +114,12 @@ fun PillAddScreen(navController: NavController) {
                     Text(
                         text = if (selectedDates.isEmpty()) "Sanalarni tanlang" else
                             selectedDates.joinToString { it.toString() },
-                        color = TextColor,
+                        color = textColor,
                         modifier = Modifier.padding(12.dp)
                     )
                 }
                 if (showDatePicker.value) {
-                    MultipleDatePickerDialog(selectedDates) {
+                    MultipleDatePickerDialog(selectedDates,viewModel) {
                         showDatePicker.value = false
                     }
                 }
@@ -118,20 +132,20 @@ fun PillAddScreen(navController: NavController) {
                     "1 kunda nechchi marta ichiladi",
                     timesPerDay.value,
                     { timesPerDay.value = it },
-                    KeyboardType.Number
+                    KeyboardType.Number,viewModel
                 )
             }
 
             val count = timesPerDay.value.toIntOrNull() ?: 0
             if (count in 1..6) {
                 items(count) { index ->
-                    TimePickerField(label = "Vaqtni tanlang", timeState = timeStates[index])
+                    TimePickerField(label = "Vaqtni tanlang", timeState = timeStates[index], viewModel = viewModel)
                 }
             } else if (count > 6) {
                 item {
                     Text(
                         "1 kunda 6 mahaldan ko'p dori icha olmaysiz!",
-                        color = Color.Red,
+                        color = textColor2,
                         fontWeight = FontWeight.SemiBold,
                         modifier = Modifier.padding(10.dp)
                     )
@@ -143,7 +157,7 @@ fun PillAddScreen(navController: NavController) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 10.dp, vertical = 10.dp)
-                        .background(shape = RoundedCornerShape(10.dp), color = TextColor)
+                        .background(shape = RoundedCornerShape(10.dp), color = textColor)
                         .clickable {
                             val selectedTimes = timeStates
                                 .take(count)
@@ -192,7 +206,7 @@ fun PillAddScreen(navController: NavController) {
                     Text(
                         text = "Saqlash",
                         fontSize = 18.sp,
-                        color = MainColor,
+                        color = mainColor,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(10.dp)
                     )
@@ -205,12 +219,17 @@ fun PillAddScreen(navController: NavController) {
 
 @Composable
 fun MultipleDatePickerDialog(
-    selectedDates: SnapshotStateList<LocalDate>,
+    selectedDates: SnapshotStateList<LocalDate>,viewModel: ThemeViewModel,
     onDismiss: () -> Unit
 ) {
     val today = remember { LocalDate.now() }
     val currentMonth = remember { mutableStateOf(YearMonth.now()) }
-
+    val isDarkTheme by viewModel.themeDark.collectAsState()
+    val mainColor = if (isDarkTheme) MainColor else DMainColor
+    val textColor = if (isDarkTheme) TextColor else DTextColor
+    val textColor2 = if (isDarkTheme) TextColor2 else DTextColor2
+    val regColor = if (isDarkTheme) RegColor else DRegColor
+    val aColor = if (isDarkTheme) AColor else DAColor
     AlertDialog(
         onDismissRequest = onDismiss,
         confirmButton = {
@@ -289,12 +308,17 @@ fun Context.requestExactAlarmPermission() {
 
 
 @Composable
-fun TimePickerField(label: String, timeState: MutableState<String>) {
+fun TimePickerField(label: String, timeState: MutableState<String>,viewModel: ThemeViewModel) {
     val context = LocalContext.current
     val calendar = Calendar.getInstance()
     val hour = calendar.get(Calendar.HOUR_OF_DAY)
     val minute = calendar.get(Calendar.MINUTE)
-
+    val isDarkTheme by viewModel.themeDark.collectAsState()
+    val mainColor = if (isDarkTheme) MainColor else DMainColor
+    val textColor = if (isDarkTheme) TextColor else DTextColor
+    val textColor2 = if (isDarkTheme) TextColor2 else DTextColor2
+    val regColor = if (isDarkTheme) RegColor else DRegColor
+    val aColor = if (isDarkTheme) AColor else DAColor
     val dialog = remember {
         TimePickerDialog(
             context,
@@ -314,7 +338,7 @@ fun TimePickerField(label: String, timeState: MutableState<String>) {
             Icon(
                 imageVector = Icons.Default.Timer,
                 contentDescription = "timer",
-                tint = MainColor,
+                tint = mainColor,
                 modifier = Modifier.clickable { dialog.show() }
             )
         },
@@ -324,14 +348,14 @@ fun TimePickerField(label: String, timeState: MutableState<String>) {
             .clickable { dialog.show() },
         shape = RoundedCornerShape(10),
         colors = TextFieldDefaults.colors(
-            focusedContainerColor = RegColor,
-            unfocusedContainerColor = RegColor,
-            disabledContainerColor = RegColor,
-            focusedIndicatorColor = TextColor,
-            unfocusedIndicatorColor = Color.Gray,
-            cursorColor = Color.Black,
-            focusedTextColor = TextColor,
-            unfocusedTextColor = TextColor
+            focusedContainerColor = regColor,
+            unfocusedContainerColor = regColor,
+            disabledContainerColor = regColor,
+            focusedIndicatorColor = textColor,
+            unfocusedIndicatorColor = textColor2,
+            cursorColor = textColor2,
+            focusedTextColor = textColor,
+            unfocusedTextColor = textColor
         )
     )
 }
@@ -342,8 +366,14 @@ fun CustomTextField(
     label: String,
     value: String,
     onValueChange: (String) -> Unit,
-    keyboardType: KeyboardType = KeyboardType.Text
+    keyboardType: KeyboardType = KeyboardType.Text,viewModel: ThemeViewModel
 ) {
+    val isDarkTheme by viewModel.themeDark.collectAsState()
+    val mainColor = if (isDarkTheme) MainColor else DMainColor
+    val textColor = if (isDarkTheme) TextColor else DTextColor
+    val textColor2 = if (isDarkTheme) TextColor2 else DTextColor2
+    val regColor = if (isDarkTheme) RegColor else DRegColor
+    val aColor = if (isDarkTheme) AColor else DAColor
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
@@ -353,24 +383,18 @@ fun CustomTextField(
             .padding(vertical = 6.dp, horizontal = 10.dp),
         shape = RoundedCornerShape(10),
         colors = TextFieldDefaults.colors(
-            focusedContainerColor = RegColor,
-            unfocusedContainerColor = RegColor,
-            disabledContainerColor = RegColor,
-            focusedIndicatorColor = TextColor,
-            unfocusedIndicatorColor = Color.Gray,
-            cursorColor = Color.Black,
-            focusedTextColor = TextColor,
-            unfocusedTextColor = TextColor
+            focusedContainerColor = regColor,
+            unfocusedContainerColor = regColor,
+            disabledContainerColor = regColor,
+            focusedIndicatorColor = textColor,
+            unfocusedIndicatorColor =textColor2,
+            cursorColor =textColor2,
+            focusedTextColor = textColor,
+            unfocusedTextColor = textColor
         ),
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType)
     )
 }
 
 
-@Preview(showBackground = true)
-@Composable
-fun PillAddScreenPreview() {
-    TibbiyKomakTheme {
-        PillAddScreen(rememberNavController())
-    }
-}
+

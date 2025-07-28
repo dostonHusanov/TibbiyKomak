@@ -20,6 +20,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,9 +38,17 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.doston.tibbiykomak.data.ReminderData
 import com.doston.tibbiykomak.database.UserDatabaseHelper
+import com.doston.tibbiykomak.ui.theme.AColor
+import com.doston.tibbiykomak.ui.theme.DAColor
+import com.doston.tibbiykomak.ui.theme.DMainColor
+import com.doston.tibbiykomak.ui.theme.DRegColor
+import com.doston.tibbiykomak.ui.theme.DTextColor
+import com.doston.tibbiykomak.ui.theme.DTextColor2
 import com.doston.tibbiykomak.ui.theme.MainColor
 import com.doston.tibbiykomak.ui.theme.RegColor
 import com.doston.tibbiykomak.ui.theme.TextColor
+import com.doston.tibbiykomak.ui.theme.TextColor2
+import com.doston.tibbiykomak.ui.theme.ThemeViewModel
 import com.doston.tibbiykomak.ui.theme.TibbiyKomakTheme
 import java.util.Calendar
 
@@ -46,10 +56,15 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun PillEditScreen(pills: ReminderData, navController: NavController) {
+fun PillEditScreen(pills: ReminderData, navController: NavController,viewModel: ThemeViewModel) {
     val context = LocalContext.current
     val dbHelper = remember { UserDatabaseHelper(context) }
-
+    val isDarkTheme by viewModel.themeDark.collectAsState()
+    val mainColor = if (isDarkTheme) MainColor else DMainColor
+    val textColor = if (isDarkTheme) TextColor else DTextColor
+    val textColor2 = if (isDarkTheme) TextColor2 else DTextColor2
+    val regColor = if (isDarkTheme) RegColor else DRegColor
+    val aColor = if (isDarkTheme) AColor else DAColor
     val name = remember { mutableStateOf(pills.name) }
     val desc = remember { mutableStateOf(pills.desc) }
 
@@ -74,7 +89,7 @@ fun PillEditScreen(pills: ReminderData, navController: NavController) {
             item {
                 Text(
                     text = "Dori o'zgartirish",
-                    color = TextColor,
+                    color = textColor,
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(10.dp)
@@ -82,11 +97,11 @@ fun PillEditScreen(pills: ReminderData, navController: NavController) {
             }
 
             item {
-                CustomTextField("Dori nomi", name.value, { name.value = it })
+                CustomTextField("Dori nomi", name.value, { name.value = it }, viewModel = viewModel)
             }
 
             item {
-                CustomTextField("Dori xaqida qisqa malumot", desc.value, { desc.value = it })
+                CustomTextField("Dori xaqida qisqa malumot", desc.value, { desc.value = it },viewModel=viewModel)
             }
 
             item {
@@ -94,19 +109,19 @@ fun PillEditScreen(pills: ReminderData, navController: NavController) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 10.dp, vertical = 8.dp)
-                        .background(RegColor, RoundedCornerShape(10.dp))
+                        .background(regColor, RoundedCornerShape(10.dp))
                         .clickable { showDatePicker.value = true }
                         .padding(16.dp)
                 ) {
                     Text(
                         text = if (selectedDates.isEmpty()) "Sana(lar)ni tanlang"
                         else selectedDates.joinToString { it.format(formatter) },
-                        color = TextColor
+                        color = textColor
                     )
                 }
                 if (showDatePicker.value) {
                     MultipleDatePickerDialog(
-                        selectedDates = selectedDates
+                        selectedDates = selectedDates, viewModel = viewModel
                     ){
                         showDatePicker.value = false
                     }
@@ -126,7 +141,7 @@ fun PillEditScreen(pills: ReminderData, navController: NavController) {
                             timesPerDayCountString.value = ""
                         }
                     },
-                    KeyboardType.Number
+                    KeyboardType.Number,viewModel
                 )
             }
 
@@ -134,13 +149,13 @@ fun PillEditScreen(pills: ReminderData, navController: NavController) {
 
             if (count in 1..6) {
                 items(count) { index ->
-                    TimePickerField(label = "Vaqtni tanlang", timeState = timeStates[index])
+                    TimePickerField(label = "Vaqtni tanlang", timeState = timeStates[index],viewModel)
                 }
             } else if (count > 6) {
                 item {
                     Text(
                         "1 kunda 6 mahaldan ko'p dori icha olmaysiz!",
-                        color = Color.Red,
+                        color = textColor2,
                         fontWeight = FontWeight.SemiBold,
                         modifier = Modifier.padding(10.dp)
                     )
@@ -149,7 +164,7 @@ fun PillEditScreen(pills: ReminderData, navController: NavController) {
                 item {
                     Text(
                         "Kamida 1 mahal dori ichishingiz kerak.",
-                        color = Color.Red,
+                        color = textColor2,
                         fontWeight = FontWeight.SemiBold,
                         modifier = Modifier.padding(10.dp)
                     )
@@ -162,7 +177,7 @@ fun PillEditScreen(pills: ReminderData, navController: NavController) {
                         .fillMaxWidth()
                         .padding(horizontal = 10.dp, vertical = 10.dp)
                         .background(
-                            shape = RoundedCornerShape(10.dp), color = TextColor
+                            shape = RoundedCornerShape(10.dp), color = textColor
                         )
                         .clickable {
                             val selectedTimes = timeStates
@@ -211,7 +226,7 @@ fun PillEditScreen(pills: ReminderData, navController: NavController) {
                     Text(
                         text = "O'zgartirish",
                         fontSize = 18.sp,
-                        color = MainColor,
+                        color = mainColor,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(10.dp)
                     )

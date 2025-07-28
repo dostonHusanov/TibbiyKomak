@@ -27,6 +27,8 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -37,16 +39,31 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.doston.tibbiykomak.data.ReminderData
+import com.doston.tibbiykomak.ui.theme.AColor
+import com.doston.tibbiykomak.ui.theme.DAColor
+import com.doston.tibbiykomak.ui.theme.DMainColor
+import com.doston.tibbiykomak.ui.theme.DRegColor
+import com.doston.tibbiykomak.ui.theme.DTextColor
+import com.doston.tibbiykomak.ui.theme.DTextColor2
 import com.doston.tibbiykomak.ui.theme.MainColor
+import com.doston.tibbiykomak.ui.theme.RegColor
 import com.doston.tibbiykomak.ui.theme.TextColor
+import com.doston.tibbiykomak.ui.theme.TextColor2
+import com.doston.tibbiykomak.ui.theme.ThemeViewModel
 import com.doston.tibbiykomak.ui.theme.TibbiyKomakTheme
 
 @Composable
-fun PillInfoScreen(data: ReminderData, navController: NavController) {
+fun PillInfoScreen(data: ReminderData, navController: NavController,viewModel: ThemeViewModel) {
+    val isDarkTheme by viewModel.themeDark.collectAsState()
+    val mainColor = if (isDarkTheme) MainColor else DMainColor
+    val textColor = if (isDarkTheme) TextColor else DTextColor
+    val textColor2 = if (isDarkTheme) TextColor2 else DTextColor2
+    val regColor = if (isDarkTheme) RegColor else DRegColor
+    val aColor = if (isDarkTheme) AColor else DAColor
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MainColor)
+            .background(mainColor)
             .padding(WindowInsets.statusBars.asPaddingValues())
             .padding(WindowInsets.systemBars.asPaddingValues())
             .padding(horizontal = 16.dp)
@@ -58,7 +75,7 @@ fun PillInfoScreen(data: ReminderData, navController: NavController) {
                 text = "Dori Tafsilotlari",
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
-                color = TextColor,
+                color = textColor,
 
                 )
             Spacer(modifier = Modifier.height(14.dp))
@@ -67,31 +84,31 @@ fun PillInfoScreen(data: ReminderData, navController: NavController) {
                     .fillMaxWidth()
                     .shadow(4.dp, RoundedCornerShape(16.dp)),
                 shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = TextColor)
+                colors = CardDefaults.cardColors(containerColor = textColor)
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     PillDetailRow(
                         icon = Icons.Default.MedicalServices,
                         label = "Dori nomi",
                         value = data.name
-                    )
+                    ,viewModel)
                     Spacer(modifier = Modifier.height(12.dp))
                     PillDetailRow(
                         icon = Icons.Default.Info,
                         label = "Dori haqida",
-                        value = data.desc
+                        value = data.desc,viewModel
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     PillDetailRow(
                         icon = Icons.Default.CalendarToday,
                         label = "Kunlar soni",
-                        value = "${data.date.count()} kun"
+                        value = "${data.date.count()} kun",viewModel
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     PillDetailRow(
                         icon = Icons.Default.Schedule,
                         label = "Vaqtlari",
-                        value = data.times.joinToString(", ")
+                        value = data.times.joinToString(", "),viewModel
                     )
                 }
             }
@@ -103,7 +120,7 @@ fun PillInfoScreen(data: ReminderData, navController: NavController) {
             modifier = Modifier
                 .fillMaxWidth()
                 .background(
-                    color = TextColor,
+                    color = textColor,
                     RoundedCornerShape(10.dp)
                 )
                 .clickable { navController.popBackStack() },
@@ -112,8 +129,9 @@ fun PillInfoScreen(data: ReminderData, navController: NavController) {
         ) {
             Text(
                 text = "Oraga qytish",
-                color = MainColor,
+                color = mainColor,
                 fontSize = 16.sp,
+
                 modifier = Modifier.padding(10.dp)
             )
         }
@@ -124,8 +142,14 @@ fun PillInfoScreen(data: ReminderData, navController: NavController) {
 fun PillDetailRow(
     icon: androidx.compose.ui.graphics.vector.ImageVector,
     label: String,
-    value: String
+    value: String,viewModel: ThemeViewModel
 ) {
+    val isDarkTheme by viewModel.themeDark.collectAsState()
+    val mainColor = if (isDarkTheme) MainColor else DMainColor
+    val textColor = if (isDarkTheme) TextColor else DTextColor
+    val textColor2 = if (isDarkTheme) TextColor2 else DTextColor2
+    val regColor = if (isDarkTheme) RegColor else DRegColor
+    val aColor = if (isDarkTheme) AColor else DAColor
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.fillMaxWidth()
@@ -133,7 +157,7 @@ fun PillDetailRow(
         Icon(
             imageVector = icon,
             contentDescription = label,
-            tint = MainColor,
+            tint = mainColor,
             modifier = Modifier.size(24.dp)
         )
         Spacer(modifier = Modifier.width(12.dp))
@@ -141,28 +165,16 @@ fun PillDetailRow(
             Text(
                 text = label,
                 fontSize = 14.sp,
-                color = MainColor
+                color = mainColor
             )
             Text(
                 text = value,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium,
-                color = MainColor
+                color = mainColor
             )
         }
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PillInfoScreenPreview() {
-    TibbiyKomakTheme {
-        val data = ReminderData(
-            name = "Paracetamol",
-            desc = "Og'riq qoldiruvchi va isitma tushiruvchi dori.",
-            date = listOf("12","13"),
-            times = listOf("07:00", "13:00", "20:30")
-        )
-        PillInfoScreen(data, rememberNavController())
-    }
-}
+

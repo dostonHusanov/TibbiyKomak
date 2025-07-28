@@ -26,6 +26,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -39,22 +41,37 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.doston.tibbiykomak.data.ReminderData
 import com.doston.tibbiykomak.database.UserDatabaseHelper
+import com.doston.tibbiykomak.ui.theme.AColor
+import com.doston.tibbiykomak.ui.theme.DAColor
+import com.doston.tibbiykomak.ui.theme.DMainColor
+import com.doston.tibbiykomak.ui.theme.DRegColor
+import com.doston.tibbiykomak.ui.theme.DTextColor
+import com.doston.tibbiykomak.ui.theme.DTextColor2
 import com.doston.tibbiykomak.ui.theme.MainColor
+import com.doston.tibbiykomak.ui.theme.RegColor
 import com.doston.tibbiykomak.ui.theme.TextColor
+import com.doston.tibbiykomak.ui.theme.TextColor2
+import com.doston.tibbiykomak.ui.theme.ThemeViewModel
 import com.doston.tibbiykomak.ui.theme.TibbiyKomakTheme
 
 @Composable
-fun PillScreen(navController: NavController) {
+fun PillScreen(navController: NavController,viewModel: ThemeViewModel) {
     val context = LocalContext.current
     val db = remember { UserDatabaseHelper(context) }
     val pills = remember { mutableStateOf(emptyList<ReminderData>()) }
+    val isDarkTheme by viewModel.themeDark.collectAsState()
+    val mainColor = if (isDarkTheme) MainColor else DMainColor
+    val textColor = if (isDarkTheme) TextColor else DTextColor
+    val textColor2 = if (isDarkTheme) TextColor2 else DTextColor2
+    val regColor = if (isDarkTheme) RegColor else DRegColor
+    val aColor = if (isDarkTheme) AColor else DAColor
     Scaffold(modifier = Modifier.background(MainColor)) { innerPadding ->
 
 
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MainColor)
+                .background(mainColor)
                 .padding(innerPadding)
         ) {
 
@@ -79,14 +96,14 @@ fun PillScreen(navController: NavController) {
                                 AlarmScheduler.cancelAlarmsForPill(context, pill)
                                 db.deletePill(pill.id)
                                 pills.value = db.getAllPills().sortedByDescending { it.id }
-                            }
+                            },viewModel
                         )
                     }
                 }
             }
             FloatingActionButton(
                 onClick = { navController.navigate("pillAdd") },
-                containerColor = TextColor,
+                containerColor = textColor,
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
                     .padding(16.dp)
@@ -94,7 +111,7 @@ fun PillScreen(navController: NavController) {
                 Icon(
                     imageVector = Icons.Default.Add,
                     contentDescription = "Add",
-                    tint = MainColor
+                    tint = mainColor
                 )
             }
         }
@@ -105,29 +122,35 @@ fun PillScreen(navController: NavController) {
 fun PillItem(pill: ReminderData,
               onClick: () -> Unit = {},
               onEdit: (ReminderData) -> Unit,
-              onDelete: (ReminderData) -> Unit) {
+              onDelete: (ReminderData) -> Unit,viewModel: ThemeViewModel) {
+    val isDarkTheme by viewModel.themeDark.collectAsState()
+    val mainColor = if (isDarkTheme) MainColor else DMainColor
+    val textColor = if (isDarkTheme) TextColor else DTextColor
+    val textColor2 = if (isDarkTheme) TextColor2 else DTextColor2
+    val regColor = if (isDarkTheme) RegColor else DRegColor
+    val aColor = if (isDarkTheme) AColor else DAColor
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(10.dp)
-            .background(TextColor, RoundedCornerShape(5.dp))
+            .background(textColor, RoundedCornerShape(5.dp))
     ) {
         Row(
             modifier = Modifier.clickable { onClick() }
                 .fillMaxWidth()
-                .background(TextColor),
+                .background(textColor),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(
                 modifier = Modifier
-                    .background(TextColor)
+                    .background(textColor)
                     .padding(10.dp)
             ) {
                 Text(
                     text = pill.name,
                     fontSize = 20.sp,
-                    color = MainColor,
+                    color = mainColor,
                     fontWeight = FontWeight.SemiBold,modifier = Modifier.padding(vertical = 2.dp, horizontal = 2.dp)
                 )
 
@@ -136,12 +159,12 @@ fun PillItem(pill: ReminderData,
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text(text = "${pill.date.count()} kun", fontSize = 16.sp, color = MainColor,modifier = Modifier.padding(vertical = 2.dp, horizontal = 2.dp))
+                    Text(text = "${pill.date.count()} kun", fontSize = 16.sp, color = mainColor,modifier = Modifier.padding(vertical = 2.dp, horizontal = 2.dp))
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
                         text = "Har kuni ${pill.times.count()} marta istemol qilinadi",
                         fontSize = 16.sp,
-                        color = MainColor,
+                        color = mainColor,
                         modifier = Modifier.padding(vertical = 2.dp, horizontal = 2.dp)
                     )
                 }
@@ -156,7 +179,7 @@ fun PillItem(pill: ReminderData,
                     modifier = Modifier
                         .clickable { expanded.value = true }
                         .padding(5.dp),
-                    tint = MainColor
+                    tint = mainColor
                 )
 
                 DropdownMenu(
@@ -184,11 +207,4 @@ fun PillItem(pill: ReminderData,
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PillScreenPreview() {
-    TibbiyKomakTheme {
-        PillScreen(rememberNavController())
-    }
-}
 

@@ -62,7 +62,7 @@ fun MainNav(context: Context,viewModel: ThemeViewModel) {
         }
 
         composable("reminderScreen") { backStackEntry ->
-            ReminderScreen(navController)
+            ReminderScreen(navController,viewModel)
         }
 
 

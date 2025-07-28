@@ -24,6 +24,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -44,17 +45,24 @@ import androidx.navigation.compose.rememberNavController
 import com.doston.tibbiykomak.R
 import com.doston.tibbiykomak.data.ReminderData
 import com.doston.tibbiykomak.database.UserDatabaseHelper
+import com.doston.tibbiykomak.ui.theme.AColor
+import com.doston.tibbiykomak.ui.theme.DAColor
+import com.doston.tibbiykomak.ui.theme.DMainColor
+import com.doston.tibbiykomak.ui.theme.DRegColor
+import com.doston.tibbiykomak.ui.theme.DTextColor
+import com.doston.tibbiykomak.ui.theme.DTextColor2
 import com.doston.tibbiykomak.ui.theme.MainColor
 import com.doston.tibbiykomak.ui.theme.RegColor
 import com.doston.tibbiykomak.ui.theme.TextColor
 import com.doston.tibbiykomak.ui.theme.TextColor2
+import com.doston.tibbiykomak.ui.theme.ThemeViewModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
 @Composable
-fun ReminderScreen(navController: NavController) {
+fun ReminderScreen(navController: NavController,viewModel:ThemeViewModel) {
     val context = LocalContext.current
     val allPills = remember { getAllPills(context) }
     val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
@@ -67,12 +75,18 @@ fun ReminderScreen(navController: NavController) {
     val selectedPills = remember(selectedDate) {
         allPills.filter { it.date.contains(selectedDate) }
     }
+    val isDarkTheme by viewModel.themeDark.collectAsState()
+    val mainColor = if (isDarkTheme) MainColor else DMainColor
+    val textColor = if (isDarkTheme) TextColor else DTextColor
+    val textColor2 = if (isDarkTheme) TextColor2 else DTextColor2
+    val regColor = if (isDarkTheme) RegColor else DRegColor
+    val aColor = if (isDarkTheme) AColor else DAColor
 
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(MainColor)
+            .background(mainColor)
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
             LazyColumn(modifier = Modifier.weight(1f)) {
@@ -88,7 +102,7 @@ fun ReminderScreen(navController: NavController) {
 
                         Text(
                             text = formattedDate,
-                            color = TextColor2,
+                            color = textColor2,
                             fontSize = 20.sp,
                             textAlign = TextAlign.Start,
                             modifier = Modifier.padding(horizontal = 16.dp),
@@ -124,7 +138,7 @@ fun ReminderScreen(navController: NavController) {
                             name = pill.name,
                             desc = pill.desc,
                             date = pill.date,
-                            today = selectedDate
+                            today = selectedDate,viewModel
                         )
                     }
                 }
@@ -133,7 +147,7 @@ fun ReminderScreen(navController: NavController) {
 
         FloatingActionButton(
             onClick = { navController.navigate("pillScreen") },
-            containerColor = TextColor,
+            containerColor = textColor,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(16.dp)
@@ -141,7 +155,7 @@ fun ReminderScreen(navController: NavController) {
             Icon(
                 imageVector = Icons.Default.Add,
                 contentDescription = "Add",
-                tint = MainColor
+                tint = mainColor
             )
         }
     }
@@ -151,21 +165,27 @@ fun ReminderScreen(navController: NavController) {
 
 
 @Composable
-fun ReminderItem(time: String, name: String, desc: String, date: List<String>, today: String) {
-    val currentIndex = date.indexOf(today) + 1 
+fun ReminderItem(time: String, name: String, desc: String, date: List<String>, today: String,viewModel: ThemeViewModel) {
+    val currentIndex = date.indexOf(today) + 1
+    val isDarkTheme by viewModel.themeDark.collectAsState()
+    val mainColor = if (isDarkTheme) MainColor else DMainColor
+    val textColor = if (isDarkTheme) TextColor else DTextColor
+    val textColor2 = if (isDarkTheme) TextColor2 else DTextColor2
+    val regColor = if (isDarkTheme) RegColor else DRegColor
+    val aColor = if (isDarkTheme) AColor else DAColor
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp),
         shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = TextColor)
+        colors = CardDefaults.cardColors(containerColor = textColor)
     ) {
         Column {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(color = Color(0xFF365486)),
+                    .background(color = textColor),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
@@ -173,36 +193,36 @@ fun ReminderItem(time: String, name: String, desc: String, date: List<String>, t
                     text = time,
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(8.dp), color = MainColor
+                    modifier = Modifier.padding(8.dp), color = mainColor
                 )
 
                 Text(
                     text = if (currentIndex > 0) "$currentIndex/${date.size} Kun" else "-/${date.size} Kun",
                     fontSize = 14.sp,
-                    modifier = Modifier.padding(8.dp), color = MainColor
+                    modifier = Modifier.padding(8.dp), color = mainColor
                 )
 
-                Text("Istemol qilindi", fontSize = 14.sp, modifier = Modifier.padding(8.dp), color = MainColor)
+                Text("Istemol qilindi", fontSize = 14.sp, modifier = Modifier.padding(8.dp), color = mainColor)
             }
 
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(color = RegColor)
+                    .background(color = regColor)
                     .padding(6.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Image(
+                Icon(
                     painter = painterResource(id = R.drawable.pill),
                     contentDescription = "",
                     modifier = Modifier
                         .size(55.dp)
-                        .padding(6.dp)
+                        .padding(6.dp), tint = textColor
                 )
 
                 Column(modifier = Modifier.padding(start = 8.dp)) {
-                    Text(name, fontSize = 20.sp, fontWeight = FontWeight.Bold)
-                    Text(desc, fontSize = 12.sp, maxLines = 1)
+                    Text(name, fontSize = 20.sp, fontWeight = FontWeight.Bold, color = textColor)
+                    Text(desc, fontSize = 12.sp, maxLines = 1, color = textColor)
                 }
             }
         }
@@ -246,8 +266,4 @@ fun generateNext7Days(): List<String> {
 
 
 
-@Preview(showBackground = true)
-@Composable
-fun ReminderScreenPreview() {
-    ReminderScreen(rememberNavController())
-}
+
