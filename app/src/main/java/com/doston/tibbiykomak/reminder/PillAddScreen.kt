@@ -145,7 +145,7 @@ fun PillAddScreen(navController: NavController,viewModel: ThemeViewModel) {
                 item {
                     Text(
                         "1 kunda 6 mahaldan ko'p dori icha olmaysiz!",
-                        color = textColor2,
+                        color = textColor,
                         fontWeight = FontWeight.SemiBold,
                         modifier = Modifier.padding(10.dp)
                     )
@@ -234,24 +234,25 @@ fun MultipleDatePickerDialog(
         onDismissRequest = onDismiss,
         confirmButton = {
             TextButton(onClick = onDismiss) {
-                Text("OK")
+                Text("OK", color = textColor)
             }
         },
-        title = { Text("Sanalarni tanlang") },
+        title = { Text("Sanalarni tanlang", color = textColor) },
+        containerColor = mainColor,
         text = {
-            Column {
+            Column(modifier=Modifier.background(mainColor)) {
                 Text(
                     "${
                         currentMonth.value.month.name.lowercase()
                             .replaceFirstChar { it.uppercase() }
                     } ${currentMonth.value.year}",
                     style = MaterialTheme.typography.titleMedium,
-                    modifier = Modifier.padding(bottom = 8.dp)
+                    modifier = Modifier.padding(bottom = 8.dp), color = textColor
                 )
 
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(7),
-                    modifier = Modifier.height(300.dp)
+                    modifier = Modifier.height(270.dp)
                 ) {
                     val days = currentMonth.value.lengthOfMonth()
                     val startDayOfWeek = currentMonth.value.atDay(1).dayOfWeek.value % 7
@@ -282,7 +283,7 @@ fun MultipleDatePickerDialog(
                                 },
                             contentAlignment = Alignment.Center
                         ) {
-                            Text(text = "${day + 1}")
+                            Text(text = "${day + 1}", color = textColor)
                         }
                     }
                 }
@@ -333,7 +334,7 @@ fun TimePickerField(label: String, timeState: MutableState<String>,viewModel: Th
         value = timeState.value,
         onValueChange = {},
         readOnly = true,
-        label = { Text(label) },
+        label = { Text(label, color = textColor) },
         trailingIcon = {
             Icon(
                 imageVector = Icons.Default.Timer,
@@ -348,13 +349,13 @@ fun TimePickerField(label: String, timeState: MutableState<String>,viewModel: Th
             .clickable { dialog.show() },
         shape = RoundedCornerShape(10),
         colors = TextFieldDefaults.colors(
-            focusedContainerColor = regColor,
+            focusedContainerColor = textColor,
             unfocusedContainerColor = regColor,
             disabledContainerColor = regColor,
             focusedIndicatorColor = textColor,
             unfocusedIndicatorColor = textColor2,
-            cursorColor = textColor2,
-            focusedTextColor = textColor,
+            cursorColor =mainColor,
+            focusedTextColor = mainColor,
             unfocusedTextColor = textColor
         )
     )
@@ -377,19 +378,19 @@ fun CustomTextField(
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
-        label = { Text(label) },
+        label = { Text(label, color = textColor) },
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 6.dp, horizontal = 10.dp),
         shape = RoundedCornerShape(10),
         colors = TextFieldDefaults.colors(
-            focusedContainerColor = regColor,
+            focusedContainerColor = textColor,
             unfocusedContainerColor = regColor,
             disabledContainerColor = regColor,
             focusedIndicatorColor = textColor,
             unfocusedIndicatorColor =textColor2,
-            cursorColor =textColor2,
-            focusedTextColor = textColor,
+            cursorColor =mainColor,
+            focusedTextColor =mainColor,
             unfocusedTextColor = textColor
         ),
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType)

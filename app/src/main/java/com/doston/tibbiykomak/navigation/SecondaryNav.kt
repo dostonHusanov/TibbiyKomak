@@ -22,6 +22,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.outlined.Help
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Phone
 import androidx.compose.material3.Card
@@ -67,6 +68,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.doston.tibbiykomak.R
+import com.doston.tibbiykomak.SupportScreen
 import com.doston.tibbiykomak.data.MainData
 import com.doston.tibbiykomak.data.ReminderData
 import com.doston.tibbiykomak.data.User
@@ -229,6 +231,26 @@ fun SecondaryNav(viewModel: ThemeViewModel) {
                         )
 
                         NavigationDrawerItem(
+                            label = { Text("Qollab Quvvatlash") },
+                            selected = false,
+                            icon = { Icon(Icons.Outlined.Help, contentDescription = null) },
+                            onClick = {
+                                scope.launch { drawerState.close() }
+                                navController.navigate("support")
+
+                            },
+                            colors = NavigationDrawerItemDefaults.colors(
+                                unselectedContainerColor = textColor,
+                                unselectedTextColor = mainColor,
+                                unselectedBadgeColor = mainColor,
+                                unselectedIconColor = mainColor
+                            ),
+                            modifier = Modifier
+                                .padding(horizontal = 16.dp)
+                                .background(shape = RoundedCornerShape(10.dp), color = textColor)
+                        )
+                        Spacer(Modifier.height(10.dp))
+                        NavigationDrawerItem(
                             label = { Text("Ilova Haqida") },
                             selected = false,
                             icon = { Icon(Icons.Outlined.Info, contentDescription = null) },
@@ -248,25 +270,7 @@ fun SecondaryNav(viewModel: ThemeViewModel) {
                                 .background(shape = RoundedCornerShape(10.dp), color = textColor)
                         )
                         Spacer(Modifier.height(10.dp))
-                        NavigationDrawerItem(
-                            label = { Text("Bog'lanish") },
-                            selected = false,
 
-                            icon = { Icon(Icons.Outlined.Phone, contentDescription = null) },
-                            onClick = {
-                                scope.launch { drawerState.close() }
-                                navController.navigate("contactScreen")
-                            },
-                            colors = NavigationDrawerItemDefaults.colors(
-                                unselectedContainerColor = textColor,
-                                unselectedTextColor = mainColor,
-                                unselectedBadgeColor = mainColor,
-                                unselectedIconColor = mainColor
-                            ),
-                            modifier = Modifier
-                                .padding(horizontal = 16.dp)
-                                .background(shape = RoundedCornerShape(10.dp), color = textColor)
-                        )
                     }
                     Spacer(Modifier.height(10.dp))
                     Row(
@@ -423,54 +427,57 @@ fun SecondaryNav(viewModel: ThemeViewModel) {
                     }
 
                     composable("reminderScreen") {
-                        ReminderScreen(navController,viewModel)
+                        ReminderScreen(navController, viewModel)
                     }
                     composable("pillScreen") {
-                        PillScreen(navController,viewModel)
+                        PillScreen(navController, viewModel)
                     }
                     composable("pillAdd") {
-                        PillAddScreen(navController,viewModel)
+                        PillAddScreen(navController, viewModel)
                     }
 
-                    composable("aboutScreen") { AboutScreen(navController) }
-                    composable("contactScreen") { ContactScreen(navController) }
+                    composable("aboutScreen") { AboutScreen(navController, viewModel) }
+                    composable("contactScreen") { ContactScreen(navController, viewModel) }
                     composable("infoScreen") { backStackEntry ->
                         val illness = navController.previousBackStackEntry
                             ?.savedStateHandle?.get<MainData>("illness")
                         illness?.let {
-                            InfoScreen(illness = it, navController)
+                            InfoScreen(illness = it, navController, viewModel)
                         }
                     }
                     composable("pillInfo") { backStackEntry ->
                         val pillInfo = navController.previousBackStackEntry
                             ?.savedStateHandle?.get<ReminderData>("pillInfo")
                         pillInfo?.let {
-                            PillInfoScreen(data = it, navController,viewModel)
+                            PillInfoScreen(data = it, navController, viewModel)
                         }
                     }
                     composable("pillEdit") { backStackEntry ->
                         val pillEdit = navController.previousBackStackEntry
                             ?.savedStateHandle?.get<ReminderData>("pillEdit")
                         pillEdit?.let {
-                            PillEditScreen(pills = it, navController,viewModel)
+                            PillEditScreen(pills = it, navController, viewModel)
                         }
                         if (pillEdit != null) {
-                            PillEditScreen(pills = pillEdit, navController,viewModel)
+                            PillEditScreen(pills = pillEdit, navController, viewModel)
                         }
+                    }
+                    composable("support") {
+                        SupportScreen(navController,viewModel)
                     }
                 }
             }
         } else {
 
             NavHost(navController = navController, startDestination = "homeScreen") {
-                composable("aboutScreen") { AboutScreen(navController) }
-                composable("contactScreen") { ContactScreen(navController) }
+                composable("aboutScreen") { AboutScreen(navController, viewModel) }
+                composable("contactScreen") { ContactScreen(navController, viewModel) }
 
                 composable("infoScreen") { backStackEntry ->
                     val illness = navController.previousBackStackEntry
                         ?.savedStateHandle?.get<MainData>("illness")
                     illness?.let {
-                        InfoScreen(illness = it, navController)
+                        InfoScreen(illness = it, navController, viewModel)
                     }
                 }
 
@@ -479,32 +486,34 @@ fun SecondaryNav(viewModel: ThemeViewModel) {
                 }
 
                 composable("reminderScreen") {
-                    ReminderScreen(navController,viewModel)
+                    ReminderScreen(navController, viewModel)
                 }
                 composable("pillScreen") {
-                    PillScreen(navController,viewModel)
+                    PillScreen(navController, viewModel)
                 }
                 composable("pillAdd") {
-                    PillAddScreen(navController,viewModel)
+                    PillAddScreen(navController, viewModel)
                 }
                 composable("pillInfo") { backStackEntry ->
                     val pillInfo = navController.previousBackStackEntry
                         ?.savedStateHandle?.get<ReminderData>("pillInfo")
                     pillInfo?.let {
-                        PillInfoScreen(data = it, navController,viewModel)
+                        PillInfoScreen(data = it, navController, viewModel)
                     }
                 }
                 composable("pillEdit") { backStackEntry ->
                     val pillEdit = navController.previousBackStackEntry
                         ?.savedStateHandle?.get<ReminderData>("pillEdit")
                     pillEdit?.let {
-                        PillEditScreen(pills = it, navController,viewModel)
+                        PillEditScreen(pills = it, navController, viewModel)
                     }
                     if (pillEdit != null) {
-                        PillEditScreen(pills = pillEdit, navController,viewModel)
+                        PillEditScreen(pills = pillEdit, navController, viewModel)
                     }
                 }
-
+                composable("support") {
+                    SupportScreen(navController,viewModel)
+                }
             }
         }
     }

@@ -22,18 +22,32 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.doston.tibbiykomak.ui.theme.AColor
+import com.doston.tibbiykomak.ui.theme.DAColor
+import com.doston.tibbiykomak.ui.theme.DMainColor
+import com.doston.tibbiykomak.ui.theme.DRegColor
+import com.doston.tibbiykomak.ui.theme.DTextColor
+import com.doston.tibbiykomak.ui.theme.DTextColor2
 import com.doston.tibbiykomak.ui.theme.MainColor
+import com.doston.tibbiykomak.ui.theme.RegColor
 import com.doston.tibbiykomak.ui.theme.TextColor
 import com.doston.tibbiykomak.ui.theme.TextColor2
+import com.doston.tibbiykomak.ui.theme.ThemeViewModel
 import com.doston.tibbiykomak.ui.theme.TibbiyKomakTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ContactScreen(navController: NavController) {
+fun ContactScreen(navController: NavController,viewModel:ThemeViewModel) {
     val context = LocalContext.current
     var fullName by remember { mutableStateOf("") }
     var phoneNumber by remember { mutableStateOf("") }
     var messageText by remember { mutableStateOf("") }
+    val isDarkTheme by viewModel.themeDark.collectAsState()
+    val mainColor= if (isDarkTheme) MainColor else DMainColor
+    val textColor=if (isDarkTheme) TextColor else DTextColor
+    val textColor2=if(isDarkTheme) TextColor2 else DTextColor2
+    val regColor=if (isDarkTheme) RegColor else DRegColor
+    val aColor=if(isDarkTheme) AColor else DAColor
 
     Scaffold(
         containerColor = MainColor,
@@ -43,7 +57,7 @@ fun ContactScreen(navController: NavController) {
                     Text(
                         text = "Biz bilan bog'lanish",
                         fontSize = 22.sp,
-                        color = TextColor2
+                        color = textColor2
                     )
                 },
                 navigationIcon = {
@@ -51,12 +65,12 @@ fun ContactScreen(navController: NavController) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
                             contentDescription = "Orqaga",
-                            tint = TextColor2
+                            tint = textColor2
                         )
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MainColor
+                    containerColor = mainColor
                 )
             )
         }
@@ -64,7 +78,7 @@ fun ContactScreen(navController: NavController) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MainColor)
+                .background(mainColor)
                 .padding(innerPadding)
                 .padding(horizontal = 16.dp),
             verticalArrangement = Arrangement.Top,
@@ -75,15 +89,15 @@ fun ContactScreen(navController: NavController) {
             OutlinedTextField(
                 value = fullName,
                 onValueChange = { fullName = it },
-                label = { Text("To'liq ismingiz") },
+                label = { Text("To'liq ismingiz", color = textColor) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = TextColor2,
-                    unfocusedBorderColor = TextColor,
-                    focusedLabelColor = TextColor2,
-                    unfocusedLabelColor = TextColor,
-                    cursorColor = TextColor2
+                    focusedBorderColor = textColor2,
+                    unfocusedBorderColor = textColor,
+                    focusedLabelColor = textColor2,
+                    unfocusedLabelColor = textColor,
+                    cursorColor = textColor2
                 )
             )
 
@@ -92,15 +106,15 @@ fun ContactScreen(navController: NavController) {
             OutlinedTextField(
                 value = phoneNumber,
                 onValueChange = { phoneNumber = it },
-                label = { Text("Telefon raqamingiz") },
+                label = { Text("Telefon raqamingiz", color = textColor) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = TextColor2,
-                    unfocusedBorderColor = TextColor,
-                    focusedLabelColor = TextColor2,
-                    unfocusedLabelColor = TextColor,
-                    cursorColor = TextColor2
+                    focusedBorderColor = textColor2,
+                    unfocusedBorderColor = textColor,
+                    focusedLabelColor = textColor2,
+                    unfocusedLabelColor = textColor,
+                    cursorColor = textColor2
                 )
             )
 
@@ -109,16 +123,16 @@ fun ContactScreen(navController: NavController) {
             OutlinedTextField(
                 value = messageText,
                 onValueChange = { messageText = it },
-                label = { Text("Xabaringiz") },
+                label = { Text("Xabaringiz", color = textColor) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(120.dp),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = TextColor2,
-                    unfocusedBorderColor = TextColor,
-                    focusedLabelColor = TextColor2,
-                    unfocusedLabelColor = TextColor,
-                    cursorColor = TextColor2
+                    focusedBorderColor = textColor2,
+                    unfocusedBorderColor = textColor,
+                    focusedLabelColor = textColor2,
+                    unfocusedLabelColor = textColor,
+                    cursorColor = textColor2
                 )
             )
 
@@ -149,19 +163,12 @@ fun ContactScreen(navController: NavController) {
                     .fillMaxWidth()
                     .height(50.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = TextColor,
-                    contentColor = MainColor
+                    containerColor = textColor,
+                    contentColor = mainColor
                 )
             ) {
-                Text(text = "Xabar yuborish", fontSize = 16.sp)
+                Text(text = "Xabar yuborish", fontSize = 16.sp, color = mainColor)
             }
         }
-    }
-}
-@Preview(showBackground = true)
-@Composable
-fun ContactScreenPreview(){
-    TibbiyKomakTheme {
-        ContactScreen(rememberNavController())
     }
 }

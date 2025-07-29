@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">Tibbiy Ko\'mak</string>
+    <string name="support_help">Support &amp; Help</string>
+    <string name="faq_title">Frequently Asked Questions</string>
+    <string name="still_need_help">Still need help?</string>
+    <string name="send_us_message">Send us a message and we\'ll get back to you as soon as possible.</string>
+    <string name="contact_form">Contact Form</string>
+    <string name="full_name">Full Name</string>
+    <string name="your_message">Your Message</string>
+    <string name="send_message">Send Message</string>
+    <string name="message_hint">Your message will be copied to clipboard and Telegram will open automatically.</string>
+    <string name="other_ways">Other Ways to Reach Us</string>
+    <string name="email_support">Email Support</string>
+    <string name="telegram">Telegram</string>
+    <string name="fill_all_fields">Please fill in all fields</string>
+    <string name="opening_telegram">Opening Telegram with your message…</string>
+    <string name="opening_telegram_web">Opening Telegram Web with your message…</string>
+    <string name="message_copied">Message copied to clipboard. Please visit t.me/Dostonbek_Husanov and paste it manually.</string>
+
 </resources>

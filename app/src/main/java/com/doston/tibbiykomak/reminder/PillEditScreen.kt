@@ -84,7 +84,7 @@ fun PillEditScreen(pills: ReminderData, navController: NavController,viewModel: 
         }
     }
 
-    Scaffold(containerColor = MainColor) { innerPadding ->
+    Scaffold(containerColor = mainColor) { innerPadding ->
         LazyColumn(modifier = Modifier.padding(innerPadding)) {
             item {
                 Text(
