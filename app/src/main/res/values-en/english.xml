@@ -1,0 +1,567 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tibbiy Ko\'mak</string>
+    <string name="support_help">Support &amp; Help</string>
+    <string name="faq_title">Frequently Asked Questions</string>
+    <string name="still_need_help">Still need help?</string>
+    <string name="send_us_message">Send us a message and we\'ll get back to you as soon as possible.</string>
+    <string name="contact_form">Contact Form</string>
+    <string name="full_name">Full Name</string>
+    <string name="your_message">Your Message</string>
+    <string name="send_message">Send Message</string>
+    <string name="message_hint">Your message will be copied to clipboard and Telegram will open automatically.</string>
+    <string name="other_ways">Other Ways to Reach Us</string>
+    <string name="email_support">Email Support</string>
+    <string name="telegram">Telegram</string>
+    <string name="fill_all_fields">Please fill in all fields</string>
+    <string name="opening_telegram">Opening Telegram with your message…</string>
+    <string name="opening_telegram_web">Opening Telegram Web with your message…</string>
+    <string name="message_copied">Message copied to clipboard. Please visit t.me/Dostonbek_Husanov and paste it manually.</string>
+    <string name="ommaviy_muammolar">Common Issues</string>
+    <string name="email_ixtiyoriy">Email (optional)</string>
+    <string name="ilovadan_qanday_foydalanish_mumkin">How to use the app?</string>
+    <string name="ilova_asosiy_sahifasida_turli_xil_tibbiy_muammolar_bo_yicha_ma_lumotlarni_topishingiz_mumkin_har_bir_bo_limni_tanlash_orqali_batafsil_ma_lumot_olishingiz_mumkin">
+You can find information about various medical issues on the app\'s main screen. You can get detailed information by selecting each section.
+</string>
+    <string name="dori_eslatmalarini_qanday_sozlash_mumkin">How to set medication reminders?</string>
+    <string name="eslatmalar_bo_limiga_o_ting_va_tugmasini_bosing_dori_nomini_vaqtini_va_davomiyligini_kiriting_ilova_avtomatik_ravishda_sizga_eslatma_beradi">
+Go to the Reminders section and press the \'+\' button. Enter the medicine name, time, and duration. The app will automatically remind you.
+</string>
+    <string name="ma_lumotlar_qanchalik_ishonchli">How reliable is the information?</string>
+    <string name="barcha_ma_lumotlar_tibbiy_mutaxassislar_tomonidan_tekshirilgan_lekin_bu_ma_lumotlar_shifokor_maslahatini_almashtirmaydi">
+All information has been reviewed by medical professionals. However, this information does not replace a doctor\'s advice.
+</string>
+    <string name="offline_rejimda_ishlay_olasizmi">Can it work in offline mode?</string>
+    <string name="ha_asosiy_ma_lumotlar_offline_rejimda_mavjud_faqat_yangilanishlar_va_qo_shimcha_ma_lumotlar_uchun_internet_kerak">
+Yes, the main information is available offline. Only updates and additional info require internet access.
+</string>
+    <string name="qanday_qilib_yordam_so_rash_mumkin">How to request help?</string>
+    <string name="ushbu_sahifadagi_forma_orqali_yoki_telegram_email_orqali_biz_bilan_bog_lanishingiz_mumkin_24_soat_ichida_javob_beramiz">
+You can contact us through the form on this page or via Telegram/Email. We will respond within 24 hours.
+</string>
+    <string name="doimiy_ravishda_yangi_funksiyalar_qo_shib_boramiz_yangilanishlar_haqida_bildirishnomalar_orqali_xabar_beramiz">
+We regularly add new features. We\'ll notify you of updates via notifications.
+</string>
+    <string name="yangi_funksiyalar_qachon_qo_shiladi">When will new features be added?</string>
+    <string name="ha_barcha_shaxsiy_ma_lumotlaringiz_xavfsiz_saqlanadi_va_uchinchi_shaxslarga_berilmaydi">
+Yes, all your personal data is stored securely and not shared with third parties.
+</string>
+    <string name="ma_lumotlarim_xavfsizmi">Is my data safe?</string>
+    <string name="ha_ilova_to_liq_bepul_va_hech_qanday_yashirin_to_lovlar_yo_q_barcha_funksiyalar_bepul_foydalanish_uchun">
+Yes, the app is completely free and has no hidden charges. All features are free to use.
+</string>
+    <string name="ilova_bepulmi">Is the app free?</string>
+    <string name="istemol_qilindi">Consumed</string>
+    <string name="har_kuni_marta_istemol_qilinadi">Taken %1$s times daily</string>
+    <string name="dori_tafsilotlari">Medicine Details</string>
+    <string name="dori_haqida">About the Medicine</string>
+    <string name="kunlar_soni">Number of Days</string>
+    <string name="vaqtlari">Timings</string>
+    <string name="oraga_qytish">Go Back</string>
+    <string name="dori_o_zgartirish">Edit Medicine</string>
+    <string name="dori_xaqida_qisqa_malumot">Brief Info About the Medicine</string>
+    <string name="sana_lar_ni_tanlang">Select Date(s)</string>
+    <string name="_1_kunda_nechchi_marta_ichiladi">How many times per day?</string>
+    <string name="vaqtni_tanlang">Select Time</string>
+    <string name="_1_kunda_6_mahaldan_ko_p_dori_icha_olmaysiz">You cannot take medicine more than 6 times a day!</string>
+    <string name="kamida_1_mahal_dori_ichishingiz_kerak">You must take medicine at least once a day.</string>
+    <string name="iltimos_barcha_maydonlarni_to_ldiring">Please fill in all fields!</string>
+    <string name="iltimos_dori_eslatmalar_uchun_ruxsat_bering">Please allow permission for medication reminders</string>
+    <string name="o_zgartirish">Edit</string>
+    <string name="dori_vaqti">Medicine Time: %1$s</string>
+    <string name="dori_qo_shish">Add Medicine</string>
+    <string name="dori_nomi">Medicine Name</string>
+    <string name="sanalarni_tanlang">Select Dates</string>
+    <string name="bo_sh_maydonlarni_to_ldiring">Please fill the empty fields!</string>
+    <string name="saqlash">Save</string>
+    <string name="oldingisi">Previous</string>
+    <string name="keyingisi">Next</string>
+    <string name="xush_kelibsiz">Welcome!</string>
+    <string name="tibbiy_ko_mak_ilovasi_orqali_sog_lig_ingiz_haqida_tez_va_foydali_maslahatlar_oling">
+Get quick and helpful health advice through the Tibbiy Ko\'mak app.
+</string>
+    <string name="barcha_muammolar_tartiblangan">All issues are categorized</string>
+    <string name="ruhiy_surunkali_bolalar_ayollar_va_boshqa_sog_liq_muammolari_qulay_turkumlarda">
+Mental, chronic, children\'s, women\'s and other health issues in convenient categories.
+</string>
+    <string name="belgilar_orqali_qidiring">Search by symptoms</string>
+    <string name="faqatgina_muammoni_yozing_sizga_to_g_ri_keladigan_maslahatni_topamiz">
+Just describe your issue, and we\'ll find the right advice for you.
+</string>
+    <string name="ishonchli_maslahatlar">Trusted Advice</string>
+    <string name="shifokor_maslahatiga_asoslangan_dorilar_va_uy_sharoitidagi_tavsiyalar">
+Doctor-recommended medicines and home remedies.
+</string>
+    <string name="bosh_sahifa">Home</string>
+    <string name="eslatma">Reminder</string>
+    <string name="yosh">%1$s years old</string>
+    <string name="qollab_quvvatlash">Support</string>
+    <string name="ilova_haqida">About the App</string>
+    <string name="tavsiya_etilgan_dori_vositalar">Recommended Medications</string>
+    <string name="uy_sharoitida_tavsiyalar">Home Remedies</string>
+    <string name="tugatish">Finish</string>
+    <string name="ko_rish">View</string>
+    <string name="dori">Medicine</string>
+    <string name="signal_vaqti_tugadi">Reminder Time Ended</string>
+    <string name="signal_o_chirildi">Reminder Turned Off</string>
+    <string name="_5_daqiqaga_kechiktirildi">Postponed for 5 minutes</string>
+    <string name="dori_ichildi_sog_ayib_ketin">Medicine Taken! Get well soon!</string>
+    <string name="biz_bilan_bog_lanish">Contact Us</string>
+    <string name="to_liq_ismingiz">Your Full Name</string>
+    <string name="telefon_raqamingiz">Your Phone Number</string>
+    <string name="xabaringiz">Your Message</string>
+    <string name="salom_mening_ismim_telefon_raqamim_xabar">
+Hello! My name is: %1$s\nMy phone number is: %2$s\nMessage: %3$s
+</string>
+    <string name="maydonlar_bo_sh_bo_lmasligi_kerak">Fields must not be empty</string>
+    <string name="xabar_yuborish">Send Message</string>
+    <string name="tibbiy_ko_mak_sizning_shaxsiy_sog_liqni_saqlash_yordamchingiz">
+Tibbiy Ko\'mak — Your Personal Health Assistant
+</string>
+    <string name="tibbiy_ko_mak_bu_sizning_kundalik_sog_lig_ingizni_nazorat_qilishda_yordam_beradigan_ilova_dori_eslatmalari_kasalliklar_haqida_ma_lumotlar_va_ko_plab_foydali_funksiyalarni_taqdim_etadi">
+Tibbiy Ko\'mak is an app that helps you monitor your daily health. It offers medication reminders, disease information, and many useful features.
+</string>
+    <string name="asosiy_xususiyatlar">Main Features</string>
+    <string name="dori_eslatmalari">Medication Reminders.</string>
+    <string name="kasalliklar_haqida_ma_lumot">Disease Information.</string>
+    <string name="shaxsiy_profil">Personal Profile.</string>
+    <string name="bog_lanish_funksiyasi">Contact Function.</string>
+    <string name="tungi_va_kunduzgi_rejimlar">Night and Day Modes.</string>
+    <string name="kimlar_uchun_mo_ljallangan">Who is this for?</string>
+  <string name="no_shpa">No-shpa</string>
+    <string name="doimiy_dori_iste_mol_qiluvchi_insonlar_uchun">For people who regularly take medication.</string>
+    <string name="yoshi_katta_eslatmalarga_muhtoj_foydalanuvchilar_uchun">For elderly users who need reminders.</string>
+    <string name="farzandlariga_dori_eslatmalarini_sozlamoqchi_bo_lgan_ota_onalar_uchun">For parents who want to set medication reminders for their children.</string>
+    <string name="sog_lig_ini_nazorat_qilmoqchi_bo_lgan_foydalanuvchilar_uchun">For users who want to monitor their health.</string>
+    <string name="oddiy_va_o_zbek_tilidagi_ilovani_afzal_ko_radiganlar_uchun">For those who prefer a simple app in Uzbek.</string>
+    <string name="murakkab_tibbiy_ilovalardan_charchagan_foydalanuvchilar_uchun">For users tired of complex medical apps.</string>
+    <string name="nogironligi_bor_va_eslatmaga_ehtiyoji_bo_lgan_insonlar_uchun">For people with disabilities who need reminders.</string>
+    <string name="tibbiy_ma_lumotlarga_tezkor_kirishni_xohlaydiganlar_uchun">For those who want quick access to medical information.</string>
+    <string name="nima_uchun_tibbiy_ko_mak">Why choose Medical Help?</string>
+    <string name="oson_va_tushunarli_dizayn">Simple and intuitive design.</string>
+    <string name="to_liq_o_zbek_tilida">Entirely in Uzbek and english language.</string>
+    <string name="internetga_bog_liq_bo_lmagan_holda_ishlaydi">Works without internet connection.</string>
+    <string name="sog_lig_ingiz_siz_uchun_muhim_bo_lgani_kabi_biz_uchun_ham_muhim">Your health is as important to us as it is to you.</string>
+    <string name="ilova_versiyasi_1_0_0">App version: 1.0.0</string>
+    <string name="_2025_tibbiy_ko_mak_barcha_huquqlar_himoyalangan">© 2025 Medical Help. All rights reserved.</string>
+    <string name="bosh_og_rig_i">Headache</string>
+    <string name="bosh_og_rig_i_turli_sabablarga_ko_ra_yuzaga_keladigan_keng_tarqalgan_simptom">Headache – a common symptom caused by various factors.</string>
+    <string name="paratsetamol">Paracetamol</string>
+    <string name="og_riqni_kamaytiruvchi_va_isitmani_tushiruvchi_dori">Pain reliever and fever reducer.</string>
+    <string name="kattalar_uchun_500_1000_mg_har_4_6_soatda_kunlik_maksimal_doza_4000_mg">Adults: 500–1000 mg every 4–6 hours. Maximum daily dose: 4000 mg.</string>
+    <string name="ibuprofen">Ibuprofen</string>
+    <string name="yallig_lanishga_qarshi_va_og_riqni_kamaytiruvchi_dori">Anti-inflammatory and pain-relieving medication.</string>
+    <string name="kattalar_uchun_200_400_mg_har_4_6_soatda_kunlik_maksimal_doza_1200_mg">Adults: 200–400 mg every 4–6 hours. Maximum daily dose: 1200 mg.</string>
+    <string name="dam_olish">Rest</string>
+    <string name="ko_proq_suv_ichish">Drink more water</string>
+    <string name="yengil_ovqat">Light meals</string>
+    <string name="ruhiy_sog_liq_muammolari">Mental health issues</string>
+    <string name="ovqat_hazm_qilish_muammolari">Digestive problems</string>
+    <string name="allergiya">Allergy</string>
+    <string name="qon_bosimi_muammolari">Blood pressure issues</string>
+    <string name="nafas_olish_tizimi_muammolari">Respiratory system issues</string>
+    <string name="qon_tomir_muammolari">Cardiovascular problems</string>
+    <string name="teri_muammolari">Skin problems</string>
+    <string name="metabolik_muammolar">Metabolic disorders</string>
+    <string name="suyak_va_mushak_muammolari">Bone and muscle issues</string>
+    <string name="isitma">Fever</string>
+    <string name="isitma_tana_haroratining_normal_darajadan_yuqori_ko_tarilishi_odatda_infektsiya_belgisi">Fever – elevated body temperature, usually a sign of infection.</string>
+    <string name="paracetamol">Paracetamol</string>
+    <string name="isitmani_tushiruvchi_va_og_riqni_kamaytiruvchi_dori">Fever reducer and pain reliever.</string>
+    <string name="kattalar_uchun_500_1000_mg_har_4_6_soatda">Adults: 500–1000 mg every 4–6 hours.</string>
+    <string name="isitma_va_yallig_lanishga_qarshi_dori">Fever and anti-inflammatory medication.</string>
+    <string name="kattalar_uchun_200_400_mg_har_6_soatda">Adults: 200–400 mg every 6 hours.</string>
+    <string name="ko_proq_suyuqlik_ichish">Drink more fluids</string>
+    <string name="yengil_kiyim_kiying">Wear light clothing</string>
+    <string name="ich_qotishi">Constipation</string>
+    <string name="ich_qotishi_ichak_harakatlarining_kamayishi_yoki_to_xtashi_og_riq_va_noqulaylik_tug_diradi">Constipation – reduced or stopped bowel movements causing pain and discomfort.</string>
+    <string name="laktuloza">Lactulose</string>
+    <string name="ich_qotishni_yumshatuvchi_va_ichak_harakatini_oshiruvchi_dori">Laxative that softens stool and stimulates bowel movements.</string>
+    <string name="odatda_10_20_ml_kuniga_bir_necha_marta">Usually 10–20 ml several times a day.</string>
+    <string name="magnezium_gidroksid">Magnesium hydroxide</string>
+    <string name="ichak_harakatini_rag_batlantiruvchi_dori">Medication that stimulates bowel activity.</string>
+    <string name="kattalar_uchun_15_30_ml_kuniga_bir_necha_marta">Adults: 15–30 ml several times a day.</string>
+    <string name="ko_proq_tolali_ovqatlar_iste_mol_qilish">Eat more fiber-rich foods</string>
+    <string name="jismoniy_faollik">Physical activity</string>
+    <string name="ishtaha_yo_qolishi">Loss of appetite</string>
+    <string name="ishtaha_yo_qolishi_ovqatga_bo_lgan_qiziqishning_pasayishi">Loss of appetite – decreased interest in food.</string>
+    <string name="multivitaminlar">Multivitamins</string>
+    <string name="organizmni_qo_llab_quvvatlash_uchun">To support the body.</string>
+    <string name="kuniga_1_marta">Once a day.</string>
+    <string name="zanjabil_kapsulalari">Ginger capsules</string>
+    <string name="ovqat_hazm_qilishni_yaxshilaydi">Improves digestion.</string>
+    <string name="kuniga_1_2_marta">1–2 times a day.</string>
+    <string name="yengil_mashqlar">Light exercises</string>
+    <string name="tanaffuslar_qilish">Take breaks</string>
+    <string name="ko_p_suyuqlik_ichish">Drink plenty of fluids</string>
+    <string name="qorin_og_rig_i">Abdominal pain</string>
+    <string name="qorin_og_rig_i_turli_sabablarga_ko_ra_yuzaga_keladigan_qorin_sohasidagi_og_riq">Abdominal pain – pain in the abdominal area due to various causes.</string>
+    <string name="espumisan">Espumisan</string>
+    <string name="shishishni_kamaytiruvchi_dori">Anti-bloating medication.</string>
+    <string name="kattalar_uchun_40_mg_kuniga_bir_necha_marta">Adults: 40 mg several times a day.</string>
+
+    <string name="mushak_gev_etici_va_og_riq_qoldiruvchi">Muscle relaxant and pain reliever.</string>
+    <string name="kattalar_uchun_40_80_mg_har_8_soatda">For adults: 40–80 mg every 8 hours.</string>
+    <string name="issiq_suyuqlik_ichish">Drink warm fluids</string>
+    <string name="teri_allergiyasi">Skin allergy</string>
+    <string name="teri_allergiyasi_terining_allergik_reaksiyasi_qizarish_qichishish_va_toshma_bilan_namoyon_bo_ladi">Skin allergy — allergic reaction of the skin, manifests as redness, itching, and rash.</string>
+    <string name="loratadin">Loratadine</string>
+    <string name="antiallergik_dori">Antiallergic medication.</string>
+    <string name="kattalar_uchun_10_mg_kuniga_bir_marta">For adults: 10 mg once daily.</string>
+    <string name="setirizin">Cetirizine</string>
+    <string name="allergiya_belgilari_uchun_dori">Medication for allergy symptoms.</string>
+    <string name="allergenlardan_uzoq_turish">Avoid allergens</string>
+    <string name="sovuq_siqish">Cold compress</string>
+    <string name="teri_namlantirish">Moisturize the skin</string>
+    <string name="tomoq_og_rig_i">Sore throat</string>
+    <string name="tomoq_og_rig_i_tomoqdagi_yallig_lanish_yoki_infektsiya_sababli_yuzaga_keladi">Sore throat — caused by inflammation or infection in the throat.</string>
+    <string name="og_riqni_kamaytiruvchi_va_yallig_lanishga_qarshi_dori">Pain reliever and anti-inflammatory medication.</string>
+    <string name="iliq_choy_ichish">Drink warm tea</string>
+    <string name="tomoqni_tuzli_suv_bilan_chayish">Gargle with salt water</string>
+    <string name="og_riq_va_isitmani_kamaytiruvchi_dori">Pain and fever reliever.</string>
+    <string name="depressiya">Depression</string>
+    <string name="depressiya_uzoq_davom_etadigan_qayg_u_va_ruhiy_tushkunlik_holati">Depression — a prolonged state of sadness and emotional distress.</string>
+    <string name="fluoksetin">Fluoxetine</string>
+    <string name="antidepressant_dori">Antidepressant medication.</string>
+    <string name="kuniga_20_mg_dan_boshlanadi_shifokor_ko_rsatmasi_bo_yicha">Start with 20 mg daily, as prescribed by a doctor.</string>
+    <string name="sertralin">Sertraline</string>
+    <string name="kuniga_50_mg_dan_boshlanadi_shifokor_ko_rsatmasi_bo_yicha">Start with 50 mg daily, as prescribed by a doctor.</string>
+    <string name="jismoniy_mashqlar_qilish">Do physical exercise</string>
+    <string name="do_stlar_bilan_muloqot">Socialize with friends</string>
+    <string name="professional_yordamga_murojaat_qilish">Seek professional help</string>
+    <string name="stress">Stress</string>
+    <string name="stress_organizm_va_ongning_kuchli_bosim_va_zo_riqish_holati">Stress — a state of intense pressure and mental strain.</string>
+    <string name="valeriana_ekstrakti">Valerian extract</string>
+    <string name="tinchlantiruvchi_dori">Calming medication.</string>
+    <string name="kuniga_1_2_marta_300_mg">300 mg, 1–2 times a day.</string>
+    <string name="magniy_preparatlari">Magnesium supplements</string>
+    <string name="stressni_kamaytiruvchi_minerallar">Minerals that reduce stress.</string>
+    <string name="kuniga_100_300_mg">100–300 mg per day.</string>
+    <string name="nafas_olish_mashqlari">Breathing exercises</string>
+    <string name="yetarli_uxlash">Get enough sleep</string>
+    <string name="uyqu_buzilishlari">Sleep disorders</string>
+    <string name="uyqu_buzilishlari_uxlashning_sifat_va_miqdoriga_ta_sir_qiluvchi_holatlar">Sleep disorders — conditions affecting the quality and quantity of sleep.</string>
+    <string name="melatonin">Melatonin</string>
+    <string name="uyquni_tartibga_soluvchi_dori">Sleep-regulating medication.</string>
+    <string name="kechqurun_1_3_mg">1–3 mg in the evening.</string>
+    <string name="diphenhidramin">Diphenhydramine</string>
+    <string name="uyqu_dori">Sleeping medication.</string>
+    <string name="kattalar_uchun_25_50_mg_kechqurun">25–50 mg in the evening for adults.</string>
+    <string name="yotishdan_oldin_og_ir_ovqat_yemang">Avoid heavy meals before bed</string>
+    <string name="yotish_vaqtini_belgilash">Set a regular bedtime</string>
+    <string name="yorug_lik_va_shovqinni_kamaytirish">Reduce light and noise</string>
+    <string name="gastrit_oshqozon_shilliq_qavatining_yallig_lanishi">Gastritis — inflammation of the stomach lining.</string>
+    <string name="gastrit">Gastritis</string>
+    <string name="omeprazol">Omeprazole</string>
+    <string name="oshqozon_kislotasini_kamaytiruvchi_dori">Medication to reduce stomach acid.</string>
+    <string name="kuniga_20_mg_ovqatdan_oldin">20 mg per day, before meals.</string>
+    <string name="ranitidin">Ranitidine</string>
+    <string name="kuniga_150_mg_kuniga_2_marta">150 mg, twice a day.</string>
+    <string name="achchiq_va_yog_li_ovqatlardan_saqlanish">Avoid spicy and fatty foods</string>
+    <string name="chekish_va_spirtli_ichimliklardan_voz_kechish">Avoid smoking and alcohol</string>
+    <string name="hazmsizlik_dispepsiya">Indigestion (Dyspepsia)</string>
+    <string name="hazmsizlik_ovqat_hazm_bo_lishida_qiyinchiliklar_va_noqulaylik_hissi">Indigestion — discomfort or difficulty in digesting food.</string>
+    <string name="mezim">Mezim</string>
+    <string name="ovqat_hazm_qilish_fermentlari">Digestive enzymes.</string>
+    <string name="ovqatdan_keyin_1_2_tabletka">1–2 tablets after meals.</string>
+    <string name="pancreatin">Pancreatin</string>
+    <string name="kichik_porsiyalarda_tez_tez_ovqatlanish">Eat small, frequent meals</string>
+    <string name="og_ir_va_yog_li_taomlardan_saqlanish">Avoid heavy and fatty meals</string>
+    <string name="ko_p_suv_ichish">Drink plenty of water</string>
+    <string name="qorin_og_rig_i_turli_sabablar_bilan_yuzaga_keladigan_noqulaylik">Abdominal pain — discomfort caused by various reasons.</string>
+    <string name="espumizan">Espumizan</string>
+    <string name="gazni_yo_qotuvchi_dori">Anti-gas medication.</string>
+    <string name="ovqatdan_keyin_2_3_tabletka">2–3 tablets after meals.</string>
+    <string name="spazmolitik_dori">Antispasmodic medication.</string>
+    <string name="kuniga_2_3_marta_40_mg">40 mg, 2–3 times a day.</string>
+    <string name="yengil_ovqatlanish">Eat light meals</string>
+    <string name="oziq_ovqatni_yaxshi_chaynash">Chew food thoroughly</string>
+    <string name="stressni_kamaytirish">Reduce stress</string>
+    <string name="teridagi_allergiya">Skin allergy</string>
+    <string name="terida_qizarish_qichishish_shishish_kabi_allergik_reaksiyalar">Allergic skin reactions such as redness, itching, and swelling.</string>
+    <string name="loratadi">Loratadine</string>
+    <string name="allergiyaga_qarshi_dori">Antiallergic medication.</string>
+    <string name="kuniga_10_mg_1_marta">10 mg once daily.</string>
+    <string name="cetirizin">Cetirizine</string>
+    <string name="allergiyaga_qarshi_dor">Antiallergic medication.</string>
+    <string name="kuniga_10_mg_1_mart">10 mg once daily.</string>
+    <string name="allergenlardan_uzoqroq_bo_lish">Avoid allergens</string>
+    <string name="terini_toza_va_nam_saqlash">Keep the skin clean and moisturized</string>
+    <string name="sovuq_kompress_qo_yish">Apply cold compress</string>
+    <string name="burun_allergiyasi_hayfaringit">Nasal allergy (Hypharyngitis)</string>
+    <string name="burun_yo_llarining_allergik_yallig_lanishi_burun_bitishi_va_hap_r_k">Allergic inflammation of nasal passages, nasal congestion, and sneezing.</string>
+    <string name="allergiyaga_qarshi_do">Antiallergic medication.</string>
+    <string name="kuniga_10_mg_1_mar">10 mg once daily.</string>
+    <string name="fexofenadin">Fexofenadine</string>
+    <string name="allergiyaga_qarshi_d">Antiallergic medication.</string>
+    <string name="kuniga_180_mg_1_marta">180 mg once daily.</string>
+    <string name="uy_sharoitida_changni_kamaytirish">Reduce dust at home</string>
+    <string name="allergenlardan_uzoqroq_bo_lis">Avoid allergens</string>
+    <string name="burunni_nam_saqlash">Keep the nose moisturized</string>
+
+    <string name="oshqozon_allergiyasi">Stomach allergy</string>
+    <string name="ovqat_hazm_qilish_tizimining_allergik_reaksiyasi">Allergic reaction of the digestive system.</string>
+    <string name="ranitidi">Ranitidine</string>
+    <string name="allergiyaga_qarshi_">Anti-allergy medication.</string>
+    <string name="kuniga_150_mg_2_marta">150 mg twice a day.</string>
+    <string name="famotidin">Famotidine</string>
+    <string name="allergiyaga_qarshi">Anti-allergy medication.</string>
+    <string name="kuniga_20_mg_2_marta">20 mg twice a day.</string>
+    <string name="allergen_bo_lgan_ovqatlardan_voz_kechish">Avoid allergenic foods</string>
+    <string name="kichik_porsiyalarda_ovqatlanish">Eat in small portions</string>
+    <string name="ko_p_suv_ichis">Drink plenty of water</string>
+
+    <string name="yuqori_qon_bosimi">High blood pressure (Hypertension)</string>
+    <string name="yuqori_qon_bosimi_desc">Blood pressure is above normal, accompanied by headache, dizziness, and rapid heartbeat.</string>
+    <string name="enalapril">Enalapril</string>
+    <string name="enalapril_desc">ACE inhibitor, lowers blood pressure.</string>
+    <string name="enalapril_dose">5–20 mg per day, 1–2 times.</string>
+    <string name="amlodipin">Amlodipine</string>
+    <string name="amlodipin_desc">Calcium channel blocker, lowers blood pressure.</string>
+    <string name="amlodipin_dose">5–10 mg per day, once daily.</string>
+    <string name="kamaytir_tuz">Reduce salt intake</string>
+    <string name="stress_kamaytir">Reduce stress</string>
+    <string name="soglom_ovqatlanish">Healthy diet</string>
+
+    <string name="past_qon_bosimi">Low blood pressure (Hypotension)</string>
+    <string name="past_qon_bosimi_desc">Blood pressure is below normal, with symptoms like fatigue, dizziness, and fainting.</string>
+    <string name="midodrin">Midodrine</string>
+    <string name="midodrin_desc">Raises blood pressure.</string>
+    <string name="midodrin_dose">2.5–10 mg per day, 2–3 times.</string>
+    <string name="fludrokortizon">Fludrocortisone</string>
+    <string name="fludrokortizon_desc">Raises blood pressure by retaining fluids.</string>
+    <string name="fludrokortizon_dose">0.1 mg per day, may increase if needed.</string>
+    <string name="kop_suyuqlik">Drink plenty of fluids</string>
+    <string name="birdan_turmaslik">Avoid standing up suddenly</string>
+    <string name="tuzli_mahsulotlar">Consume salty foods</string>
+    <string name="elastik_paypoq">Wear compression stockings</string>
+
+    <string name="mushak_gevsheticiler">Muscle relaxants</string>
+    <string name="mushak_gevsheticiler_desc">Relaxes the muscles.</string>
+    <string name="shifokor_korsatma">According to doctor\'s prescription.</string>
+    <string name="ogriq_qoldiruvchi">Painkillers</string>
+    <string name="ogriq_qoldiruvchi_desc">Reduces pain.</string>
+    <string name="issiq_kompres">Apply warm compress</string>
+    <string name="chozish_mashqlari">Gentle stretching exercises</string>
+    <string name="suyuqlik_ichish">Adequate fluid intake</string>
+
+    <string name="yalliglanishga_qarshi">Anti-inflammatory medications</string>
+    <string name="yalliglanishga_qarshi_desc">Reduces inflammation.</string>
+    <string name="tana_holati">Maintain correct posture</string>
+    <string name="jismoniy_mashqlar">Regular physical activity</string>
+    <string name="issiq_vanna">Take warm baths</string>
+
+    <string name="mushak_zaiflik">Muscle weakness</string>
+    <string name="mushak_zaiflik_desc">Loss of muscle strength, difficulty in movement.</string>
+    <string name="vitamin_b_kompleks">Vitamin B complex</string>
+    <string name="vitamin_b_kompleks_desc">Improves muscle function.</string>
+    <string name="kuniga_bir_marta">Once a day.</string>
+    <string name="protein_qoshimcha">Protein supplements</string>
+    <string name="protein_qoshimcha_desc">Strengthens muscles.</string>
+    <string name="ovqat_bilan_birga">Take with food.</string>
+    <string name="muntazam_mashqlar">Do regular exercises</string>
+    <string name="balanslangan_ovqat">Healthy and balanced diet</string>
+    <string name="yetarli_dam_olish">Get enough rest</string>
+
+    <string name="bronxit">Bronchitis</string>
+    <string name="bronxit_desc">Inflammation of the bronchial tubes, with cough, mucus, and difficulty breathing.</string>
+    <string name="ambroksol">Ambroxol</string>
+    <string name="ambroksol_desc">Thins mucus and helps its expulsion.</string>
+    <string name="ambroksol_dose">30 mg, 2–3 times a day.</string>
+    <string name="salbutamol">Salbutamol</string>
+    <string name="salbutamol_desc">Expands the bronchi, eases breathing.</string>
+    <string name="salbutamol_dose">2–4 times a day as needed.</string>
+    <string name="issiq_ichimlik">Drink warm fluids</string>
+    <string name="nam_havo">Ensure humid air</string>
+    <string name="chekishdan_saqlanish">Avoid smoking</string>
+
+    <string name="bronxial_astma">Bronchial asthma</string>
+    <string name="bronxial_astma_desc">Chronic inflammation of the bronchi, with shortness of breath, chest tightness, and coughing.</string>
+    <string name="salbutamol_inhalator">Salbutamol (inhaler)</string>
+    <string name="salbutamol_inhalator_desc">Bronchodilator, used for rapid relief.</string>
+    <string name="salbutamol_inhalator_dose">Press 1–2 times when needed.</string>
+    <string name="budesonid">Budesonide</string>
+    <string name="budesonid_desc">Anti-inflammatory inhalation medication.</string>
+    <string name="budesonid_dose">1–2 times a day, dose prescribed by doctor.</string>
+    <string name="allergen_saqlanish">Avoid allergens</string>
+    <string name="inhalator_ishlatish">Use inhaler correctly</string>
+    <string name="dori_nazorati">Continuous medication monitoring</string>
+    <string name="soglom_turmush">Healthy lifestyle</string>
+
+    <string name="pnevmoniya">Pneumonia</string>
+    <string name="pnevmoniya_desc">Inflammation of the lungs, with fever, cough, chest pain, and general weakness.</string>
+    <string name="amoksitsillin">Amoxicillin</string>
+    <string name="amoksitsillin_desc">Antibiotic effective against bacterial infections.</string>
+    <string name="amoksitsillin_dose">500 mg, 3 times a day.</string>
+    <string name="azitromitsin">Azithromycin</string>
+    <string name="azitromitsin_desc">Broad-spectrum antibiotic.</string>
+    <string name="azitromitsin_dose">500 mg once daily for 3–5 days.</string>
+    <string name="isitma_tushirish">Reduce fever</string>
+    <string name="tibbiy_nazorat">Stay under medical supervision</string>
+
+    <string name="qandli_diabet_asoratlari">Complications of diabetes</string>
+    <string name="qandli_diabet_asoratlari_desc">Complications caused by diabetes, such as cardiovascular diseases, kidney failure, and others.</string>
+    <string name="antihipertenzivlar">Antihypertensives</string>
+    <string name="yiringli_yaralar">Purulent wounds</string>
+    <string name="yiringli_yaralar_desc">Inflammatory wounds formed by the accumulation of pus under the skin.</string>
+    <string name="antibiotiklar">Antibiotics (as prescribed by a doctor)</string>
+    <string name="yiringli_infeksiyani_davolaydi">Treats purulent infections.</string>
+    <string name="belgilangan_dozada">At the prescribed dose.</string>
+    <string name="analjeziklar">Analgesics</string>
+    <string name="ogriqni_kamaytiradi">Reduces pain.</string>
+    <string name="zaruratga_qarab">As needed.</string>
+    <string name="teri_tozaligi">Pay attention to skin cleanliness</string>
+    <string name="yaralarni_himoya_qilish">Protect wounds from contamination</string>
+    <string name="shifokorga_murojaat">Consult a doctor</string>
+
+    <string name="qandli_diabet">Diabetes</string>
+    <string name="qandli_diabet_desc">A chronic disease characterized by elevated blood sugar levels.</string>
+    <string name="metformin">Metformin</string>
+    <string name="qon_shakar_pashaytiradi">Lowers blood sugar.</string>
+    <string name="kuniga_1_2_ovqatdan_keyin">Once or twice a day after meals.</string>
+    <string name="insulin">Insulin</string>
+    <string name="qondagi_shakarni_tartib">Regulates blood sugar.</string>
+    <string name="shifokor_nazoratida_dozalanadi">Dosage under doctor supervision.</string>
+    <string name="qon_shakar_tekshirish">Regular blood sugar monitoring</string>
+
+    <string name="qandli_diabet_ketoasidozi">Diabetic ketoacidosis</string>
+    <string name="qandli_diabet_ketoasidozi_desc">A serious condition where very high blood sugar causes acidic compounds to build up in the body.</string>
+    <string name="qon_shakar_tez_pashaytiradi">Rapidly lowers blood sugar.</string>
+    <string name="tezkor_yordam_talab">Requires urgent medical help.</string>
+    <string name="elektrolitlar">Electrolytes</string>
+    <string name="tana_suyuqlik_balansi">Maintains fluid balance in the body.</string>
+    <string name="shifokor_nazoratida">Under doctor supervision.</string>
+    <string name="darhol_shifokorga">Immediate medical consultation</string>
+    <string name="suyuqlik_ichishni_kopaytirish">Increase fluid intake</string>
+    <string name="tibbiy_nazoratda_bolish">Remain under medical supervision</string>
+
+    <!-- Diarrhea -->
+    <string name="diareya">Diarrhea</string>
+    <string name="diareya_desc">Frequent passage of loose, watery stools.</string>
+    <string name="loperamid">Loperamide</string>
+    <string name="loperamid_desc">Reduces diarrhea.</string>
+    <string name="loperamid_usage">As prescribed by a doctor.</string>
+    <string name="smekta">Smecta</string>
+    <string name="smekta_desc">Helps cleanse the intestines.</string>
+    <string name="smekta_usage">3 times daily.</string>
+    <string name="diareya_advice1">Drink plenty of fluids</string>
+    <string name="diareya_advice2">Eat light and low-fat meals</string>
+    <string name="diareya_advice3">Take antibiotics only under medical supervision</string>
+
+    <!-- Acne -->
+    <string name="akne">Acne (scars)</string>
+    <string name="akne_desc">A skin condition with pus-filled or black spots, usually on the face or body.</string>
+    <string name="benzoyl">Benzoyl peroxide</string>
+    <string name="benzoyl_desc">Kills bacteria and reduces inflammation.</string>
+    <string name="benzoyl_usage">Apply 1–2 times daily to affected areas.</string>
+    <string name="azelain">Azelaic acid</string>
+    <string name="azelain_desc">Reduces inflammation and pigmentation.</string>
+    <string name="azelain_usage">Twice daily.</string>
+    <string name="akne_advice1">Clean your skin regularly</string>
+    <string name="akne_advice2">Avoid oily foods</string>
+    <string name="akne_advice3">Avoid touching your face</string>
+
+    <!-- Dermatitis -->
+    <string name="dermatit">Dermatitis</string>
+    <string name="dermatit_desc">A skin condition involving redness, itching, and inflammation.</string>
+    <string name="hidrokortizon">Hydrocortisone cream</string>
+    <string name="hidrokortizon_desc">Reduces inflammation.</string>
+    <string name="hidrokortizon_usage">Apply 1–2 times daily.</string>
+    <string name="antihistamin">Antihistamines</string>
+    <string name="antihistamin_desc">Reduces itching.</string>
+    <string name="antihistamin_usage">As prescribed by a doctor.</string>
+    <string name="dermatit_advice1">Avoid allergens</string>
+    <string name="dermatit_advice2">Keep skin moisturized</string>
+    <string name="dermatit_advice3">Avoid washing with hot water</string>
+
+    <!-- Psoriasis -->
+    <string name="psoriaz">Psoriasis</string>
+    <string name="psoriaz_desc">Red, thickened patches of skin caused by rapid skin cell growth.</string>
+    <string name="kalsipotriol">Calcipotriol cream</string>
+    <string name="kalsipotriol_desc">Slows down skin cell growth.</string>
+    <string name="kalsipotriol_usage">1–2 times daily.</string>
+    <string name="metotreksat">Methotrexate</string>
+    <string name="metotreksat_desc">Anti-inflammatory medication.</string>
+    <string name="metotreksat_usage">Used under doctor supervision.</string>
+    <string name="psoriaz_advice1">Reduce stress</string>
+    <string name="psoriaz_advice2">Keep skin moisturized</string>
+    <string name="psoriaz_advice3">Avoid rough or irritating clothing</string>
+
+    <!-- Hypotension -->
+    <string name="past_qon_bosimi_2">Low blood pressure (hypotension)</string>
+    <string name="past_qon_bosimi_desc_2">Low blood pressure characterized by fatigue, dizziness, and fainting.</string>
+    <string name="midodrin_desc_2">Raises blood pressure.</string>
+    <string name="midodrin_dose_2">Several times a day as prescribed by a doctor.</string>
+    <string name="kofein_prep">Caffeine preparations</string>
+    <string name="kofein_prep_desc">Stimulates the central nervous system.</string>
+    <string name="kofein_prep_dose">As needed.</string>
+    <string name="koproq_suyuqlik">Drink more fluids</string>
+    <string name="tuzli_ovqat">Eat salty foods</string>
+    <string name="sekin_turish">Stand up slowly</string>
+    <string name="faollik">Maintain regular physical activity</string>
+
+    <!-- Varicose Veins -->
+    <string name="varikoz">Varicose veins (enlarged veins)</string>
+    <string name="varikoz_desc">Vein enlargement in the legs with swelling, pain, and heaviness.</string>
+    <string name="detraleks">Detralex</string>
+    <string name="detraleks_desc">Improves circulation and strengthens veins.</string>
+    <string name="detraleks_dose">1–2 tablets daily.</string>
+    <string name="troxevasin">Troxevasin</string>
+    <string name="troxevasin_desc">Strengthens vein walls.</string>
+    <string name="troxevasin_dose">2 capsules daily.</string>
+    <string name="oyoq_dam">Elevate legs to rest</string>
+    <string name="siqish_paypoq">Use compression stockings</string>
+    <string name="uzoq_tik_turish">Avoid prolonged standing</string>
+    <string name="yurish_harakat">Increase walking and movement</string>
+
+    <!-- Gastritis -->
+    <string name="gastrit_desc">Inflammation of the stomach lining, with stomach pain, nausea, and vomiting.</string>
+    <string name="omeprazol_desc">Reduces stomach acid.</string>
+    <string name="omeprazol_dose">1 tablet daily before meals.</string>
+    <string name="ranitidin_desc">Suppresses stomach acid.</string>
+    <string name="ranitidin_dose">150 mg daily in the evening.</string>
+    <string name="kislotali_ovqat">Avoid acidic and spicy foods</string>
+    <string name="kichik_porsiya">Eat in small frequent meals</string>
+    <string name="spirtli_ichimlik">Avoid alcohol</string>
+
+    <!-- Stomach Ulcer -->
+    <string name="oshqozon_yarasi">Stomach ulcer</string>
+    <string name="oshqozon_yarasi_desc">Ulcers in the stomach lining, causing severe pain and discomfort.</string>
+    <string name="almagel">Almagel</string>
+    <string name="almagel_desc">Neutralizes stomach acid.</string>
+    <string name="almagel_dose">After every meal.</string>
+    <string name="sucralfate">Sucralfate</string>
+    <string name="sucralfate_desc">Protects and coats the ulcer.</string>
+    <string name="sucralfate_dose">4 times a day.</string>
+    <string name="tuz_achchiq_cheklash">Limit salty and spicy foods</string>
+    <string name="chekish_tashlash">Quit smoking</string>
+    <string name="stress_kamaytirish">Reduce stress</string>
+
+    <!-- Bloating -->
+    <string name="meteorizm">Abdominal bloating (flatulence)</string>
+    <string name="meteorizm_desc">Gas buildup in the abdomen causing bloating, discomfort, and pain.</string>
+    <string name="simetikon">Simethicone</string>
+    <string name="simetikon_desc">Reduces gas and prevents bloating.</string>
+    <string name="simetikon_dose">After meals.</string>
+    <string name="espumisan_desc">Helps release gas.</string>
+    <string name="espumisan_dose">2–3 times a day.</string>
+    <string name="gaz_ovqat_cheklash">Avoid gas-producing foods</string>
+    <string name="yaxshi_chaynalgan">Eat well-chewed food</string>
+    <string name="faollikni_oshirish">Increase physical activity</string>
+
+    <!-- Constipation -->
+    <string name="ich_qotishi_desc">Problem due to slow bowel movement, resulting in hard and infrequent stool.</string>
+    <string name="dulkolaks">Dulcolax</string>
+    <string name="dulkolaks_desc">Stimulates the intestines.</string>
+    <string name="dulkolaks_dose">5–10 mg daily.</string>
+    <string name="laktuloza_desc">Improves bowel movement.</string>
+    <string name="laktuloza_dose">15–30 ml daily.</string>
+    <string name="tolaga_boy_ovqat">Eat nutritious, fiber-rich foods</string>
+    <string name="davom_etish">Continue</string>
+    <string name="iltimos_barcha_kataklarni_to_ldiring">Please fill in all fields</string>
+    <string name="telefon_raqam">Phone number</string>
+    <string name="familya">Last name</string>
+    <string name="ism">First name</string>
+    <string name="ro_yhatdan_o_ting">Register</string>
+
+</resources>

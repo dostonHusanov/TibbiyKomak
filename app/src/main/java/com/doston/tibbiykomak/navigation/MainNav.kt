@@ -1,6 +1,7 @@
 package com.doston.tibbiykomak.navigation
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -10,6 +11,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.doston.tibbiykomak.auth.LanguageScreen
+import com.doston.tibbiykomak.auth.LocaleManager
 import com.doston.tibbiykomak.auth.RegisterScreen
 import com.doston.tibbiykomak.home.HomeScreen
 import com.doston.tibbiykomak.home.SecondHomeScreen
@@ -33,8 +36,26 @@ fun MainNav(context: Context,viewModel: ThemeViewModel) {
         // First Navigation Flow (Welcome, Language, and Onboarding)
         composable("welcome") {
             WelcomeScreen(onStart = {
-                navController.navigate("onboarding")
+                navController.navigate("language")
             })
+        }
+        composable("language") {
+            LanguageScreen(
+                onLanguageSelected = { languageCode ->
+                    val activity = context as? Activity
+
+                    LocaleManager.setLocale(context, languageCode)
+                    LocaleManager.getPrefs(context).edit().putBoolean("language_selected", true)
+                        .apply()
+
+                    activity?.recreate()
+                },
+                onNextClicked = {
+                    navController.navigate("onboarding") {
+                        popUpTo("language") { inclusive = true }
+                    }
+                },viewModel
+            )
         }
 
 

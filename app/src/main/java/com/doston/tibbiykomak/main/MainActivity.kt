@@ -21,6 +21,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.doston.tibbiykomak.R
+import com.doston.tibbiykomak.auth.LocaleManager
 import com.doston.tibbiykomak.navigation.MainNav
 import com.doston.tibbiykomak.ui.theme.ThemeViewModel
 
@@ -65,6 +66,9 @@ val viewModel:ThemeViewModel= viewModel()
                     arrayOf(Manifest.permission.POST_NOTIFICATIONS), 1)
             }
         }
+    }
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(LocaleManager.applyStoredLocale(newBase))
     }
 }
 

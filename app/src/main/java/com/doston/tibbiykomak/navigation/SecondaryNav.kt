@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -214,11 +215,23 @@ fun SecondaryNav(viewModel: ThemeViewModel) {
                             fontSize = 18.sp, fontWeight = FontWeight.Bold, color = textColor
                         )
                         Spacer(Modifier.height(2.dp))
-                        Text(
-                            stringResource(R.string.yosh, user?.age!!),
-                            modifier = Modifier.padding(horizontal = 16.dp),
-                            fontSize = 16.sp, fontWeight = FontWeight.SemiBold, color = textColor
-                        )
+                        Row {
+                            Text(
+                                user?.age.toString(),
+                                modifier = Modifier.padding(horizontal = 16.dp),
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.SemiBold,
+                                color = textColor
+                            )
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text(
+                                stringResource(R.string.yosh),
+                                modifier = Modifier.padding(horizontal = 16.dp),
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.SemiBold,
+                                color = textColor
+                            )
+                        }
                         Spacer(Modifier.height(2.dp))
                         Text(
                             "${user?.phoneNumber}",
