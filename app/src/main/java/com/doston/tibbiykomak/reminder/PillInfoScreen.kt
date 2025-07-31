@@ -32,12 +32,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.doston.tibbiykomak.R
 import com.doston.tibbiykomak.data.ReminderData
 import com.doston.tibbiykomak.ui.theme.AColor
 import com.doston.tibbiykomak.ui.theme.DAColor
@@ -72,7 +74,7 @@ fun PillInfoScreen(data: ReminderData, navController: NavController,viewModel: T
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
             Text(
-                text = "Dori Tafsilotlari",
+                text = stringResource(R.string.dori_tafsilotlari),
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
                 color = textColor,
@@ -95,19 +97,19 @@ fun PillInfoScreen(data: ReminderData, navController: NavController,viewModel: T
                     Spacer(modifier = Modifier.height(12.dp))
                     PillDetailRow(
                         icon = Icons.Default.Info,
-                        label = "Dori haqida",
+                        label = stringResource(R.string.dori_haqida),
                         value = data.desc,viewModel
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     PillDetailRow(
                         icon = Icons.Default.CalendarToday,
-                        label = "Kunlar soni",
+                        label = stringResource(R.string.kunlar_soni),
                         value = "${data.date.count()} kun",viewModel
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     PillDetailRow(
                         icon = Icons.Default.Schedule,
-                        label = "Vaqtlari",
+                        label = stringResource(R.string.vaqtlari),
                         value = data.times.joinToString(", "),viewModel
                     )
                 }
@@ -128,7 +130,7 @@ fun PillInfoScreen(data: ReminderData, navController: NavController,viewModel: T
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "Oraga qytish",
+                text = stringResource(R.string.oraga_qytish),
                 color = mainColor,
                 fontSize = 16.sp,
 

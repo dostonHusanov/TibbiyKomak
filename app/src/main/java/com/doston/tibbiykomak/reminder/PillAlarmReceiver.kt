@@ -48,7 +48,7 @@ class PillAlarmReceiver : BroadcastReceiver() {
 
         val builder = NotificationCompat.Builder(context, channelId)
             .setSmallIcon(R.drawable.pill)
-            .setContentTitle("Dori vaqti: $pillName")
+            .setContentTitle(context.getString(R.string.dori_vaqti, pillName))
             .setContentText(desc)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setCategory(NotificationCompat.CATEGORY_ALARM)

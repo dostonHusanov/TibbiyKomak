@@ -14,7 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -38,9 +40,13 @@ fun OnBoardingScreen(onFinish: () -> Unit) {
         }
     }
 
+    val context = LocalContext.current
+    val listData = getOnBoardingData(context)
     val scope = rememberCoroutineScope()
 
-    Box(modifier = Modifier.fillMaxSize().padding(WindowInsets.systemBars.asPaddingValues())) {
+    Box(modifier = Modifier
+        .fillMaxSize()
+        .padding(WindowInsets.systemBars.asPaddingValues())) {
         // Background image
         Image(
             painter = painterResource(id = R.drawable.background2), // replace with your image
@@ -132,7 +138,7 @@ fun OnBoardingScreen(onFinish: () -> Unit) {
                                 modifier = Modifier.size(20.dp),
                                 tint = MainColor
                             )
-                            Text(text = "Oldingisi", color = MainColor, fontSize = 16.sp)
+                            Text(text = stringResource(R.string.oldingisi), color = MainColor, fontSize = 16.sp)
                         }
                     }
                 }
@@ -162,7 +168,7 @@ fun OnBoardingScreen(onFinish: () -> Unit) {
                     )
                 ) {
                     Row(horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-                    Text(text = if (selectedPage == listData.size - 1) "Keyingisi" else "Keyingisi", color = TextColor, fontSize = 16.sp)
+                    Text(text = if (selectedPage == listData.size - 1) stringResource(R.string.keyingisi) else stringResource(R.string.keyingisi) , color = TextColor, fontSize = 16.sp)
                     Icon(painter = painterResource(R.drawable.right_arrow), tint = TextColor, contentDescription = "", modifier = Modifier.size(20.dp))
                 }
             }}

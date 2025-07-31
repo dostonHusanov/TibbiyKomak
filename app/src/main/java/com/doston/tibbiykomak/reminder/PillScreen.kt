@@ -33,12 +33,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.doston.tibbiykomak.R
 import com.doston.tibbiykomak.data.ReminderData
 import com.doston.tibbiykomak.database.UserDatabaseHelper
 import com.doston.tibbiykomak.ui.theme.AColor
@@ -136,7 +138,8 @@ fun PillItem(pill: ReminderData,
             .background(textColor, RoundedCornerShape(5.dp))
     ) {
         Row(
-            modifier = Modifier.clickable { onClick() }
+            modifier = Modifier
+                .clickable { onClick() }
                 .fillMaxWidth()
                 .background(textColor),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -162,7 +165,10 @@ fun PillItem(pill: ReminderData,
                     Text(text = "${pill.date.count()} kun", fontSize = 16.sp, color = mainColor,modifier = Modifier.padding(vertical = 2.dp, horizontal = 2.dp))
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
-                        text = "Har kuni ${pill.times.count()} marta istemol qilinadi",
+                        text = stringResource(
+                            R.string.har_kuni_marta_istemol_qilinadi,
+                            pill.times.count()
+                        ),
                         fontSize = 16.sp,
                         color = mainColor,
                         modifier = Modifier.padding(vertical = 2.dp, horizontal = 2.dp)

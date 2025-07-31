@@ -23,10 +23,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.doston.tibbiykomak.R
 import com.doston.tibbiykomak.ui.theme.AColor
 import com.doston.tibbiykomak.ui.theme.DAColor
 import com.doston.tibbiykomak.ui.theme.DMainColor
@@ -54,7 +56,7 @@ fun AboutScreen(navController: NavController, viewModel: ThemeViewModel) {
             TopAppBar(
                 title = {
                     Text(
-                        text = "Ilova Haqida",
+                        text = stringResource(R.string.ilova_haqida),
                         fontSize = 22.sp,
                         fontWeight = FontWeight.SemiBold,
                         color = textColor2
@@ -68,7 +70,7 @@ fun AboutScreen(navController: NavController, viewModel: ThemeViewModel) {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
-                            contentDescription = "Orqaga",
+                            contentDescription = stringResource(R.string.oraga_qytish),
                             tint = textColor2
                         )
                     }
@@ -79,7 +81,8 @@ fun AboutScreen(navController: NavController, viewModel: ThemeViewModel) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding).background(mainColor)
+                .padding(innerPadding)
+                .background(mainColor)
         ) {
             Column(
                 modifier = Modifier
@@ -89,57 +92,57 @@ fun AboutScreen(navController: NavController, viewModel: ThemeViewModel) {
                     .background(mainColor)
             ) {
                 SectionHeader(
-                    "Tibbiy Ko'mak — Sizning Shaxsiy Sog‘liqni Saqlash Yordamchingiz",
+                    stringResource(R.string.tibbiy_ko_mak_sizning_shaxsiy_sog_liqni_saqlash_yordamchingiz),
                     viewModel
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 SectionText(
                     viewModel = viewModel,
-                    text = "Tibbiy Ko'mak — bu sizning kundalik sog‘lig‘ingizni nazorat qilishda yordam beradigan ilova. Dori eslatmalari, kasalliklar haqida ma'lumotlar va ko‘plab foydali funksiyalarni taqdim etadi."
+                    text = stringResource(R.string.tibbiy_ko_mak_bu_sizning_kundalik_sog_lig_ingizni_nazorat_qilishda_yordam_beradigan_ilova_dori_eslatmalari_kasalliklar_haqida_ma_lumotlar_va_ko_plab_foydali_funksiyalarni_taqdim_etadi)
                 )
 
                 Spacer(modifier = Modifier.height(20.dp))
-                SectionHeader("Asosiy xususiyatlar", viewModel)
+                SectionHeader(stringResource(R.string.asosiy_xususiyatlar), viewModel)
 
                 val features = listOf(
-                    "Dori eslatmalari.",
-                    "Kasalliklar haqida ma'lumot.",
-                    "Shaxsiy profil.",
-                    "Bog'lanish funksiyasi.",
-                    "Tungi va kunduzgi rejimlar."
+                    stringResource(R.string.dori_eslatmalari),
+                    stringResource(R.string.kasalliklar_haqida_ma_lumot),
+                    stringResource(R.string.shaxsiy_profil),
+                    stringResource(R.string.bog_lanish_funksiyasi),
+                    stringResource(R.string.tungi_va_kunduzgi_rejimlar)
                 )
                 BulletList(items = features, viewModel)
 
                 Spacer(modifier = Modifier.height(20.dp))
-                SectionHeader("Kimlar uchun mo‘ljallangan", viewModel)
+                SectionHeader(stringResource(R.string.kimlar_uchun_mo_ljallangan), viewModel)
 
                 val people = listOf(
-                    "Doimiy dori iste'mol qiluvchi insonlar uchun.",
-                    "Yoshi katta, eslatmalarga muhtoj foydalanuvchilar uchun.",
-                    "Farzandlariga dori eslatmalarini sozlamoqchi bo‘lgan ota-onalar uchun.",
-                    "Sog‘lig‘ini nazorat qilmoqchi bo‘lgan foydalanuvchilar uchun.",
-                    "Oddiy va o‘zbek tilidagi ilovani afzal ko‘radiganlar uchun.",
-                    "Murakkab tibbiy ilovalardan charchagan foydalanuvchilar uchun.",
-                    "Nogironligi bor va eslatmaga ehtiyoji bo‘lgan insonlar uchun.",
-                    "Tibbiy ma’lumotlarga tezkor kirishni xohlaydiganlar uchun."
+                    stringResource(R.string.doimiy_dori_iste_mol_qiluvchi_insonlar_uchun),
+                    stringResource(R.string.yoshi_katta_eslatmalarga_muhtoj_foydalanuvchilar_uchun),
+                    stringResource(R.string.farzandlariga_dori_eslatmalarini_sozlamoqchi_bo_lgan_ota_onalar_uchun),
+                    stringResource(R.string.sog_lig_ini_nazorat_qilmoqchi_bo_lgan_foydalanuvchilar_uchun),
+                    stringResource(R.string.oddiy_va_o_zbek_tilidagi_ilovani_afzal_ko_radiganlar_uchun),
+                    stringResource(R.string.murakkab_tibbiy_ilovalardan_charchagan_foydalanuvchilar_uchun),
+                    stringResource(R.string.nogironligi_bor_va_eslatmaga_ehtiyoji_bo_lgan_insonlar_uchun),
+                    stringResource(R.string.tibbiy_ma_lumotlarga_tezkor_kirishni_xohlaydiganlar_uchun)
                 )
                 BulletList(items = people, viewModel)
 
                 Spacer(modifier = Modifier.height(20.dp))
-                SectionHeader("Nima uchun Tibbiy Ko'mak?", viewModel)
+                SectionHeader(stringResource(R.string.nima_uchun_tibbiy_ko_mak), viewModel)
 
                 val reasons = listOf(
-                    "Oson va tushunarli dizayn.",
-                    "To‘liq o‘zbek tilida.",
-                    "Internetga bog‘liq bo‘lmagan holda ishlaydi.",
-                    "Sog‘lig‘ingiz siz uchun muhim bo‘lgani kabi, biz uchun ham muhim."
+                    stringResource(R.string.oson_va_tushunarli_dizayn),
+                    stringResource(R.string.to_liq_o_zbek_tilida),
+                    stringResource(R.string.internetga_bog_liq_bo_lmagan_holda_ishlaydi),
+                    stringResource(R.string.sog_lig_ingiz_siz_uchun_muhim_bo_lgani_kabi_biz_uchun_ham_muhim)
                 )
                 BulletList(items = reasons, viewModel)
 
                 Spacer(modifier = Modifier.height(24.dp))
 
                 Text(
-                    text = "Ilova versiyasi: 1.0.0",
+                    text = stringResource(R.string.ilova_versiyasi_1_0_0),
                     fontSize = 14.sp,
                     color = textColor2
                 )
@@ -147,7 +150,7 @@ fun AboutScreen(navController: NavController, viewModel: ThemeViewModel) {
                 Spacer(modifier = Modifier.height(12.dp))
 
                 Text(
-                    text = "© 2025 Tibbiy Ko'mak. Barcha huquqlar himoyalangan.",
+                    text = stringResource(R.string._2025_tibbiy_ko_mak_barcha_huquqlar_himoyalangan),
                     fontSize = 12.sp,
                     color = textColor2
                 )

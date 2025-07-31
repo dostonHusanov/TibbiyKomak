@@ -38,6 +38,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -46,6 +47,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.doston.tibbiykomak.R
 import com.doston.tibbiykomak.data.ReminderData
 import com.doston.tibbiykomak.database.UserDatabaseHelper
 import com.doston.tibbiykomak.ui.theme.AColor
@@ -86,7 +88,7 @@ fun PillAddScreen(navController: NavController,viewModel: ThemeViewModel) {
         LazyColumn(modifier = Modifier.padding(innerPadding)) {
             item {
                 Text(
-                    text = "Dori qo'shish",
+                    text = stringResource(R.string.dori_qo_shish),
                     color = textColor,
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
@@ -95,10 +97,10 @@ fun PillAddScreen(navController: NavController,viewModel: ThemeViewModel) {
             }
 
             item {
-                CustomTextField("Dori nomi", name.value ,{ name.value = it }, viewModel = viewModel)
+                CustomTextField(stringResource(R.string.dori_nomi), name.value ,{ name.value = it }, viewModel = viewModel)
             }
             item {
-                CustomTextField("Dori xaqida qisqa malumot", desc.value, { desc.value = it }, viewModel = viewModel)
+                CustomTextField(stringResource(R.string.dori_xaqida_qisqa_malumot), desc.value, { desc.value = it }, viewModel = viewModel)
             }
             item {
                 Box(
@@ -112,7 +114,7 @@ fun PillAddScreen(navController: NavController,viewModel: ThemeViewModel) {
                     contentAlignment = Alignment.CenterStart
                 ) {
                     Text(
-                        text = if (selectedDates.isEmpty()) "Sanalarni tanlang" else
+                        text = if (selectedDates.isEmpty()) stringResource(R.string.sanalarni_tanlang) else
                             selectedDates.joinToString { it.toString() },
                         color = textColor,
                         modifier = Modifier.padding(12.dp)
@@ -129,7 +131,7 @@ fun PillAddScreen(navController: NavController,viewModel: ThemeViewModel) {
 
             item {
                 CustomTextField(
-                    "1 kunda nechchi marta ichiladi",
+                    stringResource(R.string._1_kunda_nechchi_marta_ichiladi),
                     timesPerDay.value,
                     { timesPerDay.value = it },
                     KeyboardType.Number,viewModel
@@ -139,12 +141,12 @@ fun PillAddScreen(navController: NavController,viewModel: ThemeViewModel) {
             val count = timesPerDay.value.toIntOrNull() ?: 0
             if (count in 1..6) {
                 items(count) { index ->
-                    TimePickerField(label = "Vaqtni tanlang", timeState = timeStates[index], viewModel = viewModel)
+                    TimePickerField(label = stringResource(R.string.vaqtni_tanlang), timeState = timeStates[index], viewModel = viewModel)
                 }
             } else if (count > 6) {
                 item {
                     Text(
-                        "1 kunda 6 mahaldan ko'p dori icha olmaysiz!",
+                        stringResource(R.string._1_kunda_6_mahaldan_ko_p_dori_icha_olmaysiz),
                         color = textColor,
                         fontWeight = FontWeight.SemiBold,
                         modifier = Modifier.padding(10.dp)
@@ -168,7 +170,7 @@ fun PillAddScreen(navController: NavController,viewModel: ThemeViewModel) {
                                 Toast
                                     .makeText(
                                         context,
-                                        "Bo'sh maydonlarni to'ldiring!",
+                                        context.getString(R.string.bo_sh_maydonlarni_to_ldiring),
                                         Toast.LENGTH_SHORT
                                     )
                                     .show()
@@ -191,11 +193,13 @@ fun PillAddScreen(navController: NavController,viewModel: ThemeViewModel) {
                                     }
                                 } else {
                                     context.requestExactAlarmPermission()
-                                    Toast.makeText(
-                                        context,
-                                        "Iltimos, dori eslatmalar uchun ruxsat bering",
-                                        Toast.LENGTH_LONG
-                                    ).show()
+                                    Toast
+                                        .makeText(
+                                            context,
+                                            context.getString(R.string.iltimos_dori_eslatmalar_uchun_ruxsat_bering),
+                                            Toast.LENGTH_LONG
+                                        )
+                                        .show()
                                 }
 
                                 navController.popBackStack()
@@ -204,7 +208,7 @@ fun PillAddScreen(navController: NavController,viewModel: ThemeViewModel) {
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "Saqlash",
+                        text = stringResource(R.string.saqlash),
                         fontSize = 18.sp,
                         color = mainColor,
                         fontWeight = FontWeight.Bold,
@@ -237,7 +241,7 @@ fun MultipleDatePickerDialog(
                 Text("OK", color = textColor)
             }
         },
-        title = { Text("Sanalarni tanlang", color = textColor) },
+        title = { Text(stringResource(R.string.sanalarni_tanlang), color = textColor) },
         containerColor = mainColor,
         text = {
             Column(modifier=Modifier.background(mainColor)) {

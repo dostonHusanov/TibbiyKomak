@@ -17,11 +17,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.doston.tibbiykomak.R
 import com.doston.tibbiykomak.ui.theme.AColor
 import com.doston.tibbiykomak.ui.theme.DAColor
 import com.doston.tibbiykomak.ui.theme.DMainColor
@@ -55,7 +57,7 @@ fun ContactScreen(navController: NavController,viewModel:ThemeViewModel) {
             TopAppBar(
                 title = {
                     Text(
-                        text = "Biz bilan bog'lanish",
+                        text = stringResource(R.string.biz_bilan_bog_lanish),
                         fontSize = 22.sp,
                         color = textColor2
                     )
@@ -89,7 +91,7 @@ fun ContactScreen(navController: NavController,viewModel:ThemeViewModel) {
             OutlinedTextField(
                 value = fullName,
                 onValueChange = { fullName = it },
-                label = { Text("To'liq ismingiz", color = textColor) },
+                label = { Text(stringResource(R.string.to_liq_ismingiz), color = textColor) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
                 colors = OutlinedTextFieldDefaults.colors(
@@ -106,7 +108,7 @@ fun ContactScreen(navController: NavController,viewModel:ThemeViewModel) {
             OutlinedTextField(
                 value = phoneNumber,
                 onValueChange = { phoneNumber = it },
-                label = { Text("Telefon raqamingiz", color = textColor) },
+                label = { Text(stringResource(R.string.telefon_raqamingiz), color = textColor) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
                 colors = OutlinedTextFieldDefaults.colors(
@@ -123,7 +125,7 @@ fun ContactScreen(navController: NavController,viewModel:ThemeViewModel) {
             OutlinedTextField(
                 value = messageText,
                 onValueChange = { messageText = it },
-                label = { Text("Xabaringiz", color = textColor) },
+                label = { Text(stringResource(R.string.xabaringiz), color = textColor) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(120.dp),
@@ -142,7 +144,12 @@ fun ContactScreen(navController: NavController,viewModel:ThemeViewModel) {
                 onClick = {
                     if (fullName.isNotEmpty() && phoneNumber.isNotEmpty() && messageText.isNotEmpty()) {
                         val message =
-                            "Salom! Mening ismim: $fullName\nTelefon raqamim: $phoneNumber\nXabar: $messageText"
+                            context.getString(
+                                R.string.salom_mening_ismim_telefon_raqamim_xabar,
+                                fullName,
+                                phoneNumber,
+                                messageText
+                            )
                         val encodedMessage = Uri.encode(message)
 
                         val telegramUsername = "Husanov_Doston"
@@ -154,7 +161,7 @@ fun ContactScreen(navController: NavController,viewModel:ThemeViewModel) {
                     } else {
                         Toast.makeText(
                             context,
-                            "Maydonlar bo'sh bo'lmasligi kerak",
+                            context.getString(R.string.maydonlar_bo_sh_bo_lmasligi_kerak),
                             Toast.LENGTH_SHORT
                         ).show()
                     }
@@ -167,7 +174,7 @@ fun ContactScreen(navController: NavController,viewModel:ThemeViewModel) {
                     contentColor = mainColor
                 )
             ) {
-                Text(text = "Xabar yuborish", fontSize = 16.sp, color = mainColor)
+                Text(text = stringResource(R.string.xabar_yuborish), fontSize = 16.sp, color = mainColor)
             }
         }
     }

@@ -59,6 +59,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -126,7 +127,7 @@ fun SecondaryNav(viewModel: ThemeViewModel) {
     val bottomNavItems = listOf(
         BottomNavItem(
             route = "homeScreen",
-            title = "Bosh sahifa",
+            title = stringResource(R.string.bosh_sahifa),
             icon = {
                 Icon(
                     painterResource(R.drawable.home),
@@ -137,7 +138,7 @@ fun SecondaryNav(viewModel: ThemeViewModel) {
         ),
         BottomNavItem(
             route = "reminderScreen",
-            title = "Eslatma",
+            title = stringResource(R.string.eslatma),
             icon = {
                 Icon(
                     painterResource(R.drawable.bell),
@@ -214,7 +215,7 @@ fun SecondaryNav(viewModel: ThemeViewModel) {
                         )
                         Spacer(Modifier.height(2.dp))
                         Text(
-                            "${user?.age} yosh",
+                            stringResource(R.string.yosh, user?.age!!),
                             modifier = Modifier.padding(horizontal = 16.dp),
                             fontSize = 16.sp, fontWeight = FontWeight.SemiBold, color = textColor
                         )
@@ -231,7 +232,7 @@ fun SecondaryNav(viewModel: ThemeViewModel) {
                         )
 
                         NavigationDrawerItem(
-                            label = { Text("Qollab Quvvatlash") },
+                            label = { Text(stringResource(R.string.qollab_quvvatlash)) },
                             selected = false,
                             icon = { Icon(Icons.Outlined.Help, contentDescription = null) },
                             onClick = {
@@ -251,7 +252,7 @@ fun SecondaryNav(viewModel: ThemeViewModel) {
                         )
                         Spacer(Modifier.height(10.dp))
                         NavigationDrawerItem(
-                            label = { Text("Ilova Haqida") },
+                            label = { Text(stringResource(R.string.ilova_haqida)) },
                             selected = false,
                             icon = { Icon(Icons.Outlined.Info, contentDescription = null) },
                             onClick = {

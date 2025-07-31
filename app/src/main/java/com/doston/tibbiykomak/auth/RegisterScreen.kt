@@ -29,6 +29,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -52,7 +53,9 @@ fun RegisterScreen(onFinish: () -> Unit) {
         modifier = Modifier
             .fillMaxSize()
     ) {
-        Box(modifier = Modifier.fillMaxSize().padding(WindowInsets.systemBars.asPaddingValues())) {
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .padding(WindowInsets.systemBars.asPaddingValues())) {
 
             Image(
                 painter = painterResource(id = R.drawable.background1),
@@ -70,14 +73,14 @@ fun RegisterScreen(onFinish: () -> Unit) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Ro’yhatdan o’ting",
+                text = stringResource(R.string.ro_yhatdan_o_ting),
                 fontSize = 34.sp,
                 fontWeight = FontWeight.Bold,
                 color = TextColor
             )
 
-            RoundedTextField(label = "Ism", value = name.value, onValueChange = { name.value = it })
-            RoundedTextField(label = "Familya", value = surname.value, onValueChange = { surname.value = it })
+            RoundedTextField(label = stringResource(R.string.ism), value = name.value, onValueChange = { name.value = it })
+            RoundedTextField(label = stringResource(R.string.familya), value = surname.value, onValueChange = { surname.value = it })
             RoundedTextField(
                 label = "Yosh",
                 value = age.value,
@@ -86,7 +89,7 @@ fun RegisterScreen(onFinish: () -> Unit) {
             )
 
             RoundedTextField(
-                label = "Telefon raqam",
+                label = stringResource(R.string.telefon_raqam),
                 value = phoneNumber.value,
                 onValueChange = { phoneNumber.value = it },
                 keyboardType = KeyboardType.Phone
@@ -104,7 +107,8 @@ fun RegisterScreen(onFinish: () -> Unit) {
                         dbHelper.insertUser(user)
                         onFinish()
                     }else{
-                        Toast.makeText(context, "Iltimos, barcha kataklarni to'ldiring", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context,
+                            context.getString(R.string.iltimos_barcha_kataklarni_to_ldiring), Toast.LENGTH_SHORT).show()
                     }
                      },
                 modifier = Modifier
@@ -114,7 +118,7 @@ fun RegisterScreen(onFinish: () -> Unit) {
                 colors = ButtonDefaults.buttonColors(containerColor = TextColor),
                 shape = RoundedCornerShape(50)
             ) {
-                Text("Davom etish", fontSize = 18.sp, fontWeight = FontWeight.Medium, color = MainColor)
+                Text(stringResource(R.string.davom_etish), fontSize = 18.sp, fontWeight = FontWeight.Medium, color = MainColor)
             }
         }
     }

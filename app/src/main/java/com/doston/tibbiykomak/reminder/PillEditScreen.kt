@@ -29,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -36,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.doston.tibbiykomak.R
 import com.doston.tibbiykomak.data.ReminderData
 import com.doston.tibbiykomak.database.UserDatabaseHelper
 import com.doston.tibbiykomak.ui.theme.AColor
@@ -88,7 +90,7 @@ fun PillEditScreen(pills: ReminderData, navController: NavController,viewModel: 
         LazyColumn(modifier = Modifier.padding(innerPadding)) {
             item {
                 Text(
-                    text = "Dori o'zgartirish",
+                    text = stringResource(R.string.dori_o_zgartirish),
                     color = textColor,
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
@@ -101,7 +103,7 @@ fun PillEditScreen(pills: ReminderData, navController: NavController,viewModel: 
             }
 
             item {
-                CustomTextField("Dori xaqida qisqa malumot", desc.value, { desc.value = it },viewModel=viewModel)
+                CustomTextField(stringResource(R.string.dori_xaqida_qisqa_malumot), desc.value, { desc.value = it },viewModel=viewModel)
             }
 
             item {
@@ -114,7 +116,7 @@ fun PillEditScreen(pills: ReminderData, navController: NavController,viewModel: 
                         .padding(16.dp)
                 ) {
                     Text(
-                        text = if (selectedDates.isEmpty()) "Sana(lar)ni tanlang"
+                        text = if (selectedDates.isEmpty()) stringResource(R.string.sana_lar_ni_tanlang)
                         else selectedDates.joinToString { it.format(formatter) },
                         color = textColor
                     )
@@ -132,7 +134,7 @@ fun PillEditScreen(pills: ReminderData, navController: NavController,viewModel: 
 
             item {
                 CustomTextField(
-                    "1 kunda nechchi marta ichiladi",
+                    stringResource(R.string._1_kunda_nechchi_marta_ichiladi),
                     timesPerDayCountString.value,
                     { newValue ->
                         if (newValue.all { it.isDigit() }) {
@@ -149,12 +151,12 @@ fun PillEditScreen(pills: ReminderData, navController: NavController,viewModel: 
 
             if (count in 1..6) {
                 items(count) { index ->
-                    TimePickerField(label = "Vaqtni tanlang", timeState = timeStates[index],viewModel)
+                    TimePickerField(label = stringResource(R.string.vaqtni_tanlang), timeState = timeStates[index],viewModel)
                 }
             } else if (count > 6) {
                 item {
                     Text(
-                        "1 kunda 6 mahaldan ko'p dori icha olmaysiz!",
+                        stringResource(R.string._1_kunda_6_mahaldan_ko_p_dori_icha_olmaysiz),
                         color = textColor2,
                         fontWeight = FontWeight.SemiBold,
                         modifier = Modifier.padding(10.dp)
@@ -163,7 +165,7 @@ fun PillEditScreen(pills: ReminderData, navController: NavController,viewModel: 
             } else if (timesPerDayCountString.value.isNotEmpty() && count == 0) {
                 item {
                     Text(
-                        "Kamida 1 mahal dori ichishingiz kerak.",
+                        stringResource(R.string.kamida_1_mahal_dori_ichishingiz_kerak),
                         color = textColor2,
                         fontWeight = FontWeight.SemiBold,
                         modifier = Modifier.padding(10.dp)
@@ -190,11 +192,13 @@ fun PillEditScreen(pills: ReminderData, navController: NavController,viewModel: 
                                 || selectedDates.isEmpty() || timesPerDayCountString.value.isBlank()
                                 || selectedTimes.size != count
                             ) {
-                                Toast.makeText(
-                                    context,
-                                    "Iltimos, barcha maydonlarni to'ldiring!",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                Toast
+                                    .makeText(
+                                        context,
+                                        context.getString(R.string.iltimos_barcha_maydonlarni_to_ldiring),
+                                        Toast.LENGTH_SHORT
+                                    )
+                                    .show()
                             } else {
                                 val data = ReminderData(
                                     id = pills.id,
@@ -211,11 +215,13 @@ fun PillEditScreen(pills: ReminderData, navController: NavController,viewModel: 
                                     AlarmScheduler.scheduleAlarmsForPill(context, data)
                                 } else {
                                     context.requestExactAlarmPermission()
-                                    Toast.makeText(
-                                        context,
-                                        "Iltimos, dori eslatmalar uchun ruxsat bering",
-                                        Toast.LENGTH_LONG
-                                    ).show()
+                                    Toast
+                                        .makeText(
+                                            context,
+                                            context.getString(R.string.iltimos_dori_eslatmalar_uchun_ruxsat_bering),
+                                            Toast.LENGTH_LONG
+                                        )
+                                        .show()
                                 }
 
 
@@ -224,7 +230,7 @@ fun PillEditScreen(pills: ReminderData, navController: NavController,viewModel: 
                         }, contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "O'zgartirish",
+                        text = stringResource(R.string.o_zgartirish),
                         fontSize = 18.sp,
                         color = mainColor,
                         fontWeight = FontWeight.Bold,

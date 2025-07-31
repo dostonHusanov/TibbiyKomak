@@ -22,11 +22,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.doston.tibbiykomak.R
 import com.doston.tibbiykomak.data.MainData
 import com.doston.tibbiykomak.ui.theme.AColor
 import com.doston.tibbiykomak.ui.theme.DAColor
@@ -78,7 +80,7 @@ fun InfoScreen(illness: MainData, navController: NavController,viewModel: ThemeV
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        SectionTitle(title = "Tavsiya etilgan dori vositalar",viewModel)
+        SectionTitle(title = stringResource(R.string.tavsiya_etilgan_dori_vositalar),viewModel)
         illness.recommendedPills.forEach {
             Card(
                 modifier = Modifier
@@ -113,7 +115,7 @@ fun InfoScreen(illness: MainData, navController: NavController,viewModel: ThemeV
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        SectionTitle(title = "Uy sharoitida tavsiyalar",viewModel)
+        SectionTitle(title = stringResource(R.string.uy_sharoitida_tavsiyalar),viewModel)
         illness.homeAdvice.forEach {
             Text(
                 text = "• $it",
@@ -139,11 +141,12 @@ fun InfoScreen(illness: MainData, navController: NavController,viewModel: ThemeV
         ) {
             Box(
                 modifier = Modifier
-                    .fillMaxSize().background(textColor),
+                    .fillMaxSize()
+                    .background(textColor),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "Tugatish",
+                    text = stringResource(R.string.tugatish),
                     fontSize = 18.sp,
                     color = mainColor,
                     textAlign = TextAlign.Center,

@@ -68,8 +68,8 @@ class FullScreenAlarmActivity : Activity() {
             }
         }
 
-        val pillName = intent.getStringExtra("pillName") ?: "Dori"
-        val pillDesc = intent.getStringExtra("desc") ?: "Eslatma"
+        val pillName = intent.getStringExtra("pillName") ?: getString(R.string.dori)
+        val pillDesc = intent.getStringExtra("desc") ?: getString(R.string.eslatma)
 
         setupUI(pillName, pillDesc)
 
@@ -230,7 +230,7 @@ class FullScreenAlarmActivity : Activity() {
     private fun setupAutoClose() {
         autoCloseRunnable = Runnable {
             if (isAlarmActive) {
-                Toast.makeText(this, "Signal vaqti tugadi", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.signal_vaqti_tugadi), Toast.LENGTH_SHORT).show()
                 dismissAlarm()
             }
         }
@@ -256,7 +256,7 @@ class FullScreenAlarmActivity : Activity() {
         stopAlarmEffects()
         handler.removeCallbacks(autoCloseRunnable ?: return)
 
-        Toast.makeText(this, "Signal o'chirildi", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, getString(R.string.signal_o_chirildi), Toast.LENGTH_SHORT).show()
         Log.d(TAG, "Alarm dismissed")
 
         finish()
@@ -267,7 +267,7 @@ class FullScreenAlarmActivity : Activity() {
         stopAlarmEffects()
         handler.removeCallbacks(autoCloseRunnable ?: return)
 
-        Toast.makeText(this, "5 daqiqaga kechiktirildi", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, getString(R.string._5_daqiqaga_kechiktirildi), Toast.LENGTH_SHORT).show()
         Log.d(TAG, "Alarm snoozed")
 
 
@@ -279,7 +279,7 @@ class FullScreenAlarmActivity : Activity() {
         stopAlarmEffects()
         handler.removeCallbacks(autoCloseRunnable ?: return)
 
-        Toast.makeText(this, "Dori Ichildi! Sog'ayib ketin!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, getString(R.string.dori_ichildi_sog_ayib_ketin), Toast.LENGTH_SHORT).show()
         Log.d(TAG, "Pill taken")
 
 

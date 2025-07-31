@@ -33,8 +33,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -65,9 +67,9 @@ fun HomeScreen(
     categoryId: Int,
     modifier: Modifier = Modifier,viewModel: ThemeViewModel
 ) {
+val context= LocalContext.current
 
-
-    val illnessList = getIllnessList(categoryId)
+    val illnessList = getIllnessList(categoryId,context)
     val grouped = illnessList.groupBy { it.category }
     val nestedScrollInterop = rememberNestedScrollInteropConnection()
     val isDarkTheme by viewModel.themeDark.collectAsState()
@@ -197,7 +199,7 @@ fun HomeItem(
                         ),
                         contentPadding = PaddingValues(0.dp)
                     ) {
-                        Text("Ko'rish", fontSize = 15.sp, textAlign = TextAlign.Center)
+                        Text(stringResource(R.string.ko_rish), fontSize = 15.sp, textAlign = TextAlign.Center)
                     }
                     Spacer(modifier = Modifier.height(4.dp))
                 }

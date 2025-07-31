@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -75,9 +74,7 @@ fun SupportScreen(navController: NavController,viewModel: ThemeViewModel) {
     val mainColor = if (isDarkTheme) MainColor else DMainColor
     val textColor = if (isDarkTheme) TextColor else DTextColor
     val textColor2 = if (isDarkTheme) TextColor2 else DTextColor2
-    val regColor = if (isDarkTheme) RegColor else DRegColor
     val aColor = if (isDarkTheme) AColor else DAColor
-    // State management
     var fullName by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var message by remember { mutableStateOf("") }
@@ -91,7 +88,6 @@ fun SupportScreen(navController: NavController,viewModel: ThemeViewModel) {
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-
             Row(
                 modifier = Modifier
                     .padding(horizontal = 16.dp, vertical = 10.dp)
@@ -101,10 +97,12 @@ fun SupportScreen(navController: NavController,viewModel: ThemeViewModel) {
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
                     contentDescription = null,
-                    modifier = Modifier.size(28.dp).clickable { navController.popBackStack() }.clip(shape = CircleShape),
+                    modifier = Modifier
+                        .size(28.dp)
+                        .clickable { navController.popBackStack() }
+                        .clip(shape = CircleShape),
                     tint = textColor
-
-
+                    
                 )
                 Spacer(modifier = Modifier.width(20.dp))
                 Text(
@@ -138,39 +136,38 @@ fun SupportScreen(navController: NavController,viewModel: ThemeViewModel) {
                     )
                 }
 
-                // FAQ Items
                 val faqItems = listOf(
                     FAQItem(
-                        question = "Ilovadan qanday foydalanish mumkin?",
-                        answer = "Ilova asosiy sahifasida turli xil tibbiy muammolar bo'yicha ma'lumotlarni topishingiz mumkin. Har bir bo'limni tanlash orqali batafsil ma'lumot olishingiz mumkin."
+                        question = context.getString(R.string.ilovadan_qanday_foydalanish_mumkin),
+                        answer = context.getString(R.string.ilova_asosiy_sahifasida_turli_xil_tibbiy_muammolar_bo_yicha_ma_lumotlarni_topishingiz_mumkin_har_bir_bo_limni_tanlash_orqali_batafsil_ma_lumot_olishingiz_mumkin)
                     ),
                     FAQItem(
-                        question = "Dori eslatmalarini qanday sozlash mumkin?",
-                        answer = "Eslatmalar bo'limiga o'ting va '+' tugmasini bosing. Dori nomini, vaqtini va davomiyligini kiriting. Ilova avtomatik ravishda sizga eslatma beradi."
+                        question = context.getString(R.string.dori_eslatmalarini_qanday_sozlash_mumkin),
+                        answer = context.getString(R.string.eslatmalar_bo_limiga_o_ting_va_tugmasini_bosing_dori_nomini_vaqtini_va_davomiyligini_kiriting_ilova_avtomatik_ravishda_sizga_eslatma_beradi)
                     ),
                     FAQItem(
-                        question = "Ma'lumotlar qanchalik ishonchli?",
-                        answer = "Barcha ma'lumotlar tibbiy mutaxassislar tomonidan tekshirilgan. Lekin bu ma'lumotlar shifokor maslahatini almashtirmaydi."
+                        question = context.getString(R.string.ma_lumotlar_qanchalik_ishonchli),
+                        answer = context.getString(R.string.barcha_ma_lumotlar_tibbiy_mutaxassislar_tomonidan_tekshirilgan_lekin_bu_ma_lumotlar_shifokor_maslahatini_almashtirmaydi)
                     ),
                     FAQItem(
-                        question = "Offline rejimda ishlay olasizmi?",
-                        answer = "Ha, asosiy ma'lumotlar offline rejimda mavjud. Faqat yangilanishlar va qo'shimcha ma'lumotlar uchun internet kerak."
+                        question = context.getString(R.string.offline_rejimda_ishlay_olasizmi),
+                        answer = context.getString(R.string.ha_asosiy_ma_lumotlar_offline_rejimda_mavjud_faqat_yangilanishlar_va_qo_shimcha_ma_lumotlar_uchun_internet_kerak)
                     ),
                     FAQItem(
-                        question = "Qanday qilib yordam so'rash mumkin?",
-                        answer = "Ushbu sahifadagi forma orqali yoki Telegram/Email orqali biz bilan bog'lanishingiz mumkin. 24 soat ichida javob beramiz."
+                        question = context.getString(R.string.qanday_qilib_yordam_so_rash_mumkin),
+                        answer = context.getString(R.string.ushbu_sahifadagi_forma_orqali_yoki_telegram_email_orqali_biz_bilan_bog_lanishingiz_mumkin_24_soat_ichida_javob_beramiz)
                     ),
                     FAQItem(
-                        question = "Ilova bepulmi?",
-                        answer = "Ha, ilova to'liq bepul va hech qanday yashirin to'lovlar yo'q. Barcha funksiyalar bepul foydalanish uchun."
+                        question = context.getString(R.string.ilova_bepulmi),
+                        answer = context.getString(R.string.ha_ilova_to_liq_bepul_va_hech_qanday_yashirin_to_lovlar_yo_q_barcha_funksiyalar_bepul_foydalanish_uchun)
                     ),
                     FAQItem(
-                        question = "Ma'lumotlarim xavfsizmi?",
-                        answer = "Ha, barcha shaxsiy ma'lumotlaringiz xavfsiz saqlanadi va uchinchi shaxslarga berilmaydi."
+                        question = context.getString(R.string.ma_lumotlarim_xavfsizmi),
+                        answer = context.getString(R.string.ha_barcha_shaxsiy_ma_lumotlaringiz_xavfsiz_saqlanadi_va_uchinchi_shaxslarga_berilmaydi)
                     ),
                     FAQItem(
-                        question = "Yangi funksiyalar qachon qo'shiladi?",
-                        answer = "Doimiy ravishda yangi funksiyalar qo'shib boramiz. Yangilanishlar haqida bildirishnomalar orqali xabar beramiz."
+                        question = context.getString(R.string.yangi_funksiyalar_qachon_qo_shiladi),
+                        answer = context.getString(R.string.doimiy_ravishda_yangi_funksiyalar_qo_shib_boramiz_yangilanishlar_haqida_bildirishnomalar_orqali_xabar_beramiz)
                     )
                 )
 
@@ -179,14 +176,12 @@ fun SupportScreen(navController: NavController,viewModel: ThemeViewModel) {
                         faq = faqItems[index],
                         isExpanded = expandedFAQ == index,
                         onToggle = { expandedFAQ = if (expandedFAQ == index) null else index },
-                        cardColor = textColor,
+                    
                         textColor = mainColor,
                         accentColor = mainColor,
                         backgroundColor = textColor
                     )
                 }
-
-                // Contact Form Section
                 item {
                     ContactFormSection(
                         fullName = fullName,
@@ -215,17 +210,14 @@ fun SupportScreen(navController: NavController,viewModel: ThemeViewModel) {
                     )
                 }
 
-                // Contact Methods Section
                 item {
                     ContactMethodsSection(
                         context = context,
                         textColor = textColor,
-                        mainColor = mainColor,
-                        aColor = aColor
+                        mainColor = mainColor
                     )
                 }
 
-                // Bottom spacing
                 item {
                     Spacer(modifier = Modifier.height(16.dp))
                 }
@@ -240,7 +232,7 @@ private fun FAQCard(
     faq: FAQItem,
     isExpanded: Boolean,
     onToggle: () -> Unit,
-    cardColor: Color,
+  
     textColor: Color,
     accentColor: Color,
     backgroundColor: Color
@@ -365,7 +357,7 @@ private fun ContactFormSection(
                     onValueChange = onEmailChange,
                     label = {
                         Text(
-                            "Email (ixtiyoriy)",
+                            stringResource(R.string.email_ixtiyoriy),
                             color = mainColor.copy(alpha = 0.7f)
                         )
                     },
@@ -443,7 +435,7 @@ private fun ContactMethodsSection(
     context: Context,
     textColor: Color,
     mainColor: Color,
-    aColor: Color
+    
 ) {
     Card(
         modifier = Modifier
@@ -463,24 +455,20 @@ private fun ContactMethodsSection(
             )
 
             Spacer(modifier = Modifier.height(16.dp))
-
             ContactMethodItem(
                 icon = Icons.Default.Email,
                 title = stringResource(R.string.email_support),
                 subtitle = "husanovdostonbek1010@gmail.com",
                 textColor = mainColor,
-                accentColor = mainColor,
                 onClick = { sendEmail(context) }, mainColor = mainColor
             )
 
             Spacer(modifier = Modifier.height(12.dp))
-
             ContactMethodItem(
                 icon = Icons.Default.Phone,
                 title = stringResource(R.string.telegram),
                 subtitle = "@Dostonbek_Husanov",
                 textColor = mainColor,
-                accentColor = mainColor,
                 onClick = { openTelegram(context) }, mainColor = mainColor
             )
         }
@@ -493,7 +481,7 @@ private fun ContactMethodItem(
     title: String,
     subtitle: String,
     textColor: Color,
-    accentColor: Color, mainColor: Color,
+    mainColor: Color,
     onClick: () -> Unit
 ) {
     Row(
@@ -526,7 +514,6 @@ private fun ContactMethodItem(
     }
 }
 
-// Helper functions
 private fun sendSupportMessage(context: Context, fullName: String, email: String, message: String) {
     val formattedMessage = buildString {
         appendLine("Name: $fullName")
