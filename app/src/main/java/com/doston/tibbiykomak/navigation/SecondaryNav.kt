@@ -1,6 +1,7 @@
 package com.doston.tibbiykomak.navigation
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.background
@@ -25,6 +26,7 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.outlined.Help
 import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.Language
 import androidx.compose.material.icons.outlined.Phone
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -70,7 +72,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.doston.tibbiykomak.R
+import com.doston.tibbiykomak.SecondLanguageScreen
 import com.doston.tibbiykomak.SupportScreen
+import com.doston.tibbiykomak.auth.LocaleManager
 import com.doston.tibbiykomak.data.MainData
 import com.doston.tibbiykomak.data.ReminderData
 import com.doston.tibbiykomak.data.User
@@ -282,6 +286,26 @@ fun SecondaryNav(viewModel: ThemeViewModel) {
                                 .background(shape = RoundedCornerShape(10.dp), color = textColor)
                         )
                         Spacer(Modifier.height(10.dp))
+                        NavigationDrawerItem(
+                            label = { Text(text = stringResource(R.string.ilova_tili)) },
+                            selected = false,
+                            icon = { Icon(Icons.Outlined.Language, contentDescription = null) },
+                            onClick = {
+                                scope.launch { drawerState.close() }
+                                navController.navigate("secondLanguage")
+
+                            },
+                            colors = NavigationDrawerItemDefaults.colors(
+                                unselectedContainerColor = textColor,
+                                unselectedTextColor = mainColor,
+                                unselectedBadgeColor = mainColor,
+                                unselectedIconColor = mainColor
+                            ),
+                            modifier = Modifier
+                                .padding(horizontal = 16.dp)
+                                .background(shape = RoundedCornerShape(10.dp), color = textColor)
+                        )
+                        Spacer(Modifier.height(10.dp))
 
                     }
                     Spacer(Modifier.height(10.dp))
@@ -457,6 +481,18 @@ fun SecondaryNav(viewModel: ThemeViewModel) {
                             InfoScreen(illness = it, navController, viewModel)
                         }
                     }
+                    composable("secondLanguage"){
+                        val localContext = LocalContext.current
+                        val activity = localContext as? Activity
+                        SecondLanguageScreen( onLanguageSelected = { languageCode ->
+                            LocaleManager.setLocale(localContext, languageCode)
+                            LocaleManager.getPrefs(localContext)
+                                .edit()
+                                .putBoolean("language_selected", true)
+                                .apply()
+                            activity?.recreate()
+                        }, navController = navController, viewModel = viewModel)
+                    }
                     composable("pillInfo") { backStackEntry ->
                         val pillInfo = navController.previousBackStackEntry
                             ?.savedStateHandle?.get<ReminderData>("pillInfo")
@@ -502,6 +538,18 @@ fun SecondaryNav(viewModel: ThemeViewModel) {
                 }
                 composable("pillScreen") {
                     PillScreen(navController, viewModel)
+                }
+                composable("secondLanguage"){
+                    val localContext = LocalContext.current
+                    val activity = localContext as? Activity
+                    SecondLanguageScreen( onLanguageSelected = { languageCode ->
+                        LocaleManager.setLocale(localContext, languageCode)
+                        LocaleManager.getPrefs(localContext)
+                            .edit()
+                            .putBoolean("language_selected", true)
+                            .apply()
+                        activity?.recreate()
+                    }, navController = navController, viewModel = viewModel)
                 }
                 composable("pillAdd") {
                     PillAddScreen(navController, viewModel)

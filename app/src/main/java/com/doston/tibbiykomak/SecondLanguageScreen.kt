@@ -1,5 +1,4 @@
-package com.doston.tibbiykomak.auth
-
+package com.doston.tibbiykomak
 
 import android.app.Activity
 import androidx.compose.foundation.background
@@ -30,7 +29,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.doston.tibbiykomak.R
+import androidx.navigation.NavController
+import com.doston.tibbiykomak.auth.LocaleManager
 import com.doston.tibbiykomak.ui.theme.AColor
 import com.doston.tibbiykomak.ui.theme.DAColor
 import com.doston.tibbiykomak.ui.theme.DMainColor
@@ -44,9 +44,11 @@ import com.doston.tibbiykomak.ui.theme.TextColor2
 import com.doston.tibbiykomak.ui.theme.ThemeViewModel
 
 @Composable
-fun LanguageScreen(
-    onLanguageSelected: (String) -> Unit, onNextClicked: () -> Unit, viewModel: ThemeViewModel
+fun SecondLanguageScreen(
+    onLanguageSelected: (String) -> Unit,
+    viewModel: ThemeViewModel,navController: NavController
 ) {
+
     var selectedLang by remember { mutableStateOf<String?>(null) }
     val isDarkTheme by viewModel.themeDark.collectAsState()
     val mainColor = if (isDarkTheme) MainColor else DMainColor
@@ -55,15 +57,16 @@ fun LanguageScreen(
     val regColor = if (isDarkTheme) RegColor else DRegColor
     val aColor = if (isDarkTheme) AColor else DAColor
     val languages = listOf(
-        "uz" to "O'zbek", "en" to "English", "ru" to "Русский"
+        "uz" to "O'zbek",
+        "en" to "English",
+        "ru" to "Русский"
     )
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(mainColor)
-            .padding(24.dp),
-        verticalArrangement = Arrangement.Center,
+            .padding(horizontal = 24.dp, vertical = 30.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
@@ -75,24 +78,28 @@ fun LanguageScreen(
 
         languages.forEach { (code, label) ->
             val isSelected = selectedLang == code
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp)
-                .border(
-                    width = if (isSelected) 2.dp else 1.dp,
-                    color = if (isSelected) regColor else aColor,
-                    shape = RoundedCornerShape(12.dp)
-                )
-                .background(
-                    color = if (isSelected) regColor.copy(alpha = 0.1f) else Color.Transparent,
-                    shape = RoundedCornerShape(12.dp)
-                )
-                .clickable {
-                    selectedLang = code
-                }
-                .padding(vertical = 16.dp, horizontal = 20.dp)) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp)
+                    .border(
+                        width = if (isSelected) 2.dp else 1.dp,
+                        color = if (isSelected) regColor else aColor,
+                        shape = RoundedCornerShape(12.dp)
+                    )
+                    .background(
+                        color = if (isSelected) regColor.copy(alpha = 0.1f) else Color.Transparent,
+                        shape = RoundedCornerShape(12.dp)
+                    )
+                    .clickable {
+                        selectedLang = code
+                    }
+                    .padding(vertical = 16.dp, horizontal = 20.dp)
+            ) {
                 Text(
-                    text = label, color = textColor, fontSize = 18.sp
+                    text = label,
+                    color = textColor,
+                    fontSize = 18.sp
                 )
             }
         }
@@ -106,7 +113,8 @@ fun LanguageScreen(
                     onLanguageSelected(it)
                     (context as? Activity)?.recreate() // restart for locale to apply
                 }
-                onNextClicked()
+                navController.popBackStack()
+
             },
             enabled = selectedLang != null,
             modifier = Modifier
@@ -121,5 +129,7 @@ fun LanguageScreen(
         }
     }
 }
+
+
 
 
