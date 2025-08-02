@@ -94,7 +94,7 @@ Doctor-recommended medicines and home remedies.
 </string>
     <string name="bosh_sahifa">Home</string>
     <string name="eslatma">Reminder</string>
-    <string name="yosh">%1$s years old</string>
+    <string name="yosh">years old</string>
     <string name="qollab_quvvatlash">Support</string>
     <string name="ilova_haqida">About the App</string>
     <string name="tavsiya_etilgan_dori_vositalar">Recommended Medications</string>

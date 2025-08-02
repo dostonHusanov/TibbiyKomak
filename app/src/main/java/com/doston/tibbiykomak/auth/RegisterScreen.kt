@@ -82,7 +82,7 @@ fun RegisterScreen(onFinish: () -> Unit) {
             RoundedTextField(label = stringResource(R.string.ism), value = name.value, onValueChange = { name.value = it })
             RoundedTextField(label = stringResource(R.string.familya), value = surname.value, onValueChange = { surname.value = it })
             RoundedTextField(
-                label = "Yosh",
+                label = stringResource(R.string.yosh),
                 value = age.value,
                 onValueChange = { age.value = it },
                 keyboardType = KeyboardType.Number

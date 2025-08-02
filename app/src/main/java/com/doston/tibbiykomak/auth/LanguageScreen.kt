@@ -1,6 +1,7 @@
 package com.doston.tibbiykomak.auth
 
 
+import android.app.Activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -25,7 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.doston.tibbiykomak.ui.theme.AColor
@@ -43,19 +44,19 @@ import com.doston.tibbiykomak.ui.theme.ThemeViewModel
 @Composable
 fun LanguageScreen(
     onLanguageSelected: (String) -> Unit,
-    onNextClicked: () -> Unit,viewModel: ThemeViewModel
+    onNextClicked: () -> Unit, viewModel: ThemeViewModel
 ) {
     var selectedLang by remember { mutableStateOf<String?>(null) }
     val isDarkTheme by viewModel.themeDark.collectAsState()
-    val mainColor= if (isDarkTheme) MainColor else DMainColor
-    val textColor=if (isDarkTheme) TextColor else DTextColor
-    val textColor2=if(isDarkTheme) TextColor2 else DTextColor2
-    val regColor=if (isDarkTheme) RegColor else DRegColor
-    val aColor=if(isDarkTheme) AColor else DAColor
+    val mainColor = if (isDarkTheme) MainColor else DMainColor
+    val textColor = if (isDarkTheme) TextColor else DTextColor
+    val textColor2 = if (isDarkTheme) TextColor2 else DTextColor2
+    val regColor = if (isDarkTheme) RegColor else DRegColor
+    val aColor = if (isDarkTheme) AColor else DAColor
     val languages = listOf(
-        "en" to "English",
         "uz" to "O'zbek",
-        //"ru" to "Русский"
+        "en" to "English",
+        "ru" to "Русский"
     )
 
     Column(
@@ -102,10 +103,14 @@ fun LanguageScreen(
         }
 
         Spacer(modifier = Modifier.height(40.dp))
-
+val context= LocalContext.current
         Button(
             onClick = {
-                selectedLang?.let { onLanguageSelected(it) }
+                selectedLang?.let {
+                    LocaleManager.setLocale(context, it)
+                    onLanguageSelected(it)
+                    (context as? Activity)?.recreate() // restart for locale to apply
+                }
                 onNextClicked()
             },
             enabled = selectedLang != null,

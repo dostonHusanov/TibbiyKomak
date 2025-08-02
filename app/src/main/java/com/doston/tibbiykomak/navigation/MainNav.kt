@@ -40,23 +40,27 @@ fun MainNav(context: Context,viewModel: ThemeViewModel) {
             })
         }
         composable("language") {
+            val localContext = LocalContext.current
+            val activity = localContext as? Activity
+
             LanguageScreen(
                 onLanguageSelected = { languageCode ->
-                    val activity = context as? Activity
-
-                    LocaleManager.setLocale(context, languageCode)
-                    LocaleManager.getPrefs(context).edit().putBoolean("language_selected", true)
+                    LocaleManager.setLocale(localContext, languageCode)
+                    LocaleManager.getPrefs(localContext)
+                        .edit()
+                        .putBoolean("language_selected", true)
                         .apply()
-
                     activity?.recreate()
                 },
                 onNextClicked = {
                     navController.navigate("onboarding") {
                         popUpTo("language") { inclusive = true }
                     }
-                },viewModel
+                },
+                viewModel = viewModel
             )
         }
+
 
 
 

@@ -119,7 +119,7 @@ fun OnBoardingScreen(onFinish: () -> Unit) {
                             }
                         },
                         modifier = Modifier
-                            .width(150.dp)
+                            .width(170.dp)
                             .height(45.dp)
                             .border(2.dp, MainColor, CircleShape),
                         shape = CircleShape,

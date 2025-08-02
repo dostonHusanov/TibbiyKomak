@@ -38,7 +38,7 @@ object LocaleManager {
     }
 
     fun getLanguage(context: Context): String {
-        return getPrefs(context).getString(LANGUAGE_KEY, "eng") ?: "eng"
+        return getPrefs(context).getString(LANGUAGE_KEY, "en") ?: "en"
     }
 
     fun getPrefs(context: Context): SharedPreferences {
