@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "796315246993",
+    "project_id": "tibbiyko-mak",
+    "storage_bucket": "tibbiyko-mak.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:796315246993:android:4601306524236a33c13a30",
+        "android_client_info": {
+          "package_name": "com.doston.tibbiykomak"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxiXXdBJA8tRkjEGAHZcQiqkqvoDoJRy8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

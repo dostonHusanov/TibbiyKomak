@@ -629,5 +629,7 @@
     <string name="ro_yhatdan_o_ting">Ro’yhatdan o’ting</string>
     <string name="ilova_tili">Ilova Tili</string>
     <string name="select_language">Tilni Tanlang</string>
+    <string name="ma_lumot_mavjud_emas">Ma\'lumot mavjud emas!</string>
+    <string name="no_data_available">No data available</string>
 
 </resources>

@@ -565,4 +565,6 @@ Tibbiy Ko\'mak is an app that helps you monitor your daily health. It offers med
     <string name="ro_yhatdan_o_ting">Register</string>
     <string name="ilova_tili">App Language</string>
     <string name="select_language">Select a language</string>
+    <string name="ma_lumot_mavjud_emas">No data available!</string>
+
 </resources>

@@ -459,7 +459,7 @@ fun SecondaryNav(viewModel: ThemeViewModel) {
                     modifier = Modifier.padding(innerPadding)
                 ) {
                     composable("homeScreen") {
-                        HomeScreen(navController, categoryId = 1, viewModel = viewModel)
+                        HomeScreen(navController, categoryId = 1, themeViewModel = viewModel)
                     }
 
                     composable("reminderScreen") {
@@ -530,7 +530,7 @@ fun SecondaryNav(viewModel: ThemeViewModel) {
                 }
 
                 composable("homeScreen") {
-                    HomeScreen(navController, categoryId = 1, viewModel = viewModel)
+                    HomeScreen(navController, categoryId = 1, themeViewModel = viewModel)
                 }
 
                 composable("reminderScreen") {
@@ -554,6 +554,7 @@ fun SecondaryNav(viewModel: ThemeViewModel) {
                 composable("pillAdd") {
                     PillAddScreen(navController, viewModel)
                 }
+
                 composable("pillInfo") { backStackEntry ->
                     val pillInfo = navController.previousBackStackEntry
                         ?.savedStateHandle?.get<ReminderData>("pillInfo")

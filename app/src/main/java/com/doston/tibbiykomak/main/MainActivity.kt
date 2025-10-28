@@ -32,6 +32,8 @@ import com.doston.tibbiykomak.ui.theme.RegColor
 import com.doston.tibbiykomak.ui.theme.TextColor
 import com.doston.tibbiykomak.ui.theme.TextColor2
 import com.doston.tibbiykomak.ui.theme.ThemeViewModel
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.Logger
 
 class MainActivity : ComponentActivity() {
 
@@ -41,7 +43,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
 
-
+            FirebaseDatabase.getInstance().setLogLevel(Logger.Level.DEBUG)
             val viewModel: ThemeViewModel = viewModel()
             val isDarkTheme by viewModel.themeDark.collectAsState()
             MainNav(context = applicationContext, viewModel)

@@ -1,18 +1,35 @@
 package com.doston.tibbiykomak.onBoarding
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -25,7 +42,9 @@ import androidx.compose.ui.unit.sp
 import com.doston.tibbiykomak.R
 import com.doston.tibbiykomak.ui.theme.MainColor
 import com.doston.tibbiykomak.ui.theme.TextColor
-import com.google.accompanist.pager.*
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalPagerApi::class)
@@ -44,18 +63,19 @@ fun OnBoardingScreen(onFinish: () -> Unit) {
     val listData = getOnBoardingData(context)
     val scope = rememberCoroutineScope()
 
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .padding(WindowInsets.systemBars.asPaddingValues())) {
-        // Background image
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(WindowInsets.systemBars.asPaddingValues())
+    ) {
+
         Image(
-            painter = painterResource(id = R.drawable.background2), // replace with your image
+            painter = painterResource(id = R.drawable.background2),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
         )
 
-        // Foreground content
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -138,7 +158,11 @@ fun OnBoardingScreen(onFinish: () -> Unit) {
                                 modifier = Modifier.size(20.dp),
                                 tint = MainColor
                             )
-                            Text(text = stringResource(R.string.oldingisi), color = MainColor, fontSize = 16.sp)
+                            Text(
+                                text = stringResource(R.string.oldingisi),
+                                color = MainColor,
+                                fontSize = 16.sp
+                            )
                         }
                     }
                 }
@@ -167,11 +191,24 @@ fun OnBoardingScreen(onFinish: () -> Unit) {
                         contentColor = MaterialTheme.colorScheme.onPrimary
                     )
                 ) {
-                    Row(horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-                    Text(text = if (selectedPage == listData.size - 1) stringResource(R.string.keyingisi) else stringResource(R.string.keyingisi) , color = TextColor, fontSize = 16.sp)
-                    Icon(painter = painterResource(R.drawable.right_arrow), tint = TextColor, contentDescription = "", modifier = Modifier.size(20.dp))
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = if (selectedPage == listData.size - 1) stringResource(R.string.keyingisi) else stringResource(
+                                R.string.keyingisi
+                            ), color = TextColor, fontSize = 16.sp
+                        )
+                        Icon(
+                            painter = painterResource(R.drawable.right_arrow),
+                            tint = TextColor,
+                            contentDescription = "",
+                            modifier = Modifier.size(20.dp)
+                        )
+                    }
                 }
-            }}
+            }
         }
     }
 }

@@ -1,7 +1,6 @@
 package com.doston.tibbiykomak.reminder
 
 import android.content.Context
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -33,16 +32,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.doston.tibbiykomak.R
 import com.doston.tibbiykomak.data.ReminderData
 import com.doston.tibbiykomak.database.UserDatabaseHelper
@@ -63,16 +59,13 @@ import java.util.Date
 import java.util.Locale
 
 @Composable
-fun ReminderScreen(navController: NavController,viewModel:ThemeViewModel) {
+fun ReminderScreen(navController: NavController, viewModel: ThemeViewModel) {
     val context = LocalContext.current
     val allPills = remember { getAllPills(context) }
     val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-
     val today = dateFormat.format(Date())
     val dateRange = remember { generateNext7Days() }
-
     var selectedDate by remember { mutableStateOf(today) }
-
     val selectedPills = remember(selectedDate) {
         allPills.filter { it.date.contains(selectedDate) }
     }
@@ -80,8 +73,6 @@ fun ReminderScreen(navController: NavController,viewModel:ThemeViewModel) {
     val mainColor = if (isDarkTheme) MainColor else DMainColor
     val textColor = if (isDarkTheme) TextColor else DTextColor
     val textColor2 = if (isDarkTheme) TextColor2 else DTextColor2
-    val regColor = if (isDarkTheme) RegColor else DRegColor
-    val aColor = if (isDarkTheme) AColor else DAColor
 
 
     Box(
@@ -101,14 +92,14 @@ fun ReminderScreen(navController: NavController,viewModel:ThemeViewModel) {
                         selectedDate
                     }
 
-                        Text(
-                            text = formattedDate,
-                            color = textColor2,
-                            fontSize = 20.sp,
-                            textAlign = TextAlign.Start,
-                            modifier = Modifier.padding(horizontal = 16.dp),
-                            fontWeight = FontWeight.Bold
-                        )
+                    Text(
+                        text = formattedDate,
+                        color = textColor2,
+                        fontSize = 20.sp,
+                        textAlign = TextAlign.Start,
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                        fontWeight = FontWeight.Bold
+                    )
 
                 }
                 item {
@@ -131,16 +122,35 @@ fun ReminderScreen(navController: NavController,viewModel:ThemeViewModel) {
                         }
                     }
                 }
-                items(selectedPills.size) { index ->
-                    val pill = selectedPills[index]
-                    pill.times.forEach { time ->
-                        ReminderItem(
-                            time = time,
-                            name = pill.name,
-                            desc = pill.desc,
-                            date = pill.date,
-                            today = selectedDate,viewModel
-                        )
+                if (selectedPills.isNotEmpty()) {
+                    items(selectedPills.size) { index ->
+                        val pill = selectedPills[index]
+                        pill.times.forEach { time ->
+                            ReminderItem(
+                                time = time,
+                                name = pill.name,
+                                desc = pill.desc,
+                                date = pill.date,
+                                today = selectedDate,
+                                viewModel = viewModel
+                            )
+                        }
+                    }
+                } else {
+                    item {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 40.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = stringResource(R.string.ma_lumot_mavjud_emas),
+                                fontSize = 18.sp,
+                                color = textColor,
+                                fontWeight = FontWeight.SemiBold
+                            )
+                        }
                     }
                 }
             }
@@ -163,10 +173,15 @@ fun ReminderScreen(navController: NavController,viewModel:ThemeViewModel) {
 }
 
 
-
-
 @Composable
-fun ReminderItem(time: String, name: String, desc: String, date: List<String>, today: String,viewModel: ThemeViewModel) {
+fun ReminderItem(
+    time: String,
+    name: String,
+    desc: String,
+    date: List<String>,
+    today: String,
+    viewModel: ThemeViewModel
+) {
     val currentIndex = date.indexOf(today) + 1
     val isDarkTheme by viewModel.themeDark.collectAsState()
     val mainColor = if (isDarkTheme) MainColor else DMainColor
@@ -203,7 +218,12 @@ fun ReminderItem(time: String, name: String, desc: String, date: List<String>, t
                     modifier = Modifier.padding(8.dp), color = mainColor
                 )
 
-                Text(stringResource(R.string.istemol_qilindi), fontSize = 14.sp, modifier = Modifier.padding(8.dp), color = mainColor)
+                Text(
+                    stringResource(R.string.istemol_qilindi),
+                    fontSize = 14.sp,
+                    modifier = Modifier.padding(8.dp),
+                    color = mainColor
+                )
             }
 
             Row(
@@ -229,6 +249,7 @@ fun ReminderItem(time: String, name: String, desc: String, date: List<String>, t
         }
     }
 }
+
 @Composable
 fun DateItem(date: String, isSelected: Boolean, onClick: () -> Unit) {
     val backgroundColor = if (isSelected) TextColor else Color.White
@@ -250,10 +271,12 @@ fun DateItem(date: String, isSelected: Boolean, onClick: () -> Unit) {
         Text(day, fontSize = 18.sp, fontWeight = FontWeight.Bold, color = textColor)
     }
 }
+
 fun getAllPills(context: Context): List<ReminderData> {
     val db = UserDatabaseHelper(context)
     return db.getAllPills()
 }
+
 fun generateNext7Days(): List<String> {
     val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
     val calendar = Calendar.getInstance()

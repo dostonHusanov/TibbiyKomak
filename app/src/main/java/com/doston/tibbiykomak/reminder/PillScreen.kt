@@ -35,11 +35,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.doston.tibbiykomak.R
 import com.doston.tibbiykomak.data.ReminderData
 import com.doston.tibbiykomak.database.UserDatabaseHelper
@@ -54,19 +52,15 @@ import com.doston.tibbiykomak.ui.theme.RegColor
 import com.doston.tibbiykomak.ui.theme.TextColor
 import com.doston.tibbiykomak.ui.theme.TextColor2
 import com.doston.tibbiykomak.ui.theme.ThemeViewModel
-import com.doston.tibbiykomak.ui.theme.TibbiyKomakTheme
 
 @Composable
-fun PillScreen(navController: NavController,viewModel: ThemeViewModel) {
+fun PillScreen(navController: NavController, viewModel: ThemeViewModel) {
     val context = LocalContext.current
     val db = remember { UserDatabaseHelper(context) }
     val pills = remember { mutableStateOf(emptyList<ReminderData>()) }
     val isDarkTheme by viewModel.themeDark.collectAsState()
     val mainColor = if (isDarkTheme) MainColor else DMainColor
     val textColor = if (isDarkTheme) TextColor else DTextColor
-    val textColor2 = if (isDarkTheme) TextColor2 else DTextColor2
-    val regColor = if (isDarkTheme) RegColor else DRegColor
-    val aColor = if (isDarkTheme) AColor else DAColor
     Scaffold(modifier = Modifier.background(MainColor)) { innerPadding ->
 
 
@@ -82,26 +76,44 @@ fun PillScreen(navController: NavController,viewModel: ThemeViewModel) {
 
             }
             Column(modifier = Modifier.fillMaxSize()) {
-                LazyColumn(modifier = Modifier) {
-                    items(pills.value) { pill ->
-                        PillItem(
-                            pill = pill,
-                            onClick = {
-                                navController.currentBackStackEntry?.savedStateHandle?.set("pillInfo", pill)
-                                navController.navigate("pillInfo")
-                            },
-                            onEdit = {
-                                navController.currentBackStackEntry?.savedStateHandle?.set("pillEdit", pill)
-                                navController.navigate("pillEdit")
-                            },
-                            onDelete = {
-                                AlarmScheduler.cancelAlarmsForPill(context, pill)
-                                db.deletePill(pill.id)
-                                pills.value = db.getAllPills().sortedByDescending { it.id }
-                            },viewModel
+                if (pills.value.isEmpty()) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(top = 40.dp),
+                        contentAlignment = Alignment.TopCenter
+                    ) {
+                        Text(
+                            text = stringResource(R.string.ma_lumot_mavjud_emas),
+                            fontSize = 18.sp,
+                            color = textColor,
+                            fontWeight = FontWeight.SemiBold
                         )
                     }
+                } else {
+                    LazyColumn(modifier = Modifier.fillMaxSize()) {
+                        items(pills.value) { pill ->
+                            PillItem(
+                                pill = pill,
+                                onClick = {
+                                    navController.currentBackStackEntry?.savedStateHandle?.set("pillInfo", pill)
+                                    navController.navigate("pillInfo")
+                                },
+                                onEdit = {
+                                    navController.currentBackStackEntry?.savedStateHandle?.set("pillEdit", pill)
+                                    navController.navigate("pillEdit")
+                                },
+                                onDelete = {
+                                    AlarmScheduler.cancelAlarmsForPill(context, pill)
+                                    db.deletePill(pill.id)
+                                    pills.value = db.getAllPills().sortedByDescending { it.id }
+                                },
+                                viewModel = viewModel
+                            )
+                        }
+                    }
                 }
+
             }
             FloatingActionButton(
                 onClick = { navController.navigate("pillAdd") },
@@ -121,10 +133,12 @@ fun PillScreen(navController: NavController,viewModel: ThemeViewModel) {
 }
 
 @Composable
-fun PillItem(pill: ReminderData,
-              onClick: () -> Unit = {},
-              onEdit: (ReminderData) -> Unit,
-              onDelete: (ReminderData) -> Unit,viewModel: ThemeViewModel) {
+fun PillItem(
+    pill: ReminderData,
+    onClick: () -> Unit = {},
+    onEdit: (ReminderData) -> Unit,
+    onDelete: (ReminderData) -> Unit, viewModel: ThemeViewModel
+) {
     val isDarkTheme by viewModel.themeDark.collectAsState()
     val mainColor = if (isDarkTheme) MainColor else DMainColor
     val textColor = if (isDarkTheme) TextColor else DTextColor
@@ -154,7 +168,8 @@ fun PillItem(pill: ReminderData,
                     text = pill.name,
                     fontSize = 20.sp,
                     color = mainColor,
-                    fontWeight = FontWeight.SemiBold,modifier = Modifier.padding(vertical = 2.dp, horizontal = 2.dp)
+                    fontWeight = FontWeight.SemiBold,
+                    modifier = Modifier.padding(vertical = 2.dp, horizontal = 2.dp)
                 )
 
                 Row(
@@ -162,7 +177,12 @@ fun PillItem(pill: ReminderData,
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text(text = "${pill.date.count()} kun", fontSize = 16.sp, color = mainColor,modifier = Modifier.padding(vertical = 2.dp, horizontal = 2.dp))
+                    Text(
+                        text = "${pill.date.count()} kun",
+                        fontSize = 16.sp,
+                        color = mainColor,
+                        modifier = Modifier.padding(vertical = 2.dp, horizontal = 2.dp)
+                    )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
                         text = stringResource(

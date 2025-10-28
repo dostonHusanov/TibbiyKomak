@@ -83,7 +83,7 @@ fun MainNav(context: Context,viewModel: ThemeViewModel) {
         }
 
         composable("homeScreen") {
-            HomeScreen(navController = navController,1, viewModel = viewModel)
+            HomeScreen(navController = navController,1, themeViewModel = viewModel )
         }
 
         composable("reminderScreen") { backStackEntry ->

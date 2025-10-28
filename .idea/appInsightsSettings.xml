@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.doston.tibbiykomak" />
+                  <option name="mobileSdkAppId" value="1:796315246993:android:4601306524236a33c13a30" />
+                  <option name="projectId" value="tibbiyko-mak" />
+                  <option name="projectNumber" value="796315246993" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
